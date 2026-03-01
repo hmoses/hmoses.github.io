@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harold Moses II — Senior Technical Writer</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --tag-bg: #1f3c57;
+      --tag-text: #58a6ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; font-size: 15px; line-height: 1.7; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 48px 24px 36px; text-align: center; }
+    .avatar { width: 96px; height: 96px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 16px; }
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
+    header h1 span { color: var(--accent); }
+    .tagline { color: var(--muted); font-size: 1rem; margin-top: 6px; max-width: 560px; margin-inline: auto; }
+    .contact-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 20px; font-size: 0.875rem; color: var(--muted); }
+    .contact-bar a, .contact-bar span { display: flex; align-items: center; gap: 5px; }
+    .stats { display: flex; justify-content: center; gap: 32px; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 24px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .container { max-width: 900px; margin: 40px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 280px; gap: 32px; }
+    @media (max-width: 700px) { .container { grid-template-columns: 1fr; } }
+    section { margin-bottom: 36px; }
+    section h2 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 20px; }
+    .summary p { color: var(--muted); font-size: 0.95rem; }
+    .job { padding: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px; transition: border-color 0.2s; }
+    .job:hover { border-color: var(--accent); }
+    .job-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+    .job-title { font-weight: 700; font-size: 1rem; }
+    .job-date { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+    .job-company { font-size: 0.875rem; color: var(--accent2); margin-bottom: 10px; }
+    .job ul { padding-left: 18px; color: var(--muted); font-size: 0.875rem; }
+    .job ul li { margin-bottom: 5px; }
+    .job .tech-line { margin-top: 10px; font-size: 0.78rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: 8px; }
+    .sidebar section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { background: var(--tag-bg); color: var(--tag-text); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+    .edu-school { font-weight: 700; font-size: 0.95rem; }
+    .edu-degree { font-size: 0.875rem; color: var(--muted); }
+    footer { text-align: center; padding: 32px 24px; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 40px; }
+  </style>
+</head>
+<body>
+<header>
+  <img class="avatar" src="https://avatars.githubusercontent.com/u/14812747?v=4" alt="Harold Moses II" />
+  <h1>Harold Moses <span>II</span></h1>
+  <p class="tagline">Senior Technical Writer &middot; Agentic AI Specialist &middot; Developer Experience</p>
+  <div class="contact-bar">
+    <a href="mailto:hwmoses2@icloud.com">&#9993; hwmoses2@icloud.com</a>
+    <span>&#128222; 415-828-0509</span>
+    <span>&#128205; San Francisco Bay Area, CA</span>
+    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" target="_blank">&#128279; LinkedIn</a>
+    <a href="https://github.com/hmoses" target="_blank">&#128025; GitHub</a>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Years Experience</div></div>
+  <div class="stat"><div class="stat-num">70%</div><div class="stat-label">Faster Doc Updates</div></div>
+  <div class="stat"><div class="stat-num">85%</div><div class="stat-label">Less Manual CI/CD</div></div>
+  <div class="stat"><div class="stat-num">99.8%</div><div class="stat-label">System Reliability</div></div>
+</div>
+
+<div class="container">
+  <main>
+    <section class="summary">
+      <h2>Professional Summary</h2>
+      <p>Innovative Technical Writer actively utilizing Agentic AI across Hardware, Software, API/SDK, UX, and Cybersecurity documentation. An insatiable learner who fleshes out the minutiae so that users don't have to. Proven track record of designing autonomous workflows that improve developer experience and reduce costs.</p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Sr. Technical Writer</span><span class="job-date">May 2024 &ndash; Feb 2026 &middot; 1 yr 10 mos</span></div>
+        <div class="job-company">Block, Inc. | Proto Mining Division &mdash; Oakland, CA</div>
+        <ul>
+          <li>Pioneered agentic AI documentation solutions while leading technical infrastructure initiatives for the Proto mining division</li>
+          <li>Architected and implemented autonomous AI agents for the Proto API Monitor system &mdash; detecting API changes, publishing docs, and notifying stakeholders with minimal human intervention</li>
+          <li>Developed agentic AI workflows that reduced documentation update time by <strong>70%</strong>, enabling faster feature shipping and improved developer experience</li>
+          <li>Designed cross-product AI monitoring infrastructure proposed for Square, Cash App, Afterpay &amp; TIDAL (Hack Week 2026)</li>
+          <li>Created AI-powered error detection systems with multi-location file checking, increasing system reliability by <strong>99.8%</strong></li>
+          <li>Built intelligent Slack notification systems with contextual PR &amp; changelog awareness</li>
+          <li>Pioneered AI-driven GitHub Actions workflows for CI/CD, reducing manual intervention by <strong>85%</strong></li>
+          <li>Implemented ML solutions to resolve documentation discrepancies across multiple platforms</li>
+          <li>Developed autonomous agents for generating comprehensive technical documentation and deployment guides</li>
+        </ul>
+        <div class="tech-line">Agentic AI &middot; LLM Integration &middot; GitHub Actions &middot; OpenAPI/Swagger &middot; JavaScript/CSS &middot; Slack Integration</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Sr. Document Controller II</span><span class="job-date">Aug 2023 &ndash; Feb 2024 &middot; 7 mos</span></div>
+        <div class="job-company">Cruise &mdash; San Francisco, CA</div>
+        <ul>
+          <li>Managed complete document lifecycle for the QAQC team overseeing technical operations for an Autonomous Vehicle fleet</li>
+          <li>Implemented QA/QC and Regulatory Compliance documentation processes</li>
+          <li>Streamlined document workflows to improve efficiency and ensure regulatory compliance</li>
+          <li>Collaborated with engineering teams to document technical operations for autonomous vehicles</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Principal Technical Writer</span><span class="job-date">Apr 2022 &ndash; Aug 2023 &middot; 1 yr 5 mos</span></div>
+        <div class="job-company">OpenVPN Inc. &mdash; Pleasanton, CA</div>
+        <ul>
+          <li>Led migration, information architecture, and content management of Knowledge Base, User Guides, API references, FAQs, and Release Notes from concept to implementation</li>
+          <li>Assisted Engineering and Product Management in creating uniform, easy-to-understand UX for cloud product users</li>
+          <li>Established documentation standards and best practices for technical content</li>
+          <li>Implemented content management systems to improve documentation workflows</li>
+        </ul>
+        <div class="tech-line">Content Management &middot; Paligo</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Sr. Technical Writer</span><span class="job-date">Jul 2020 &ndash; Apr 2022 &middot; 1 yr 10 mos</span></div>
+        <div class="job-company">F5 (formerly Shape Security) &mdash; San Jose, CA</div>
+        <ul>
+          <li>Served as primary technical writer for F5 cloud security bot threats product</li>
+          <li>Worked with Developers and Product Management to produce effective user documentation for Software Engineers and System Admins</li>
+          <li>Developed content using single-sourced CCMS with a docs-as-code method</li>
+          <li>Created comprehensive documentation for complex cybersecurity products</li>
+          <li>Maintained documentation continuity through Shape Security's acquisition by F5</li>
+        </ul>
+        <div class="tech-line">Content Management &middot; Agile Methodologies &middot; Docs-as-Code</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Technical Writer (Contract)</span><span class="job-date">Sep 2019 &ndash; Apr 2020 &middot; 8 mos</span></div>
+        <div class="job-company">Airbnb &mdash; San Francisco, CA</div>
+        <ul>
+          <li>Developed and maintained web-based technical self-help site for Developers using GitHub</li>
+          <li>Created necessary bandwidth for Security Engineers to build out platform security to meet IPO deadline</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Software System Engineer II</span><span class="job-date">Aug 2015 &ndash; Jul 2019 &middot; 4 yrs</span></div>
+        <div class="job-company">Sony Interactive Entertainment (PlayStation) &mdash; San Francisco, CA</div>
+        <ul>
+          <li>Supported cloud infrastructure and managed network access as LDAP Administrator</li>
+          <li>Added and managed users for EC2, Cassandra, and DB Clusters</li>
+          <li>Managed AWS costs leveraging EC2 metadata tagging, analysis, right-sizing, and capacity purchasing (full-stack)</li>
+        </ul>
+        <div class="tech-line">AWS &middot; EC2 &middot; LDAP &middot; Agile Methodologies</div>
+      </div>
+
+      <div class="job">
+        <div class="job-header"><span class="job-title">Technical Writer Intern &rarr; Technical Writer</span><span class="job-date">May 2015 &ndash; Aug 2015 &middot; 4 mos</span></div>
+        <div class="job-company">Sony Interactive Entertainment (PlayStation) &mdash; San Francisco, CA</div>
+        <ul>
+          <li>Developed and maintained Root Cause Analyses (RCA) for Engineering teams</li>
+          <li>Worked with Engineers and DevOps to document network-impacting incidents</li>
+          <li>Presented findings to senior management across distributed teams via WebEx</li>
+          <li>Documented Network Access, Change Management, and Security procedures</li>
+          <li>Developed documentation for real-time monitoring (KAFKA) used by the NOC</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sidebar">
+    <section style="margin-bottom:20px;">
+      <h2>Skills</h2>
+      <div class="tags">
+        <span class="tag">Agentic AI</span>
+        <span class="tag">LLM Integration</span>
+        <span class="tag">Technical Documentation</span>
+        <span class="tag">API Documentation</span>
+        <span class="tag">OpenAPI / Swagger</span>
+        <span class="tag">GitHub Actions</span>
+        <span class="tag">Docs-as-Code</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Information Architecture</span>
+        <span class="tag">Content Management</span>
+        <span class="tag">UX Writing</span>
+        <span class="tag">Regulatory Compliance</span>
+        <span class="tag">QA Documentation</span>
+        <span class="tag">Process Optimization</span>
+        <span class="tag">Cross-team Collaboration</span>
+        <span class="tag">Developer Experience</span>
+        <span class="tag">JavaScript / CSS</span>
+        <span class="tag">Slack Integration</span>
+        <span class="tag">Agile Methodologies</span>
+        <span class="tag">Paligo</span>
+        <span class="tag">AWS / EC2</span>
+        <span class="tag">LDAP</span>
+        <span class="tag">System Architecture</span>
+      </div>
+    </section>
+    <section>
+      <h2>Education</h2>
+      <div class="edu-school">University of Arkansas at Little Rock</div>
+      <div class="edu-degree">BA, Professional and Technical Writing</div>
+    </section>
+  </aside>
+</div>
+
+<footer>
+  <p>Built with &#10084; and deployed via GitHub Pages &middot; <a href="https://github.com/hmoses/hmoses.github.io">View Source</a></p>
+</footer>
+</body>
+</html>
