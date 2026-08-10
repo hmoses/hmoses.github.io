@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harold Moses II — Portfolio | Technical Writer & AI Developer Tools</title>
+<meta name="description" content="Portfolio of Harold Moses II — Technical Writer building AI-powered developer tools, documentation automation, and open-source extensions. Projects include autonomous documentation agents, GitHub Apps, MCP integrations, and developer experience tooling.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #4d65ff;
+    --accent-light: #e8ebff;
+    --border: #e0e0e0;
+    --card-bg: #fafbff;
+    --tag-bg: #f0f3ff;
+    --tag-border: #d0d8ff;
+    --green: #22c55e;
+    --shadow: 0 2px 12px rgba(77,101,255,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 2px solid var(--accent);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 16px;
+    line-height: 1.7;
+  }
+  .hero-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .hero-links .primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .hero-links .primary:hover { background: #3a4fe6; }
+  .hero-links .secondary {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .hero-links .secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTION */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  .section-header {
+    text-align: center;
+    padding: 50px 0 30px;
+  }
+  .section-header h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  /* THEME BANNER */
+  .theme-banner {
+    background: var(--accent-light);
+    border: 1px solid var(--tag-border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .theme-banner h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .theme-banner p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* PROJECT CARDS */
+  .projects { display: flex; flex-direction: column; gap: 24px; padding-bottom: 40px; }
+
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(77,101,255,0.12);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .card-top h3 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .card-top h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .card-top h3 a:hover { color: var(--accent); }
+
+  .card-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-agent { background: #dcfce7; color: #166534; }
+  .badge-devtool { background: #e0e7ff; color: #3730a3; }
+  .badge-docs { background: #fef3c7; color: #92400e; }
+  .badge-extension { background: #fce7f3; color: #9d174d; }
+
+  .card-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .card-highlights {
+    list-style: none;
+    margin-bottom: 14px;
+  }
+  .card-highlights li {
+    font-size: 14px;
+    color: var(--text);
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .card-highlights li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .card-links { display: flex; gap: 12px; }
+  .card-links a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-links a:hover { text-decoration: underline; }
+
+  /* RELEVANCE SECTION */
+  .relevance {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+  .relevance h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .relevance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .relevance-item {
+    font-size: 14px;
+    color: var(--text);
+  }
+  .relevance-item .check { color: var(--green); font-weight: 700; margin-right: 6px; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+    .relevance-grid { grid-template-columns: 1fr; }
+    .card-top { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Harold Moses II</h1>
+  <div class="subtitle">Technical Writer · AI Agent Developer Tools · Open Source</div>
+  <p>Building tools that make AI agents, developer documentation, and open-source workflows more accessible. 10+ years writing developer docs at NVIDIA, Block, OpenVPN, F5, Airbnb, and PlayStation — now also shipping the tooling.</p>
+  <div class="hero-links">
+    <a href="https://github.com/hmoses" class="primary">→ GitHub</a>
+    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a>
+    <a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-header">
+    <h2>Portfolio — Featured Projects</h2>
+    <p>Open-source tools aligned with making intelligent agents ubiquitous</p>
+  </div>
+
+  <div class="theme-banner">
+    <h3>🤖 Theme: Making AI Agents Accessible & Production-Ready</h3>
+    <p>Every project below contributes to the same goal — giving developers the tools, documentation, and automation they need to move from prototypes to production-ready AI agents and workflows.</p>
+  </div>
+
+  <div class="projects">
+
+    <!-- POLY-GLOT GITHUB APP -->
+    <div class="project-card">
+      <div class="card-top">
+        <h3><a href="https://github.com/hmoses/poly-glot-github-app">🤖 Poly-Glot AI — GitHub App</a></h3>
+        <span class="card-badge badge-agent">AI Agent</span>
+      </div>
+      <div class="card-desc">An autonomous AI agent that reviews pull requests and generates professional documentation comments across 12+ programming languages. Installed via GitHub Marketplace — scans changed files, analyzes documentation coverage, generates doc comments using OpenAI or Anthropic, and posts inline review suggestions directly on PRs.</div>
+      <ul class="card-highlights">
+        <li><strong>Autonomous agent</strong> that detects undocumented code and auto-generates JSDoc, PyDoc, Javadoc, GoDoc, Rustdoc, and more</li>
+        <li>Posts <strong>inline review suggestions</strong> and Check Run coverage reports — zero human intervention</li>
+        <li>Supports <strong>12 languages</strong>: JavaScript, TypeScript, Python, Java, Kotlin, C, C++, C#, Go, Rust, Swift, PHP, Ruby</li>
+        <li>Configurable via <code>.polyglot.yml</code> — coverage thresholds, AI provider selection, include/exclude patterns</li>
+        <li><strong>Published on GitHub Marketplace</strong> — production-ready, used by real teams</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">AI Agent</span>
+        <span class="tag">GitHub App</span>
+        <span class="tag">OpenAI</span>
+        <span class="tag">Anthropic</span>
+        <span class="tag">Documentation Automation</span>
+        <span class="tag">Code Review</span>
+        <span class="tag">12 Languages</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/hmoses/poly-glot-github-app">→ Source Code</a>
+        <a href="https://github.com/marketplace/poly-glot-ai">→ GitHub Marketplace</a>
+        <a href="https://poly-glot.ai">→ Website</a>
+      </div>
+    </div>
+
+    <!-- GOOSE GOOGLE DOCS EXTENSION -->
+    <div class="project-card">
+      <div class="card-top">
+        <h3><a href="https://github.com/hmoses/goose-google-docs-extension">📄 Goose Google Docs Extension</a></h3>
+        <span class="card-badge badge-extension">MCP Extension</span>
+      </div>
+      <div class="card-desc">An MCP (Model Context Protocol) server that gives the Goose AI agent full read/write access to Google Docs and Drive. 18 tools covering document creation, editing, formatting, sharing, and export — enabling AI agents to autonomously manage documentation workflows.</div>
+      <ul class="card-highlights">
+        <li><strong>18 MCP tools</strong> — create, read, write, append, find/replace, format, share, copy, delete, export Google Docs</li>
+        <li>Built on <strong>Model Context Protocol (MCP)</strong> — the emerging standard for AI agent tool integration</li>
+        <li>OAuth 2.0 authentication with auto-refresh — secure, local credential storage</li>
+        <li>Submitted to the <strong>Goose Extensions Marketplace</strong> as a community contribution</li>
+        <li>Enables agents to <strong>autonomously create and manage documentation</strong> — no human clicks required</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">MCP</span>
+        <span class="tag">AI Agent Extension</span>
+        <span class="tag">Google Docs API</span>
+        <span class="tag">Google Drive API</span>
+        <span class="tag">OAuth 2.0</span>
+        <span class="tag">Python</span>
+        <span class="tag">Goose AI</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/hmoses/goose-google-docs-extension">→ Source Code</a>
+      </div>
+    </div>
+
+    <!-- POLY-GLOT MARKDOWN -->
+    <div class="project-card">
+      <div class="card-top">
+        <h3><a href="https://github.com/hmoses/poly-glot-markdown">📐 Poly-Glot Markdown Optimizer</a></h3>
+        <span class="card-badge badge-docs">Documentation Tool</span>
+      </div>
+      <div class="card-desc">AI-powered tool that formats Markdown and MDX files for optimal RAG retrieval, GEO (Generative Engine Optimization) discoverability, and AI agent comprehension. Enforces heading hierarchy, generates frontmatter, rewrites for semantic clarity, and chunks content for vector databases.</div>
+      <ul class="card-highlights">
+        <li><strong>RAG-optimized chunking</strong> with section summaries — makes documentation retrievable by AI agents</li>
+        <li><strong>GEO keyword emphasis</strong> — ensures docs surface in AI-generated search results</li>
+        <li>Frontmatter generation, heading hierarchy enforcement, semantic clarity rewrites</li>
+        <li>MDX component annotation and before/after diff view</li>
+        <li>Supports both <strong>OpenAI and Anthropic</strong> — API keys stored locally</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">RAG</span>
+        <span class="tag">GEO</span>
+        <span class="tag">Markdown</span>
+        <span class="tag">MDX</span>
+        <span class="tag">AI Optimization</span>
+        <span class="tag">Documentation</span>
+        <span class="tag">Vector Search</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/hmoses/poly-glot-markdown">→ Source Code</a>
+      </div>
+    </div>
+
+    <!-- GOOSE SCREEN RECORDER -->
+    <div class="project-card">
+      <div class="card-top">
+        <h3><a href="https://github.com/hmoses/goose-screen-recorder">🎬 Goose Screen Recorder</a></h3>
+        <span class="card-badge badge-devtool">Developer Tool</span>
+      </div>
+      <div class="card-desc">A macOS screen timelapse recorder with Goose AI analysis integration. Generates real bash scripts using screencapture and ffmpeg, then enables AI agents to perform frame-by-frame analysis of developer workflows — bridging visual context with agent comprehension.</div>
+      <ul class="card-highlights">
+        <li>Real screen capture using macOS native <code>screencapture</code> — silent, lightweight</li>
+        <li>Auto video stitching via <strong>ffmpeg</strong> concat pipeline — produces production .mp4 files</li>
+        <li><strong>Goose AI analysis integration</strong> — share recordings with AI agent for frame-by-frame breakdown</li>
+        <li>Fully accessible — ARIA roles, 44px touch targets, focus rings, live regions</li>
+        <li>One-click macOS .app installer with custom Desktop icon</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">macOS</span>
+        <span class="tag">Screen Capture</span>
+        <span class="tag">ffmpeg</span>
+        <span class="tag">AI Analysis</span>
+        <span class="tag">Goose AI</span>
+        <span class="tag">Accessibility</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/hmoses/goose-screen-recorder">→ Source Code</a>
+      </div>
+    </div>
+
+    <!-- POLY-GLOT SITE -->
+    <div class="project-card">
+      <div class="card-top">
+        <h3><a href="https://github.com/hmoses/poly-glot-site">🌐 Poly-Glot.ai — Product Website</a></h3>
+        <span class="card-badge badge-docs">Documentation & Marketing</span>
+      </div>
+      <div class="card-desc">The marketing and documentation website for the Poly-Glot AI product suite. Demonstrates end-to-end product documentation — from feature pages and integration guides to installation instructions and developer onboarding.</div>
+      <ul class="card-highlights">
+        <li>Full product documentation site — feature pages, quickstart guides, integration docs</li>
+        <li>Developer-focused content strategy and information architecture</li>
+        <li>Responsive design with clear developer onboarding flows</li>
+      </ul>
+      <div class="card-tags">
+        <span class="tag">Product Documentation</span>
+        <span class="tag">Developer Onboarding</span>
+        <span class="tag">Information Architecture</span>
+        <span class="tag">Web</span>
+      </div>
+      <div class="card-links">
+        <a href="https://github.com/hmoses/poly-glot-site">→ Source Code</a>
+        <a href="https://poly-glot.ai">→ Live Site</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW THESE PROJECTS ALIGN -->
+  <div class="relevance">
+    <h3>🎯 How These Projects Align with Agent Engineering</h3>
+    <div class="relevance-grid">
+      <div class="relevance-item"><span class="check">✓</span> <strong>Autonomous AI agents</strong> — Poly-Glot GitHub App runs fully autonomously on PRs</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>MCP / tool integration</strong> — Goose Google Docs Extension implements the Model Context Protocol</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>RAG-ready documentation</strong> — Poly-Glot Markdown optimizes docs for vector retrieval</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>Multi-LLM support</strong> — Projects integrate both OpenAI and Anthropic providers</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>Open source</strong> — All projects MIT licensed and publicly available</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>Developer experience</strong> — One-click installers, clear READMEs, marketplace publishing</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>Production-ready</strong> — Published on GitHub Marketplace, used by real teams</div>
+      <div class="relevance-item"><span class="check">✓</span> <strong>Documentation as product</strong> — Every project treats docs as a first-class deliverable</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://github.com/hmoses">github.com/hmoses</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></p>
+  <p style="margin-top:6px; font-size:12px; color:#999;">Remote — USA · References & additional samples available upon request</p>
+</div>
+
+</body>
+</html>
