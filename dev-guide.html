@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poly-Glot AI Workspace: Developer Integration Guide | Harold Moses II</title>
+<meta name="description" content="Developer integration guide for Poly-Glot AI Workspace, including MCP architecture, tools, localization workflows, compare mode, and troubleshooting.">
+<meta name="author" content="Harold Moses II">
+<style>
+:root{--bg:#fff;--text:#1a1a1a;--muted:#5c6470;--accent:#4d65ff;--accent-light:#eef1ff;--border:#e3e6ee;--card:#fafbff;--code:#111827;--green:#16a34a;--shadow:0 2px 14px rgba(77,101,255,.08)}
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.hero{max-width:980px;margin:0 auto;padding:56px 24px 34px;text-align:center;border-bottom:2px solid var(--accent)}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2.6px;color:var(--accent);font-weight:800;margin-bottom:10px}.hero h1{margin:0 0 10px;font-size:42px;line-height:1.08;letter-spacing:-1px}.hero p{max-width:760px;margin:0 auto 18px;color:var(--muted)}
+.hero-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.btn{display:inline-block;padding:9px 16px;border-radius:7px;font-weight:700;font-size:14px;border:1px solid var(--border)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.layout{max-width:1120px;margin:0 auto;padding:34px 24px 60px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:34px}.toc{position:sticky;top:22px;align-self:start;border:1px solid var(--border);border-radius:10px;background:var(--card);padding:18px}.toc h2{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:0 0 10px}.toc a{display:block;color:#3b4350;font-size:13px;padding:5px 0}.content h2{font-size:26px;margin:38px 0 12px;padding-top:8px}.content h3{font-size:19px;margin:28px 0 8px}.content p{margin:10px 0;color:#303642}.content ul,.content ol{padding-left:24px}.content li{margin:6px 0}.note{background:var(--accent-light);border:1px solid #d7ddff;border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:18px 0}.tool-card{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:18px;margin:14px 0;box-shadow:var(--shadow)}.tool-card h3{margin-top:0}.tool-name{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent)}
+pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding:16px;font-size:13px;line-height:1.55} code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.inline{background:#f3f4f6;padding:2px 6px;border-radius:5px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pill{display:inline-block;background:#f2f4ff;border:1px solid #d9dfff;color:var(--accent);border-radius:999px;padding:4px 9px;font-size:12px;font-weight:600;margin:2px}.footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:var(--muted);font-size:13px}.small{font-size:13px;color:var(--muted)}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto}.hero h1{font-size:31px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="eyebrow">Technical Writing Sample · Developer Documentation</div>
+<h1>Poly-Glot AI Workspace: Developer Integration Guide</h1>
+<p>A practical guide to integrating MCP-compatible AI assistants with Poly-Glot AI Workspace, including architecture, tool workflows, localization, multi-model comparison, and troubleshooting.</p>
+<div class="hero-links">
+<a class="btn primary" href="https://hmoses.github.io/poly-glot-site/">Poly-Glot Website</a>
+<a class="btn" href="https://github.com/hmoses">GitHub</a>
+<a class="btn" href="https://hmoses.github.io/portfolio.html">Portfolio</a>
+</div>
+</header>
+<div class="layout">
+<nav class="toc">
+<h2>On this page</h2>
+<a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#connect">Connect to Claude</a><a href="#tools">Tool Reference</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
+</nav>
+<main class="content">
+<section id="overview"><h2>Overview</h2>
+<p>Poly-Glot AI Workspace is an AI productivity and localization platform for creating prompts, working across multiple AI providers, and comparing model responses. The product includes more than 1,000 prompt templates, multiple input methods, and a localized interface across 38 languages.</p>
+<p>For developer and agentic workflows, Poly-Glot exposes functionality through the <strong>Model Context Protocol (MCP)</strong>. An MCP-compatible assistant can discover templates, build prompts, select languages, check subscription state, prepare multi-model comparisons, and open the broader workspace.</p>
+<div class="note"><strong>Core idea:</strong> users express intent in natural language while the agent coordinates discrete Poly-Glot tools behind the scenes.</div></section>
+<section id="architecture"><h2>Architecture</h2><p>Poly-Glot separates the user-facing workspace from the MCP integration layer. The integration exposes focused tools that can be composed into agent workflows.</p><pre><code>Developer / User
+       |
+       v
+MCP-Compatible AI Assistant
+       |
+       | Model Context Protocol
+       v
+Poly-Glot MCP Server
+       |
+       +---- search_templates
+       +---- get_template
+       +---- build_prompt
+       +---- prepare_compare
+       +---- get_language_options
+       +---- get_subscription_status
+       +---- open_workspace
+       |
+       v
+Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead of locating a template, copying it, filling variables, and then setting up multiple model sessions, an agent can orchestrate those actions as tool calls.</p></section>
+<section id="endpoint"><h2>MCP Endpoint</h2><p>Poly-Glot publishes the following MCP endpoint for compatible clients:</p><pre><code>https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code></pre><p class="small">Use this endpoint only with MCP-compatible clients that allow custom connectors.</p></section>
+<section id="connect"><h2>Connect Poly-Glot to Claude</h2><ol><li>Open <strong>Claude Settings</strong>.</li><li>Navigate to <strong>MCP Connectors</strong>.</li><li>Select <strong>Add Connector</strong>.</li><li>Enter the Poly-Glot MCP endpoint.</li><li>Name the connector <strong>Poly-Glot</strong>.</li><li>Complete the connection and confirm that the Poly-Glot tools are available.</li></ol></section>
+<section id="tools"><h2>MCP Tool Reference</h2>
+<div class="tool-card"><h3 class="tool-name">search_templates</h3><p>Searches the Poly-Glot prompt library by task or topic.</p><pre><code>Find templates for writing a LinkedIn post.
+Search for coding templates.
+Find a template for salary negotiation.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">get_template</h3><p>Retrieves the selected template after discovery. A common pattern is <span class="inline">search_templates</span> followed by <span class="inline">get_template</span>.</p></div>
+<div class="tool-card"><h3 class="tool-name">build_prompt</h3><p>Populates a selected template using user-provided requirements and produces a completed prompt for downstream use.</p></div>
+<div class="tool-card"><h3 class="tool-name">prepare_compare</h3><p>Prepares the same prompt for side-by-side evaluation across multiple AI providers. Poly-Glot Compare Mode supports workflows spanning 2 to 9 AIs.</p></div>
+<div class="tool-card"><h3 class="tool-name">get_language_options</h3><p>Returns supported language options. Poly-Glot supports 38 languages across interface and output workflows.</p></div>
+<div class="tool-card"><h3 class="tool-name">get_subscription_status</h3><p>Checks the user's current Poly-Glot plan or subscription state before gated functionality is used.</p></div>
+<div class="tool-card"><h3 class="tool-name">open_workspace</h3><p>Transitions the user from an MCP-driven conversational workflow into the full Poly-Glot Workspace.</p></div>
+</section>
+<section id="prompt"><h2>Example: Build a Developer Prompt</h2><p>A user can describe an outcome without knowing the underlying tool names:</p><pre><code>Search Poly-Glot for LinkedIn templates and build me
+one about AI productivity.</code></pre><pre><code>User request
+     |
+     v
+search_templates
+     |
+     v
+get_template
+     |
+     v
+build_prompt
+     |
+     v
+Completed prompt</code></pre><p>The agent handles template discovery and construction while the user remains focused on the desired outcome.</p></section>
+<section id="compare"><h2>Example: Compare Multiple Models</h2><p>After building a prompt, a user can extend the workflow:</p><pre><code>Now compare that across ChatGPT, Claude, and Gemini.</code></pre><p>The agent can invoke <span class="inline">prepare_compare</span> and stage the prompt for the selected providers.</p><pre><code>User
+ |
+ | "Compare it across ChatGPT, Claude, and Gemini."
+ v
+prepare_compare
+ |
+ v
+Poly-Glot Workspace
+ |
+ +---- ChatGPT
+ +---- Claude
+ +---- Gemini
+ |
+ v
+Human evaluation</code></pre><p>This preserves human judgment at the end of the workflow: the system prepares alternatives, but the user decides which response best satisfies the task.</p></section>
+<section id="localization"><h2>Localization Workflow</h2><p>Localization is a first-class workflow rather than an output-only translation step. Poly-Glot distinguishes between application language and requested AI output language.</p><pre><code>User intent
+    |
+    v
+get_language_options
+    |
+    v
+Select supported language
+    |
+    v
+search_templates
+    |
+    v
+get_template
+    |
+    v
+build_prompt
+    |
+    v
+AI workflow</code></pre><p>This allows multilingual behavior to be incorporated into orchestration rather than added only after content generation.</p></section>
+<section id="privacy"><h2>Privacy and Execution Model</h2><p>The native Poly-Glot application is designed around local workflows. MCP integrations introduce an external assistant and MCP service into the execution path, so developers should evaluate the privacy and data-handling policies of the client and AI provider they use.</p><pre><code>Native workflow
+User --> Poly-Glot --> User-selected AI experience
+
+MCP workflow
+User --> MCP Client --> Poly-Glot MCP Server
+              |
+              +--> AI assistant</code></pre></section>
+<section id="principles"><h2>Integration Design Principles</h2><div class="grid"><div class="tool-card"><h3>Intent over implementation</h3><p>Users state goals while the agent selects and sequences tools.</p></div><div class="tool-card"><h3>Composable tools</h3><p>Discovery, retrieval, construction, localization, comparison, entitlement, and workspace access remain separate capabilities.</p></div><div class="tool-card"><h3>Human in the loop</h3><p>Multi-model comparison preserves human evaluation instead of assuming a single model is always best.</p></div><div class="tool-card"><h3>Progressive interaction</h3><p>A task can begin conversationally and transition into the full workspace when a richer interface is useful.</p></div></div></section>
+<section id="troubleshooting"><h2>Troubleshooting</h2><h3>Poly-Glot tools do not appear</h3><p>Confirm that the MCP endpoint is correct and that the connector is enabled in the client.</p><h3>A template cannot be found</h3><p>Use a broader, task-oriented search rather than an exact template title.</p><pre><code>Find a template for creating developer documentation.</code></pre><h3>Compare Mode does not include the expected provider</h3><p>Confirm that the intended providers were selected when the comparison was prepared.</p><h3>The requested language is unavailable</h3><p>Use <span class="inline">get_language_options</span> to determine currently supported languages.</p><h3>A feature is unavailable for the current account</h3><p>Use <span class="inline">get_subscription_status</span> before proceeding with gated functionality.</p></section>
+<section id="summary"><h2>Developer Workflow Summary</h2><pre><code>1. Receive user intent
+          |
+2. Discover template      -> search_templates
+          |
+3. Retrieve template      -> get_template
+          |
+4. Determine language     -> get_language_options
+          |
+5. Construct prompt       -> build_prompt
+          |
+6. Prepare providers      -> prepare_compare
+          |
+7. Open workspace         -> open_workspace
+          |
+8. Compare outputs
+          |
+9. Human selects result</code></pre><p>This architecture turns a prompt library into a set of agent-accessible, composable capabilities while preserving human control over the final output.</p></section>
+<section id="sample"><h2>About This Sample</h2><p><strong>Poly-Glot AI Workspace: Developer Integration Guide</strong> is an independent technical writing sample based on the publicly documented Poly-Glot AI Workspace product and MCP integration.</p><p>It demonstrates developer documentation, information architecture, procedural documentation, conceptual documentation, API/tool reference organization, AI workflow documentation, localization concepts, and docs-as-code-oriented content design.</p><p><strong>Author:</strong> Harold Moses II<br><strong>Product:</strong> Poly-Glot AI Workspace<br><strong>Reference:</strong> <a href="https://hmoses.github.io/poly-glot-site/">hmoses.github.io/poly-glot-site</a></p><p><span class="pill">Developer Docs</span><span class="pill">MCP</span><span class="pill">Agentic AI</span><span class="pill">Docs-as-Code</span><span class="pill">Localization</span><span class="pill">Multi-Model Workflows</span></p></section>
+</main>
+</div>
+<footer class="footer">Harold Moses II · Technical Writer & Documentation Engineer · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://github.com/hmoses">GitHub</a></footer>
+</body>
+</html>
