@@ -1,0 +1,73 @@
+name: Update BYOM guide
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-byom-guide.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update developer and Claude guide content
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          files = [
+              Path('dev-guide.html'),
+              Path('dev-guide/developer-mcp-guide/index.html'),
+              Path('dev-guide/claude-mcp-guide/index.html'),
+          ]
+
+          byom_arch = '''       +---- localize_text\n       +---- get_custom_model_capabilities\n       +---- validate_custom_model\n       +---- run_custom_model\n       +---- prepare_custom_compare'''
+
+          byom_tools = '''\n<h3 style="margin-top:28px;color:var(--accent);">Bring Your Own Model (BYOM) Tools (4)</h3>\n<div class="tool-card"><h3 class="tool-name">get_custom_model_capabilities</h3><p>Returns the capabilities and connection requirements for developer-controlled models, including supported BYOM endpoint patterns and Poly-Glot integration behavior.</p></div>\n<div class="tool-card"><h3 class="tool-name">validate_custom_model</h3><p>Validates a developer-supplied HTTPS model endpoint before execution. Poly-Glot applies endpoint safety checks and does not persist raw provider API keys in Neon.</p></div>\n<div class="tool-card"><h3 class="tool-name">run_custom_model</h3><p>Runs a Poly-Glot prompt against a developer-controlled model while preserving Poly-Glot prompt construction, localization, entitlement, and orchestration workflows.</p></div>\n<div class="tool-card"><h3 class="tool-name">prepare_custom_compare</h3><p>Prepares a Compare Mode workflow that can include a developer-controlled model alongside supported built-in AI providers.</p></div>\n'''
+
+          byom_section = '''\n<section id="byom"><h2>Bring Your Own Model (BYOM)</h2>\n<p><strong>BYOM extends the same Poly-Glot MCP platform to developer-controlled models.</strong> Teams can connect private, fine-tuned, self-hosted, enterprise, or third-party models and use them with Poly-Glot prompt workflows, 38-language localization, and Compare Mode.</p>\n<div class="note"><strong>One MCP implementation:</strong> BYOM is implemented once in the production Poly-Glot MCP server. The same server is then available through the Official MCP Registry, MCP.so, Glama, Hugging Face, Claude, and other compatible MCP clients.</div>\n<div class="grid">\n<div class="tool-card"><h3>OpenAI-compatible endpoints</h3><p>Connect compatible hosted models by providing the endpoint, model identifier, and transient credentials required for the request.</p></div>\n<div class="tool-card"><h3>Custom HTTPS REST endpoints</h3><p>Poly-Glot can adapt supported developer endpoints while enforcing HTTPS, request limits, endpoint validation, and safe redirect behavior.</p></div>\n<div class="tool-card"><h3>Compare with your own model</h3><p>Use <span class="inline">prepare_custom_compare</span> to evaluate a BYOM model alongside supported Poly-Glot providers using the same prompt and localization context.</p></div>\n<div class="tool-card"><h3>Credential privacy</h3><p>Raw API keys, bearer tokens, and authorization headers are not stored in ordinary Neon database tables. Credentials are supplied transiently or through an approved secrets mechanism.</p></div>\n</div>\n<h3>BYOM request path</h3>\n<pre><code>Developer / MCP Client\n        |\n        v\nPoly-Glot MCP Server\n        |\n        +---- prompt building + localization\n        +---- endpoint validation + entitlements\n        +---- BYOM adapter\n        |\n        v\nDeveloper-Controlled Model Endpoint\n        |\n        v\nPoly-Glot Compare / Response Workflow\n\nNeon stores configuration, entitlement state, and analytics metadata.\nRaw provider credentials are not persisted.</code></pre>\n<p class="small">Localhost, <span class="inline">.local</span>, loopback, RFC1918/private-network, link-local, and cloud metadata endpoints are blocked from the public remote MCP path. A local/private model must be exposed through a secure supported HTTPS endpoint or a future local bridge.</p>\n</section>\n'''
+
+          claude_byom = '''\n<section id="claude-byom"><h2>BYOM with Claude</h2>\n<p>Claude connects to the <strong>same production Poly-Glot MCP server</strong> used by the other Poly-Glot MCP distribution surfaces. There is no separate Claude BYOM backend. What differs is the Claude client experience: connection setup, tool discovery, permission prompts, and how Claude invokes the MCP tools during a conversation.</p>\n<div class="note"><strong>Claude-specific behavior:</strong> once the BYOM tools are deployed to Poly-Glot, Claude can discover and invoke <span class="inline">get_custom_model_capabilities</span>, <span class="inline">validate_custom_model</span>, <span class="inline">run_custom_model</span>, and <span class="inline">prepare_custom_compare</span> through the existing Poly-Glot MCP connection, subject to Claude's tool approval and permission flow.</div>\n<div class="grid">\n<div class="tool-card"><h3>Use Claude as the MCP client</h3><p>Claude orchestrates Poly-Glot MCP calls while the Poly-Glot server performs prompt preparation, localization, entitlement checks, BYOM endpoint validation, and model routing.</p></div>\n<div class="tool-card"><h3>Compare Claude and BYOM models</h3><p>A developer-controlled model can participate in Poly-Glot Compare Mode alongside Claude and other supported providers without requiring a separate BYOM database or MCP deployment.</p></div>\n</div>\n<h3>Example Claude request</h3>\n<div class="chat-bubble chat-user"><div class="chat-label">You</div>Use Poly-Glot to validate my custom model endpoint, localize this prompt to Spanish, and prepare a comparison between my model and Claude.</div>\n<div class="chat-bubble chat-claude"><div class="chat-label">Claude</div>Claude can coordinate the Poly-Glot tools for endpoint validation, localization, BYOM execution/compare preparation, and entitlement checks. Tool approval behavior follows the Claude MCP client experience.</div>\n<h3>Credentials and permissions</h3>\n<p>Do not save raw model API keys in Poly-Glot's Neon tables. BYOM credentials should be supplied transiently or through an approved secrets mechanism. Claude's own MCP permissions remain separate from Poly-Glot's server-side endpoint validation and subscription controls.</p>\n</section>\n'''
+
+          for path in files:
+              s = path.read_text()
+
+              # Developer TOC and counts.
+              s = s.replace('Tool Reference (11 Tools)', 'Tool Reference (15 Tools)')
+              s = s.replace('MCP Tool Reference (11 Tools)', 'MCP Tool Reference (15 Tools)')
+              s = s.replace('Poly-Glot exposes 11 tools through MCP: 7 interactive tools for template workflows and 4 language processing tools.',
+                            'Poly-Glot exposes 15 primary tools through MCP: 7 interactive tools for template workflows, 4 language processing tools, and 4 Bring Your Own Model (BYOM) tools.')
+              s = s.replace('<a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a>',
+                            '<a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#byom">Bring Your Own Model (BYOM)</a>')
+
+              if 'get_custom_model_capabilities' not in s.split('<!-- TAB 2: CLAUDE INTEGRATION GUIDE')[0]:
+                  s = s.replace('       +---- localize_text', byom_arch, 1)
+                  marker = '</section>\n<section id="prompt"><h2>'
+                  if marker in s:
+                      s = s.replace(marker, byom_tools + '</section>\n' + byom_section + '<section id="prompt"><h2>', 1)
+                  else:
+                      raise SystemExit(f'Developer insertion marker missing in {path}')
+
+              # Claude TOC.
+              s = s.replace('<a href="#claude-tools">Available Tools</a>\n<a href="#claude-permissions">Tool Permissions</a>',
+                            '<a href="#claude-tools">Available Tools</a>\n<a href="#claude-byom">BYOM with Claude</a>\n<a href="#claude-permissions">Tool Permissions</a>')
+
+              # Insert Claude BYOM section before permissions.
+              if '<section id="claude-byom">' not in s:
+                  marker = '<section id="claude-permissions">'
+                  if marker in s:
+                      s = s.replace(marker, claude_byom + marker, 1)
+                  else:
+                      raise SystemExit(f'Claude insertion marker missing in {path}')
+
+              path.write_text(s)
+
+          print('Updated:', ', '.join(str(p) for p in files))
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html dev-guide/developer-mcp-guide/index.html dev-guide/claude-mcp-guide/index.html
+          git commit -m "Document BYOM across developer and Claude MCP guides"
+          git push
