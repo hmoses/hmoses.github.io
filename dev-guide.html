@@ -546,5 +546,20 @@ function copyCode(btn) {
   });
 }
 </script>
+<script id="polyglot-hash-tab-routing">
+(function () {
+  function activateTabFromHash() {
+    const tab = window.location.hash === '#claude' ? 'claude' :
+                window.location.hash === '#developer' ? 'developer' : null;
+    if (tab && typeof window.switchTab === 'function') {
+      window.switchTab(tab);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', activateTabFromHash);
+  window.addEventListener('hashchange', activateTabFromHash);
+})();
+</script>
+
 </body>
 </html>
