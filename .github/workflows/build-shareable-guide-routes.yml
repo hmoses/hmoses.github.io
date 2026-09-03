@@ -2,9 +2,10 @@ name: Build shareable guide routes
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - '.github/workflows/build-shareable-guide-routes.yml'
+      - .github/workflows/build-shareable-guide-routes.yml
 
 permissions:
   contents: write
@@ -14,49 +15,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Build standalone route pages and real tab links
-        shell: python
         run: |
+          python3 <<'PY'
           from pathlib import Path
 
           src = Path('dev-guide.html')
           html = src.read_text(encoding='utf-8')
 
-          old_tabs = '''<div class="tab-bar">
-<button class="tab-btn active" onclick="navigateTab('developer')">Developer Guide</button>
-<button class="tab-btn" onclick="navigateTab('claude')">Claude Integration Guide</button>
-</div>'''
-          new_tabs = '''<div class="tab-bar">
-<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>
-<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>
-</div>'''
-          if old_tabs not in html:
-              raise SystemExit('Expected tab markup not found in dev-guide.html')
-          html = html.replace(old_tabs, new_tabs, 1)
+          old_tabs = """<div class=\"tab-bar\">\n<button class=\"tab-btn active\" onclick=\"navigateTab('developer')\">Developer Guide</button>\n<button class=\"tab-btn\" onclick=\"navigateTab('claude')\">Claude Integration Guide</button>\n</div>"""
+          new_tabs = """<div class=\"tab-bar\">\n<a class=\"tab-btn active\" href=\"/dev-guide/developer-mcp-guide/\">Developer Guide</a>\n<a class=\"tab-btn\" href=\"/dev-guide/claude-mcp-guide/\">Claude Integration Guide</a>\n</div>"""
 
-          # Make anchor tabs retain the current button-like styling.
+          if old_tabs in html:
+              html = html.replace(old_tabs, new_tabs, 1)
+          elif '/dev-guide/developer-mcp-guide/' not in html:
+              raise SystemExit('Expected tab markup not found')
+
           if '.tab-btn{text-decoration:none;' not in html:
               html = html.replace('.tab-btn{padding:', '.tab-btn{text-decoration:none;padding:', 1)
 
-          # Main developer route.
           developer = html
-          developer = developer.replace('<div id="tab-developer" class="tab-content active">', '<div id="tab-developer" class="tab-content active">', 1)
-          developer = developer.replace('<div id="tab-claude" class="tab-content active">', '<div id="tab-claude" class="tab-content">', 1)
-          developer = developer.replace('<div id="tab-claude" class="tab-content">', '<div id="tab-claude" class="tab-content">', 1)
-          developer = developer.replace('<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>', '<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>', 1)
+          developer = developer.replace('<div id=\"tab-developer\" class=\"tab-content\">', '<div id=\"tab-developer\" class=\"tab-content active\">', 1)
+          developer = developer.replace('<div id=\"tab-claude\" class=\"tab-content active\">', '<div id=\"tab-claude\" class=\"tab-content\">', 1)
+          developer = developer.replace('<a class=\"tab-btn\" href=\"/dev-guide/developer-mcp-guide/\">Developer Guide</a>', '<a class=\"tab-btn active\" href=\"/dev-guide/developer-mcp-guide/\">Developer Guide</a>', 1)
+          developer = developer.replace('<a class=\"tab-btn active\" href=\"/dev-guide/claude-mcp-guide/\">Claude Integration Guide</a>', '<a class=\"tab-btn\" href=\"/dev-guide/claude-mcp-guide/\">Claude Integration Guide</a>', 1)
 
-          # Claude route: switch active classes explicitly.
-          claude = html.replace('<div id="tab-developer" class="tab-content active">', '<div id="tab-developer" class="tab-content">', 1)
-          claude = claude.replace('<div id="tab-claude" class="tab-content">', '<div id="tab-claude" class="tab-content active">', 1)
-          claude = claude.replace('<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>', '<a class="tab-btn" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>', 1)
-          claude = claude.replace('<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>', '<a class="tab-btn active" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>', 1)
+          claude = html
+          claude = claude.replace('<div id=\"tab-developer\" class=\"tab-content active\">', '<div id=\"tab-developer\" class=\"tab-content\">', 1)
+          claude = claude.replace('<div id=\"tab-claude\" class=\"tab-content\">', '<div id=\"tab-claude\" class=\"tab-content active\">', 1)
+          claude = claude.replace('<a class=\"tab-btn active\" href=\"/dev-guide/developer-mcp-guide/\">Developer Guide</a>', '<a class=\"tab-btn\" href=\"/dev-guide/developer-mcp-guide/\">Developer Guide</a>', 1)
+          claude = claude.replace('<a class=\"tab-btn\" href=\"/dev-guide/claude-mcp-guide/\">Claude Integration Guide</a>', '<a class=\"tab-btn active\" href=\"/dev-guide/claude-mcp-guide/\">Claude Integration Guide</a>', 1)
 
-          # Developer route already has developer tab active.
           Path('dev-guide/developer-mcp-guide').mkdir(parents=True, exist_ok=True)
           Path('dev-guide/claude-mcp-guide').mkdir(parents=True, exist_ok=True)
           Path('dev-guide/developer-mcp-guide/index.html').write_text(developer, encoding='utf-8')
           Path('dev-guide/claude-mcp-guide/index.html').write_text(claude, encoding='utf-8')
           src.write_text(html, encoding='utf-8')
+          PY
 
       - name: Commit shareable routes
         run: |
