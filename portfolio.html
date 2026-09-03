@@ -4,564 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harold Moses II | Portfolio | Technical Writer & AI Developer Tools</title>
-<meta name="description" content="Portfolio of Harold Moses II, Technical Writer building AI-powered developer tools, documentation automation, and open-source extensions. Projects include autonomous documentation agents, GitHub Apps, MCP integrations, and developer experience tooling.">
-<meta name="keywords" content="Harold Moses II, technical writer, portfolio, AI agents, developer documentation, documentation automation, GitHub App, MCP, Model Context Protocol, Goose AI, Poly-Glot, open source, LLM, OpenAI, Anthropic, RAG, developer tools, API documentation, docs-as-code">
+<meta name="description" content="Portfolio of Harold Moses II, Technical Writer building AI-powered developer tools, documentation automation, MCP integrations, CI/CD parity pipelines, and open-source extensions.">
+<meta name="keywords" content="Harold Moses II, technical writer, portfolio, AI agents, developer documentation, documentation automation, GitHub App, MCP, Model Context Protocol, Goose AI, Poly-Glot, open source, LLM, OpenAI, Anthropic, RAG, developer tools, API documentation, docs-as-code, CI/CD, parity pipeline">
 <meta name="author" content="Harold Moses II">
 <meta name="robots" content="index, follow">
-
-<!-- Structured Data for AI/ATS/Search parsing -->
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Harold Moses II",
-    "jobTitle": "Technical Writer",
-    "email": "hwmoses2@icloud.com",
-    "url": "https://hmoses.github.io/portfolio.html",
-    "sameAs": [
-      "https://linkedin.com/in/harold-moses-ii-78aa3a3b",
-      "https://github.com/hmoses"
-    ],
-    "knowsAbout": [
-      "Technical Writing", "Developer Documentation", "API Documentation",
-      "AI Agents", "Agentic AI", "LLM Integration", "Model Context Protocol",
-      "Documentation Automation", "Docs-as-Code", "GitHub", "Markdown",
-      "OpenAI", "Anthropic", "RAG", "Open Source", "Developer Experience"
-    ],
-    "makesOffer": [
-      {
-        "@type": "CreativeWork",
-        "name": "Poly-Glot AI GitHub App",
-        "description": "Autonomous AI agent that reviews pull requests and generates documentation comments across 12+ languages",
-        "url": "https://github.com/hmoses/poly-glot-github-app"
-      },
-      {
-        "@type": "CreativeWork",
-        "name": "Goose Google Docs Extension",
-        "description": "MCP server giving AI agents read/write access to Google Docs",
-        "url": "https://github.com/hmoses/goose-google-docs-extension"
-      },
-      {
-        "@type": "CreativeWork",
-        "name": "Poly-Glot Markdown Optimizer",
-        "description": "AI-powered tool for optimizing Markdown for RAG retrieval and AI comprehension",
-        "url": "https://github.com/hmoses/poly-glot-markdown"
-      },
-      {
-        "@type": "CreativeWork",
-        "name": "Goose Screen Recorder",
-        "description": "macOS screen timelapse recorder with AI analysis integration",
-        "url": "https://github.com/hmoses/goose-screen-recorder"
-      },
-      {
-        "@type": "CreativeWork",
-        "name": "Poly-Glot AI Workspace: Developer Integration Guide",
-        "description": "Developer integration guide covering MCP architecture, tool workflows, localization, multi-model comparison, and troubleshooting for Poly-Glot AI Workspace",
-        "url": "https://hmoses.github.io/dev-guide.html"
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Poly-Glot AI Workspace",
-        "description": "Multi-AI prompt workspace with 1,000+ templates, Compare Mode across 9 AI providers, 38-language localization, and 5 input methods. Available on Mac App Store.",
-        "url": "https://hmoses.github.io/poly-glot-site/",
-        "operatingSystem": "macOS, iOS, iPadOS",
-        "applicationCategory": "Productivity"
-      }
+  "@context":"https://schema.org",
+  "@type":"ProfilePage",
+  "mainEntity":{
+    "@type":"Person",
+    "name":"Harold Moses II",
+    "jobTitle":"Technical Writer",
+    "url":"https://hmoses.github.io/portfolio.html",
+    "sameAs":["https://linkedin.com/in/harold-moses-ii-78aa3a3b","https://github.com/hmoses"],
+    "knowsAbout":["Technical Writing","Developer Documentation","API Documentation","AI Agents","Agentic AI","LLM Integration","Model Context Protocol","Documentation Automation","Docs-as-Code","GitHub","CI/CD","OpenAI","Anthropic","RAG","Developer Experience"],
+    "makesOffer":[
+      {"@type":"SoftwareApplication","name":"Poly-Glot AI Workspace","description":"Multi-AI workspace with 1,000+ templates, Compare Mode across 9 AI providers, 38-language localization, seven MCP tools, live MCP directory distribution, and automated CI/CD parity synchronization.","url":"https://hmoses.github.io/poly-glot-site/","operatingSystem":"macOS, iOS, iPadOS","applicationCategory":"Productivity"},
+      {"@type":"CreativeWork","name":"Poly-Glot AI Workspace: Developer Integration Guide","url":"https://hmoses.github.io/dev-guide.html"},
+      {"@type":"CreativeWork","name":"Poly-Glot AI GitHub App","url":"https://github.com/hmoses/poly-glot-github-app"},
+      {"@type":"CreativeWork","name":"Goose Google Docs Extension","url":"https://github.com/hmoses/goose-google-docs-extension"},
+      {"@type":"CreativeWork","name":"Poly-Glot Markdown Optimizer","url":"https://github.com/hmoses/poly-glot-markdown"},
+      {"@type":"CreativeWork","name":"Goose Screen Recorder","url":"https://github.com/hmoses/goose-screen-recorder"}
     ]
   }
 }
 </script>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #ffffff;
-    --text: #1a1a1a;
-    --text-secondary: #555;
-    --accent: #4d65ff;
-    --accent-light: #e8ebff;
-    --border: #e0e0e0;
-    --card-bg: #fafbff;
-    --tag-bg: #f0f3ff;
-    --tag-border: #d0d8ff;
-    --green: #22c55e;
-    --shadow: 0 2px 12px rgba(77,101,255,0.08);
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 16px;
-  }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 60px 20px 40px;
-    border-bottom: 2px solid var(--accent);
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    margin-bottom: 8px;
-  }
-  .hero .subtitle {
-    font-size: 18px;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-  .hero p {
-    font-size: 15px;
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto 16px;
-    line-height: 1.7;
-  }
-  .hero-links {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .hero-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .hero-links .primary {
-    background: var(--accent);
-    color: #fff;
-  }
-  .hero-links .primary:hover { background: #3a4fe6; }
-  .hero-links .secondary {
-    border: 1px solid var(--border);
-    color: var(--text);
-  }
-  .hero-links .secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* SECTION */
-  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-
-  .section-header {
-    text-align: center;
-    padding: 50px 0 30px;
-  }
-  .section-header h2 {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-  .section-header p {
-    font-size: 15px;
-    color: var(--text-secondary);
-  }
-
-  /* THEME BANNER */
-  .theme-banner {
-    background: var(--accent-light);
-    border: 1px solid var(--tag-border);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  .theme-banner h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .theme-banner p {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  /* PROJECT CARDS */
-  .projects { display: flex; flex-direction: column; gap: 24px; padding-bottom: 40px; }
-
-  .project-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 28px;
-    box-shadow: var(--shadow);
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .project-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(77,101,255,0.12);
-  }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-  }
-  .card-top h3 {
-    font-size: 20px;
-    font-weight: 700;
-  }
-  .card-top h3 a {
-    color: var(--text);
-    text-decoration: none;
-  }
-  .card-top h3 a:hover { color: var(--accent); }
-
-  .card-badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-  .badge-agent { background: #dcfce7; color: #166534; }
-  .badge-devtool { background: #e0e7ff; color: #3730a3; }
-  .badge-docs { background: #fef3c7; color: #92400e; }
-  .badge-extension { background: #fce7f3; color: #9d174d; }
-
-  .card-desc {
-    font-size: 15px;
-    color: var(--text-secondary);
-    margin-bottom: 14px;
-    line-height: 1.6;
-  }
-
-  .card-highlights {
-    list-style: none;
-    margin-bottom: 14px;
-  }
-  .card-highlights li {
-    font-size: 14px;
-    color: var(--text);
-    padding-left: 20px;
-    position: relative;
-    margin-bottom: 4px;
-    line-height: 1.5;
-  }
-  .card-highlights li::before {
-    content: "▸";
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-  .tag {
-    background: var(--tag-bg);
-    border: 1px solid var(--tag-border);
-    border-radius: 20px;
-    padding: 3px 10px;
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .card-links { display: flex; gap: 12px; }
-  .card-links a {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .card-links a:hover { text-decoration: underline; }
-
-  /* RELEVANCE SECTION */
-  .relevance {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 28px;
-    margin-bottom: 40px;
-  }
-  .relevance h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-  .relevance-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .relevance-item {
-    font-size: 14px;
-    color: var(--text);
-  }
-  .relevance-item .check { color: var(--green); font-weight: 700; margin-right: 6px; }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 30px 20px;
-    border-top: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-  .footer a { color: var(--accent); text-decoration: none; }
-
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 28px; }
-    .relevance-grid { grid-template-columns: 1fr; }
-    .card-top { flex-direction: column; gap: 8px; }
-  }
+:root{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--shadow:0 2px 12px rgba(77,101,255,.08)}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--accent);max-width:900px;margin:0 auto}.hero h1{font-size:42px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}.hero .subtitle{font-size:18px;color:var(--accent);font-weight:600;margin-bottom:12px}.hero p{font-size:15px;color:var(--text-secondary);max-width:700px;margin:0 auto 16px;line-height:1.7}.hero-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}.hero-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}.hero-links .primary{background:var(--accent);color:#fff}.hero-links .secondary{border:1px solid var(--border);color:var(--text)}.container{max-width:900px;margin:0 auto;padding:0 20px}.section-header{text-align:center;padding:50px 0 30px}.section-header h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}.section-header p{font-size:15px;color:var(--text-secondary)}.theme-banner{background:var(--accent-light);border:1px solid var(--tag-border);border-radius:10px;padding:20px 24px;margin-bottom:30px;text-align:center}.theme-banner h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px}.theme-banner p{font-size:14px}.projects{display:flex;flex-direction:column;gap:24px;padding-bottom:40px}.project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:28px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}.project-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(77,101,255,.12)}.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px}.card-top h3{font-size:20px;font-weight:700}.card-top h3 a{color:var(--text);text-decoration:none}.card-top h3 a:hover{color:var(--accent)}.card-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}.badge-agent{background:#dcfce7;color:#166534}.badge-devtool{background:#e0e7ff;color:#3730a3}.badge-docs{background:#fef3c7;color:#92400e}.badge-extension{background:#fce7f3;color:#9d174d}.badge-live{background:#dcfce7;color:#166534}.badge-cicd{background:#ede9fe;color:#5b21b6}.card-desc{font-size:15px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6}.card-highlights{list-style:none;margin-bottom:14px}.card-highlights li{font-size:14px;color:var(--text);padding-left:20px;position:relative;margin-bottom:4px;line-height:1.5}.card-highlights li::before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:700}.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.tag{background:var(--tag-bg);border:1px solid var(--tag-border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--accent);font-weight:500}.card-links{display:flex;gap:12px;flex-wrap:wrap}.card-links a{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}.card-links a:hover{text-decoration:underline}.listing-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.listing-grid .project-card{padding:22px}.listing-grid .card-top h3{font-size:17px}.relevance{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:40px}.relevance h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px}.relevance-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.relevance-item{font-size:14px}.check{color:var(--green);font-weight:700;margin-right:6px}.footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);font-size:14px;color:var(--text-secondary)}.footer a{color:var(--accent);text-decoration:none}@media(max-width:600px){.hero h1{font-size:28px}.relevance-grid,.listing-grid{grid-template-columns:1fr}.card-top{flex-direction:column;gap:8px}}
 </style>
 </head>
 <body>
-
-<div class="hero">
-  <h1>Harold Moses II</h1>
-  <div class="subtitle">Technical Writer · AI Agent Developer Tools · Open Source</div>
-  <p>I build tools that make AI agents, developer documentation, and open-source workflows more accessible. I've spent 10+ years writing developer docs at NVIDIA, Block, OpenVPN, F5, Airbnb, and PlayStation, and now I also ship the tooling.</p>
-  <div class="hero-links">
-    <a href="https://github.com/hmoses" class="primary">GitHub</a>
-    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a>
-    <a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a>
-  </div>
-</div>
-
+<div class="hero"><h1>Harold Moses II</h1><div class="subtitle">Technical Writer · AI Agent Developer Tools · Open Source</div><p>I build tools that make AI agents, developer documentation, and open-source workflows more accessible. I've spent 10+ years writing developer docs at NVIDIA, Block, OpenVPN, F5, Airbnb, and PlayStation, and now I also ship the tooling.</p><div class="hero-links"><a href="https://github.com/hmoses" class="primary">GitHub</a><a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a><a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a></div></div>
 <div class="container">
-
-  <div class="section-header">
-    <h2>Portfolio: Featured Projects</h2>
-    <p>Open-source tools focused on making intelligent agents accessible and production-ready</p>
-  </div>
-
-  <div class="theme-banner">
-    <h3>🤖 Theme: Making AI Agents Accessible and Production-Ready</h3>
-    <p>Every project below contributes to the same goal: giving developers the tools, documentation, and automation they need to go from prototypes to production-ready AI agents and workflows.</p>
-  </div>
-
-  <div class="projects">
-
-    <!-- POLY-GLOT AI WORKSPACE (PRODUCT SITE) -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://hmoses.github.io/poly-glot-site/">🌐 Poly-Glot AI Workspace</a></h3>
-        <span class="card-badge badge-devtool">Product &amp; Platform</span>
-      </div>
-      <div class="card-desc">I designed and developed a multi-AI prompt workspace that lets users write one prompt, send it to up to 9 AI providers (ChatGPT, Claude, Gemini, Grok, Copilot, Perplexity, Mistral, HuggingChat, DuckDuckGo AI), and compare the results side by side. I shipped it with 1,000+ prompt templates, five input methods, a fully localized UI in 38 languages, and native apps for iPhone, iPad, and Mac.</div>
-      <ul class="card-highlights">
-        <li><strong>Compare Mode</strong> sends the same prompt to 2–9 AI providers and displays responses side by side for human evaluation</li>
-        <li><strong>1,000+ prompt templates</strong> across writing, coding, marketing, education, business, and more — organized by category</li>
-        <li><strong>5 input methods</strong>: type, paste, import, scan (OCR), and dictate — all in 38 languages</li>
-        <li><strong>Fully localized UI in 38 languages</strong> — every button, label, menu, and template is translated, not just output</li>
-        <li>Available on the <strong>Mac App Store</strong>, with native iPhone and iPad apps coming soon</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">Multi-AI</span>
-        <span class="tag">Prompt Engineering</span>
-        <span class="tag">Compare Mode</span>
-        <span class="tag">1,000+ Templates</span>
-        <span class="tag">38 Languages</span>
-        <span class="tag">Mac App Store</span>
-        <span class="tag">iOS</span>
-        <span class="tag">SwiftUI</span>
-      </div>
-      <div class="card-links">
-        <a href="https://hmoses.github.io/poly-glot-site/">Product Website →</a>
-        <a href="https://apps.apple.com/app/id6804499285">Mac App Store →</a>
-      </div>
-    </div>
-
-    <!-- POLY-GLOT DEV INTEGRATION GUIDE -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://hmoses.github.io/dev-guide.html">📘 Poly-Glot AI Workspace: Developer Integration Guide</a></h3>
-        <span class="card-badge badge-docs">Documentation Sample</span>
-      </div>
-      <div class="card-desc">I wrote a developer integration guide for connecting MCP-compatible AI assistants to Poly-Glot AI Workspace. I structured it to cover architecture, the full tool reference, localization workflows, multi-model comparison, privacy considerations, and troubleshooting — published as a standalone technical writing sample.</div>
-      <ul class="card-highlights">
-        <li><strong>End-to-end developer guide</strong> covering MCP architecture, tool workflows, and agent orchestration patterns</li>
-        <li><strong>7-tool MCP reference</strong> with usage examples: search_templates, get_template, build_prompt, prepare_compare, get_language_options, get_subscription_status, open_workspace</li>
-        <li>Workflow diagrams for <strong>prompt building, multi-model comparison, and localization</strong></li>
-        <li><strong>Troubleshooting section</strong>, privacy/execution model, and integration design principles</li>
-        <li><strong>Docs-as-code</strong> publishing demonstrating information architecture, procedural documentation, and conceptual documentation skills</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">Developer Docs</span>
-        <span class="tag">MCP</span>
-        <span class="tag">Agentic AI</span>
-        <span class="tag">Docs-as-Code</span>
-        <span class="tag">Localization</span>
-        <span class="tag">Multi-Model Workflows</span>
-        <span class="tag">Technical Writing Sample</span>
-      </div>
-      <div class="card-links">
-        <a href="https://hmoses.github.io/dev-guide.html">Live Guide →</a>
-        <a href="https://hmoses.github.io/poly-glot-site/">Poly-Glot Website →</a>
-      </div>
-    </div>
-
-    <!-- POLY-GLOT GITHUB APP -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://github.com/hmoses/poly-glot-github-app">🤖 Poly-Glot AI: GitHub App</a></h3>
-        <span class="card-badge badge-agent">AI Agent</span>
-      </div>
-      <div class="card-desc">I built an autonomous AI agent that reviews pull requests and generates professional documentation comments across 12+ programming languages. When a PR is opened or updated, the agent scans changed files, checks documentation coverage, generates doc comments using OpenAI or Anthropic, and posts inline suggestions directly on the PR.</div>
-      <ul class="card-highlights">
-        <li><strong>Fully autonomous agent</strong> that finds undocumented code and writes JSDoc, PyDoc, Javadoc, GoDoc, Rustdoc, and more</li>
-        <li>Posts <strong>inline review suggestions</strong> and Check Run coverage reports with zero human intervention</li>
-        <li>Supports <strong>12 languages</strong>: JavaScript, TypeScript, Python, Java, Kotlin, C, C++, C#, Go, Rust, Swift, PHP, Ruby</li>
-        <li>Configurable with <code>.polyglot.yml</code> for coverage thresholds, AI provider selection, and include/exclude patterns</li>
-        <li><strong>Open-source GitHub App</strong> built for automated, real-world PR documentation workflows</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">AI Agent</span>
-        <span class="tag">GitHub App</span>
-        <span class="tag">OpenAI</span>
-        <span class="tag">Anthropic</span>
-        <span class="tag">Documentation Automation</span>
-        <span class="tag">Code Review</span>
-        <span class="tag">12 Languages</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/hmoses/poly-glot-github-app">Source Code →</a>
-        <a href="https://hmoses.github.io/poly-glot-site/">Website →</a>
-        <a href="https://marketplace.visualstudio.com/items?itemName=poly-glot-ai.poly-glot">VS Code Extension →</a>
-      </div>
-    </div>
-
-    <!-- GOOSE GOOGLE DOCS EXTENSION -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://github.com/hmoses/goose-google-docs-extension">📄 Goose Google Docs Extension</a></h3>
-        <span class="card-badge badge-extension">MCP Extension</span>
-      </div>
-      <div class="card-desc">I built an MCP (Model Context Protocol) server that gives the Goose AI agent full read/write access to Google Docs and Drive. I implemented 18 tools for document creation, editing, formatting, sharing, and export, so AI agents can manage documentation workflows on their own.</div>
-      <ul class="card-highlights">
-        <li><strong>18 MCP tools</strong> for creating, reading, writing, appending, find/replacing, formatting, sharing, copying, deleting, and exporting Google Docs</li>
-        <li>Built on the <strong>Model Context Protocol (MCP)</strong>, the emerging standard for AI agent tool integration</li>
-        <li>OAuth 2.0 authentication with auto-refresh and secure, local credential storage</li>
-        <li>Designed for the <strong>Goose extensions ecosystem</strong> as a community-driven integration</li>
-        <li>Enables agents to <strong>create and manage documentation autonomously</strong> without any human clicks</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">MCP</span>
-        <span class="tag">AI Agent Extension</span>
-        <span class="tag">Google Docs API</span>
-        <span class="tag">Google Drive API</span>
-        <span class="tag">OAuth 2.0</span>
-        <span class="tag">Python</span>
-        <span class="tag">Goose AI</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/hmoses/goose-google-docs-extension">Source Code →</a>
-      </div>
-    </div>
-
-    <!-- POLY-GLOT MARKDOWN -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://github.com/hmoses/poly-glot-markdown">📐 Poly-Glot Markdown Optimizer</a></h3>
-        <span class="card-badge badge-docs">Documentation Tool</span>
-      </div>
-      <div class="card-desc">I built an AI-powered tool that formats Markdown and MDX files so they work better with RAG retrieval, GEO (Generative Engine Optimization) discoverability, and AI agent comprehension. I designed it to enforce heading hierarchy, generate frontmatter, rewrite for semantic clarity, and chunk content for vector databases.</div>
-      <ul class="card-highlights">
-        <li><strong>RAG-optimized chunking</strong> with section summaries so documentation is easy for AI agents to retrieve</li>
-        <li><strong>GEO keyword emphasis</strong> to help docs surface in AI-generated search results</li>
-        <li>Frontmatter generation, heading hierarchy enforcement, and semantic clarity rewrites</li>
-        <li>MDX component annotation and a before/after diff view</li>
-        <li>Integrates both <strong>OpenAI and Anthropic</strong>, with API keys stored locally in the browser</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">RAG</span>
-        <span class="tag">GEO</span>
-        <span class="tag">Markdown</span>
-        <span class="tag">MDX</span>
-        <span class="tag">AI Optimization</span>
-        <span class="tag">Documentation</span>
-        <span class="tag">Vector Search</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/hmoses/poly-glot-markdown">Source Code →</a>
-        <a href="https://hmoses.github.io/poly-glot-markdown/">Live App →</a>
-      </div>
-    </div>
-
-    <!-- GOOSE SCREEN RECORDER -->
-    <div class="project-card">
-      <div class="card-top">
-        <h3><a href="https://github.com/hmoses/goose-screen-recorder">🎬 Goose Screen Recorder</a></h3>
-        <span class="card-badge badge-devtool">Developer Tool</span>
-      </div>
-      <div class="card-desc">I built a macOS screen timelapse recorder with Goose AI analysis integration. I designed it to generate real bash scripts using screencapture and ffmpeg, then let AI agents do frame-by-frame analysis of developer workflows. It bridges visual context with agent comprehension.</div>
-      <ul class="card-highlights">
-        <li>Real screen capture using macOS native <code>screencapture</code> — silent and lightweight</li>
-        <li>Auto video stitching with an <strong>ffmpeg</strong> concat pipeline that produces production .mp4 files</li>
-        <li><strong>Goose AI analysis</strong> integration so recordings can be shared with an AI agent for frame-by-frame breakdown</li>
-        <li>Fully accessible with ARIA roles, 44px touch targets, focus rings, and live regions</li>
-        <li>One-click macOS .app installer with a custom Desktop icon</li>
-      </ul>
-      <div class="card-tags">
-        <span class="tag">macOS</span>
-        <span class="tag">Screen Capture</span>
-        <span class="tag">ffmpeg</span>
-        <span class="tag">AI Analysis</span>
-        <span class="tag">Goose AI</span>
-        <span class="tag">Accessibility</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/hmoses/goose-screen-recorder">Source Code →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- HOW THESE PROJECTS CONNECT -->
-  <div class="relevance">
-    <h3>🎯 How These Projects Connect to Agent Engineering</h3>
-    <div class="relevance-grid">
-      <div class="relevance-item"><span class="check">✓</span> <strong>Shipped product on the App Store</strong>: Poly-Glot AI Workspace is live on the Mac App Store with 9 AI providers, 1,000+ templates, and 38-language localization</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Autonomous AI agents</strong>: Poly-Glot GitHub App runs fully on its own to review PRs and generate doc comments across 12 languages</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>MCP / tool integration</strong>: Goose Google Docs Extension implements 18 tools on the Model Context Protocol</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Developer documentation</strong>: Poly-Glot Developer Integration Guide covers MCP architecture, tool reference, and agent workflows</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>RAG-ready documentation</strong>: Poly-Glot Markdown Optimizer formats docs for vector retrieval and GEO discoverability</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Multi-LLM support</strong>: OpenAI and Anthropic integrated across multiple projects, plus 9 providers in the Workspace</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Visual AI tooling</strong>: Goose Screen Recorder captures macOS screen timelapses with AI-powered frame analysis</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Open source</strong>: Every project is publicly available on GitHub</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Production-ready architecture</strong>: Webhook-driven CI/CD workflows, App Store publishing pipelines, and MCP server deployments</div>
-      <div class="relevance-item"><span class="check">✓</span> <strong>Developer experience</strong>: One-click installers, VS Code extensions, Mac App Store listings, and comprehensive READMEs</div>
-    </div>
-  </div>
-
+<div class="section-header"><h2>Portfolio: Featured Projects</h2><p>Open-source tools focused on making intelligent agents accessible and production-ready</p></div>
+<div class="theme-banner"><h3>🤖 Theme: Making AI Agents Accessible and Production-Ready</h3><p>Every project below contributes to the same goal: giving developers the tools, documentation, and automation they need to go from prototypes to production-ready AI agents and workflows.</p></div>
+<div class="projects">
+<!-- POLY-GLOT AI WORKSPACE -->
+<div class="project-card"><div class="card-top"><h3><a href="https://hmoses.github.io/poly-glot-site/">🌐 Poly-Glot AI Workspace</a></h3><span class="card-badge badge-devtool">Product &amp; Platform</span></div><div class="card-desc">I designed and developed a multi-AI prompt workspace that lets users write one prompt, send it to up to 9 AI providers (ChatGPT, Claude, Gemini, Grok, Copilot, Perplexity, Mistral, HuggingChat, DuckDuckGo AI), and compare the results side by side. I shipped it with 1,000+ prompt templates, five input methods, a fully localized UI in 38 languages, and native apps for iPhone, iPad, and Mac. I also built and deployed a remote MCP server with seven developer tools and distributed it across the Official MCP Registry, MCP.so, Glama, and Hugging Face. To keep the Apple apps, MCP server, entitlements, capabilities, and distribution metadata synchronized, I developed a CI/CD parity and auto-sync pipeline with automated validation, regression testing, webhook-driven repository dispatch, generated Swift capability contracts, MCP synchronization, and registry publishing.</div><ul class="card-highlights"><li><strong>Compare Mode</strong> sends the same prompt to 2–9 AI providers and displays responses side by side for human evaluation</li><li><strong>1,000+ prompt templates</strong> across writing, coding, marketing, education, business, and more</li><li><strong>5 input methods</strong>: type, paste, import, scan (OCR), and dictate, all in 38 languages</li><li><strong>Fully localized UI in 38 languages</strong>, including buttons, labels, menus, templates, input, and output</li><li><strong>7-tool MCP server</strong>: search_templates, get_template, build_prompt, prepare_compare, get_language_options, get_subscription_status, and open_workspace</li><li><strong>Multi-surface MCP distribution</strong> across the Official MCP Registry, MCP.so, Glama, and Hugging Face</li><li><strong>CI/CD parity automation</strong> keeps Apple capabilities, MCP entitlements, release metadata, and registry publishing aligned</li></ul><div class="card-tags"><span class="tag">Multi-AI</span><span class="tag">MCP</span><span class="tag">Compare Mode</span><span class="tag">1,000+ Templates</span><span class="tag">38 Languages</span><span class="tag">CI/CD</span><span class="tag">Parity Automation</span><span class="tag">SwiftUI</span></div><div class="card-links"><a href="https://hmoses.github.io/poly-glot-site/">Product Website →</a><a href="https://apps.apple.com/app/id6804499285">Mac App Store →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">MCP Source →</a></div></div>
+<!-- LIVE MCP LISTINGS -->
+<div class="project-card"><div class="card-top"><h3>🔌 Poly-Glot AI Workspace: Live MCP Distribution</h3><span class="card-badge badge-live">Live Listings</span></div><div class="card-desc">I published Poly-Glot AI Workspace across multiple MCP discovery surfaces so developers and AI-agent users can find, evaluate, and connect to the same production server from the ecosystem they already use.</div><div class="listing-grid">
+<div class="project-card"><div class="card-top"><h3><a href="https://registry.modelcontextprotocol.io/?q=poly-glot-ai-workspace">Official MCP Registry</a></h3><span class="card-badge badge-live">Live</span></div><div class="card-desc">Canonical registry listing for <strong>io.github.hmoses/poly-glot-ai-workspace</strong>, versioned with the production MCP release.</div><div class="card-links"><a href="https://registry.modelcontextprotocol.io/?q=poly-glot-ai-workspace">View Listing →</a></div></div>
+<div class="project-card"><div class="card-top"><h3><a href="https://mcp.so/servers/poly-glot-ai-workspace">MCP.so</a></h3><span class="card-badge badge-live">Live</span></div><div class="card-desc">Public MCP directory listing for Poly-Glot AI Workspace, exposing the server and its developer-facing tool set.</div><div class="card-links"><a href="https://mcp.so/servers/poly-glot-ai-workspace">View Listing →</a></div></div>
+<div class="project-card"><div class="card-top"><h3><a href="https://glama.ai/mcp/servers/hmoses/poly-glot-ai-workspace">Glama</a></h3><span class="card-badge badge-live">Live</span></div><div class="card-desc">Glama MCP directory presence for discovery, inspection, and ecosystem visibility.</div><div class="card-links"><a href="https://glama.ai/mcp/servers/hmoses/poly-glot-ai-workspace">View Listing →</a></div></div>
+<div class="project-card"><div class="card-top"><h3><a href="https://huggingface.co/spaces/HWM2/poly-glot-ai-workspace">Hugging Face</a></h3><span class="card-badge badge-live">Live</span></div><div class="card-desc">Running Hugging Face Space for Poly-Glot AI Workspace MCP, providing an additional public discovery and demo surface.</div><div class="card-links"><a href="https://huggingface.co/spaces/HWM2/poly-glot-ai-workspace">View Space →</a></div></div>
+</div></div>
+<!-- CI/CD PARITY PIPELINE -->
+<div class="project-card"><div class="card-top"><h3><a href="https://github.com/hmoses/poly-glot-ai-workspace">⚙️ CI/CD Parity &amp; MCP Auto-Sync Pipeline</a></h3><span class="card-badge badge-cicd">CI/CD &amp; DevOps</span></div><div class="card-desc">I developed a parity-driven release pipeline to keep the Apple product, MCP server, entitlements, generated capabilities, release manifests, and registry-facing metadata synchronized as one product surface. Instead of maintaining each distribution target manually, the pipeline validates a shared product contract and automates downstream synchronization and publishing.</div><ul class="card-highlights"><li><strong>Parity Check workflow</strong> runs on pushes and pull requests and fails CI when shared product capabilities drift</li><li><strong>MCP Auto-Sync workflow</strong> responds to repository-dispatch events generated by App Store lifecycle webhooks</li><li><strong>Generated Swift capability contract</strong> keeps iOS/macOS feature constants aligned with the MCP parity source</li><li><strong>Entitlement parity validation and regression tests</strong> protect subscription gates and shared feature behavior</li><li><strong>Registry publishing automation</strong> connects validated releases to MCP distribution metadata</li><li><strong>Release manifests and deployment policy</strong> enforce parity validation, regression testing, smoke tests, and production release rules</li></ul><div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">CI/CD</span><span class="tag">Parity Validation</span><span class="tag">MCP Auto-Sync</span><span class="tag">Repository Dispatch</span><span class="tag">App Store Webhooks</span><span class="tag">Regression Tests</span><span class="tag">Release Automation</span></div><div class="card-links"><a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/docs/PARITY_CHANGELOG.md">Parity Changelog →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/docs/OWNER_SETUP.md">Pipeline Setup →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/config/polyglot-product-parity.json">Parity Contract →</a></div></div>
+<!-- DEV GUIDE -->
+<div class="project-card"><div class="card-top"><h3><a href="https://hmoses.github.io/dev-guide.html">📘 Poly-Glot AI Workspace: Developer Integration Guide</a></h3><span class="card-badge badge-docs">Documentation Sample</span></div><div class="card-desc">I wrote a developer integration guide for connecting MCP-compatible AI assistants to Poly-Glot AI Workspace. I structured it to cover architecture, the full tool reference, localization workflows, multi-model comparison, privacy considerations, and troubleshooting.</div><ul class="card-highlights"><li><strong>End-to-end developer guide</strong> covering MCP architecture, tool workflows, and agent orchestration patterns</li><li><strong>7-tool MCP reference</strong> with usage examples</li><li>Workflow diagrams for <strong>prompt building, multi-model comparison, and localization</strong></li><li><strong>Troubleshooting, privacy, and execution model</strong> documentation</li><li><strong>Docs-as-code</strong> publishing demonstrating information architecture and procedural documentation</li></ul><div class="card-tags"><span class="tag">Developer Docs</span><span class="tag">MCP</span><span class="tag">Agentic AI</span><span class="tag">Docs-as-Code</span><span class="tag">Localization</span></div><div class="card-links"><a href="https://hmoses.github.io/dev-guide.html">Live Guide →</a><a href="https://hmoses.github.io/poly-glot-site/">Poly-Glot Website →</a></div></div>
+<!-- POLY-GLOT GITHUB APP -->
+<div class="project-card"><div class="card-top"><h3><a href="https://github.com/hmoses/poly-glot-github-app">🤖 Poly-Glot AI: GitHub App</a></h3><span class="card-badge badge-agent">AI Agent</span></div><div class="card-desc">I built an autonomous AI agent that reviews pull requests and generates professional documentation comments across 12+ programming languages. When a PR is opened or updated, the agent scans changed files, checks documentation coverage, generates doc comments using OpenAI or Anthropic, and posts inline suggestions directly on the PR.</div><ul class="card-highlights"><li><strong>Fully autonomous agent</strong> that finds undocumented code and writes JSDoc, PyDoc, Javadoc, GoDoc, Rustdoc, and more</li><li>Posts <strong>inline review suggestions</strong> and Check Run coverage reports</li><li>Supports <strong>12 languages</strong></li><li>Configurable with <code>.polyglot.yml</code></li></ul><div class="card-tags"><span class="tag">AI Agent</span><span class="tag">GitHub App</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span><span class="tag">Documentation Automation</span></div><div class="card-links"><a href="https://github.com/hmoses/poly-glot-github-app">Source Code →</a><a href="https://marketplace.visualstudio.com/items?itemName=poly-glot-ai.poly-glot">VS Code Extension →</a></div></div>
+<!-- GOOSE GOOGLE DOCS -->
+<div class="project-card"><div class="card-top"><h3><a href="https://github.com/hmoses/goose-google-docs-extension">📄 Goose Google Docs Extension</a></h3><span class="card-badge badge-extension">MCP Extension</span></div><div class="card-desc">I built an MCP server that gives the Goose AI agent read/write access to Google Docs and Drive. I implemented 18 tools for document creation, editing, formatting, sharing, and export.</div><ul class="card-highlights"><li><strong>18 MCP tools</strong> for Google Docs and Drive workflows</li><li>Built on the <strong>Model Context Protocol</strong></li><li>OAuth 2.0 authentication with auto-refresh</li><li>Enables agents to manage documentation autonomously</li></ul><div class="card-tags"><span class="tag">MCP</span><span class="tag">Google Docs API</span><span class="tag">OAuth 2.0</span><span class="tag">Python</span><span class="tag">Goose AI</span></div><div class="card-links"><a href="https://github.com/hmoses/goose-google-docs-extension">Source Code →</a></div></div>
+<!-- MARKDOWN -->
+<div class="project-card"><div class="card-top"><h3><a href="https://github.com/hmoses/poly-glot-markdown">📐 Poly-Glot Markdown Optimizer</a></h3><span class="card-badge badge-docs">Documentation Tool</span></div><div class="card-desc">I built an AI-powered tool that formats Markdown and MDX files for RAG retrieval, GEO discoverability, and AI-agent comprehension.</div><ul class="card-highlights"><li><strong>RAG-optimized chunking</strong> with section summaries</li><li><strong>GEO keyword emphasis</strong></li><li>Frontmatter generation and heading hierarchy enforcement</li><li>MDX component annotation and before/after diff view</li></ul><div class="card-tags"><span class="tag">RAG</span><span class="tag">GEO</span><span class="tag">Markdown</span><span class="tag">MDX</span><span class="tag">AI Optimization</span></div><div class="card-links"><a href="https://github.com/hmoses/poly-glot-markdown">Source Code →</a><a href="https://hmoses.github.io/poly-glot-markdown/">Live App →</a></div></div>
+<!-- SCREEN RECORDER -->
+<div class="project-card"><div class="card-top"><h3><a href="https://github.com/hmoses/goose-screen-recorder">🎬 Goose Screen Recorder</a></h3><span class="card-badge badge-devtool">Developer Tool</span></div><div class="card-desc">I built a macOS screen timelapse recorder with Goose AI analysis integration, using native screen capture and ffmpeg to bridge visual context with agent comprehension.</div><ul class="card-highlights"><li>Native macOS screen capture</li><li>Automated <strong>ffmpeg</strong> video stitching</li><li><strong>Goose AI analysis</strong> for frame-by-frame workflow review</li><li>Accessible UI and one-click macOS app installer</li></ul><div class="card-tags"><span class="tag">macOS</span><span class="tag">ffmpeg</span><span class="tag">AI Analysis</span><span class="tag">Goose AI</span><span class="tag">Accessibility</span></div><div class="card-links"><a href="https://github.com/hmoses/goose-screen-recorder">Source Code →</a></div></div>
 </div>
-
-<div class="footer">
-  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://github.com/hmoses">github.com/hmoses</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></p>
-  <p style="margin-top:6px; font-size:12px; color:#999;">Remote, USA · References and additional samples available upon request</p>
+<div class="relevance"><h3>🎯 How These Projects Connect to Agent Engineering</h3><div class="relevance-grid"><div class="relevance-item"><span class="check">✓</span><strong>Shipped product:</strong> Poly-Glot AI Workspace is live on the Mac App Store with 9 AI providers, 1,000+ templates, and 38-language localization</div><div class="relevance-item"><span class="check">✓</span><strong>MCP distribution:</strong> production server published across the Official MCP Registry, MCP.so, Glama, and Hugging Face</div><div class="relevance-item"><span class="check">✓</span><strong>CI/CD parity:</strong> automated validation and synchronization across Apple, MCP, entitlement, capability, and registry surfaces</div><div class="relevance-item"><span class="check">✓</span><strong>Autonomous AI agents:</strong> Poly-Glot GitHub App reviews PRs and generates documentation</div><div class="relevance-item"><span class="check">✓</span><strong>MCP/tool integration:</strong> multiple production MCP implementations with developer-facing tools</div><div class="relevance-item"><span class="check">✓</span><strong>Developer documentation:</strong> architecture, tool reference, workflows, troubleshooting, and docs-as-code</div><div class="relevance-item"><span class="check">✓</span><strong>RAG-ready documentation:</strong> Markdown optimization for vector retrieval and GEO</div><div class="relevance-item"><span class="check">✓</span><strong>Production-ready architecture:</strong> webhooks, GitHub Actions, release manifests, validation, regression tests, and deployment policies</div></div></div>
 </div>
-
+<div class="footer"><p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://github.com/hmoses">github.com/hmoses</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></p><p style="margin-top:6px;font-size:12px;color:#999">Remote, USA · References and additional samples available upon request</p></div>
 </body>
 </html>
