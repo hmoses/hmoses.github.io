@@ -63,13 +63,23 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 <div class="layout">
 <nav class="toc">
 <h2>On this page</h2>
-<a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#availability">Availability &amp; Distribution</a><a href="#tools">Tool Reference (11 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
+<a href="#overview">Overview</a><a href="#availability">Availability &amp; Distribution</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#tools">Tool Reference (11 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
 </nav>
 <main class="content">
 <section id="overview"><h2>Overview</h2>
 <p>Poly-Glot AI Workspace is an AI productivity and localization platform for creating prompts, working across multiple AI providers, and comparing model responses. The product includes more than 1,000 prompt templates, multiple input methods, and a localized interface across 38 languages.</p>
 <p>For developer and agentic workflows, Poly-Glot exposes functionality through the <strong>Model Context Protocol (MCP)</strong>. An MCP-compatible assistant can discover templates, build prompts, select languages, check subscription state, prepare multi-model comparisons, and open the broader workspace.</p>
 <div class="note"><strong>Core idea:</strong> users express intent in natural language while the agent coordinates discrete Poly-Glot tools behind the scenes.</div></section>
+<section id="availability"><h2>Availability &amp; Distribution</h2><p>The Poly-Glot MCP server is deployed and available across multiple distribution surfaces:</p>
+<div class="grid">
+<div class="tool-card"><h3>Official MCP Registry</h3><p>Listed on the <a href="https://registry.modelcontextprotocol.io/">Model Context Protocol Registry</a> for discovery by MCP-compatible clients.</p></div>
+<div class="tool-card"><h3>MCP.so</h3><p>Published on <a href="https://mcp.so/">MCP.so</a>, a community directory of MCP servers and integrations.</p></div>
+<div class="tool-card"><h3>Glama</h3><p>Available on <a href="https://glama.ai/mcp/servers">Glama</a> for AI workflow orchestration and server discovery.</p></div>
+<div class="tool-card"><h3>Hugging Face</h3><p>Hosted on <a href="https://huggingface.co/">Hugging Face</a> for model and tool ecosystem integration.</p></div>
+<div class="tool-card"><h3>GitHub</h3><p>Source and configuration available on <a href="https://github.com/hmoses">GitHub</a> for developer reference and contribution.</p></div>
+<div class="tool-card"><h3>Live MCP Endpoint</h3><p>The production endpoint is live and accepting connections from any MCP-compatible client at the URL listed above.</p></div>
+</div>
+<p>This is not a hypothetical integration. The Poly-Glot MCP server is deployed, registered across multiple discovery surfaces, and actively serving requests.</p></section>
 <section id="architecture"><h2>Architecture</h2><p>Poly-Glot separates the user-facing workspace from the MCP integration layer. The integration exposes focused tools that can be composed into agent workflows.</p><pre><code>Developer / User
        |
        v
@@ -94,16 +104,6 @@ Poly-Glot MCP Server
        v
 Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead of locating a template, copying it, filling variables, and then setting up multiple model sessions, an agent can orchestrate those actions as tool calls.</p></section>
 <section id="endpoint"><h2>MCP Endpoint</h2><p>Poly-Glot publishes the following MCP endpoint for compatible clients:</p><pre><code>https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code></pre><p class="small">Use this endpoint only with MCP-compatible clients that allow custom connectors.</p></section>
-<section id="availability"><h2>Availability &amp; Distribution</h2><p>The Poly-Glot MCP server is deployed and available across multiple distribution surfaces:</p>
-<div class="grid">
-<div class="tool-card"><h3>Official MCP Registry</h3><p>Listed on the <a href="https://registry.modelcontextprotocol.io/">Model Context Protocol Registry</a> for discovery by MCP-compatible clients.</p></div>
-<div class="tool-card"><h3>MCP.so</h3><p>Published on <a href="https://mcp.so/">MCP.so</a>, a community directory of MCP servers and integrations.</p></div>
-<div class="tool-card"><h3>Glama</h3><p>Available on <a href="https://glama.ai/mcp/servers">Glama</a> for AI workflow orchestration and server discovery.</p></div>
-<div class="tool-card"><h3>Hugging Face</h3><p>Hosted on <a href="https://huggingface.co/">Hugging Face</a> for model and tool ecosystem integration.</p></div>
-<div class="tool-card"><h3>GitHub</h3><p>Source and configuration available on <a href="https://github.com/hmoses">GitHub</a> for developer reference and contribution.</p></div>
-<div class="tool-card"><h3>Live MCP Endpoint</h3><p>The production endpoint is live and accepting connections from any MCP-compatible client at the URL listed above.</p></div>
-</div>
-<p>This is not a hypothetical integration. The Poly-Glot MCP server is deployed, registered across multiple discovery surfaces, and actively serving requests.</p></section>
 <section id="tools"><h2>MCP Tool Reference (11 Tools)</h2>
 <p>Poly-Glot exposes 11 tools through MCP: 7 interactive tools for template workflows and 4 language processing tools.</p>
 <h3 style="margin-top:28px;color:var(--accent);">Interactive Tools (7)</h3>
