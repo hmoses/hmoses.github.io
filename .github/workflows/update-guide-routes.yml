@@ -1,0 +1,36 @@
+name: Update guide route URLs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-guide-routes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update tab routes
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path('dev-guide.html')
+          html = path.read_text(encoding='utf-8')
+          html = html.replace("const url = tab === 'claude' ? '/claude-guide.html' : '/developer-guide.html';",
+                              "const url = tab === 'claude' ? '/dev-guide/claude-mcp-guide/' : '/dev-guide/developer-mcp-guide/';")
+          path.write_text(html, encoding='utf-8')
+      - name: Commit route update
+        run: |
+          if git diff --quiet -- dev-guide.html; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html
+          git commit -m "Use path-based MCP guide routes"
+          git push
