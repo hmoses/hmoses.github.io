@@ -63,7 +63,7 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 <div class="layout">
 <nav class="toc">
 <h2>On this page</h2>
-<a href="#overview">Overview</a><a href="#availability">Availability &amp; Distribution</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#tools">Tool Reference (11 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
+<a href="#overview">Overview</a><a href="#availability">Availability &amp; Distribution</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#tools">Tool Reference (15 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#byom">Bring Your Own Model (BYOM)</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
 </nav>
 <main class="content">
 <section id="overview"><h2>Overview</h2>
@@ -98,12 +98,16 @@ Poly-Glot MCP Server
        +---- detect_language
        +---- translate_text
        +---- localize_text
+       +---- get_custom_model_capabilities
+       +---- validate_custom_model
+       +---- run_custom_model
+       +---- prepare_custom_compare
        |
        v
 Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead of locating a template, copying it, filling variables, and then setting up multiple model sessions, an agent can orchestrate those actions as tool calls.</p></section>
 <section id="endpoint"><h2>MCP Endpoint</h2><p>Poly-Glot publishes the following MCP endpoint for compatible clients:</p><pre><code>https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code></pre><p class="small">Use this endpoint only with MCP-compatible clients that allow custom connectors.</p></section>
-<section id="tools"><h2>MCP Tool Reference (11 Tools)</h2>
-<p>Poly-Glot exposes 11 tools through MCP: 7 interactive tools for template workflows and 4 language processing tools.</p>
+<section id="tools"><h2>MCP Tool Reference (15 Tools)</h2>
+<p>Poly-Glot exposes 15 primary tools through MCP: 7 interactive tools for template workflows, 4 language processing tools, and 4 Bring Your Own Model (BYOM) tools.</p>
 <h3 style="margin-top:28px;color:var(--accent);">Interactive Tools (7)</h3>
 <div class="tool-card"><h3 class="tool-name">search_templates</h3><p>Searches the Poly-Glot prompt library by task or topic.</p><pre><code>Find templates for writing a LinkedIn post.
 Search for coding templates.
@@ -123,6 +127,42 @@ Detect the language before translating.</code></pre></div>
 Convert this paragraph to Japanese.</code></pre></div>
 <div class="tool-card"><h3 class="tool-name">localize_text</h3><p>Localizes text for a target language, locale, audience, and tone — not merely literal translation. Adapts idioms, cultural references, and register for the target audience.</p><pre><code>Localize this marketing copy for a German audience.
 Adapt this message for a formal Japanese business context.</code></pre></div>
+
+<h3 style="margin-top:28px;color:var(--accent);">Bring Your Own Model (BYOM) Tools (4)</h3>
+<div class="tool-card"><h3 class="tool-name">get_custom_model_capabilities</h3><p>Returns the capabilities and connection requirements for developer-controlled models, including supported BYOM endpoint patterns and Poly-Glot integration behavior.</p></div>
+<div class="tool-card"><h3 class="tool-name">validate_custom_model</h3><p>Validates a developer-supplied HTTPS model endpoint before execution. Poly-Glot applies endpoint safety checks and does not persist raw provider API keys in Neon.</p></div>
+<div class="tool-card"><h3 class="tool-name">run_custom_model</h3><p>Runs a Poly-Glot prompt against a developer-controlled model while preserving Poly-Glot prompt construction, localization, entitlement, and orchestration workflows.</p></div>
+<div class="tool-card"><h3 class="tool-name">prepare_custom_compare</h3><p>Prepares a Compare Mode workflow that can include a developer-controlled model alongside supported built-in AI providers.</p></div>
+</section>
+
+<section id="byom"><h2>Bring Your Own Model (BYOM)</h2>
+<p><strong>BYOM extends the same Poly-Glot MCP platform to developer-controlled models.</strong> Teams can connect private, fine-tuned, self-hosted, enterprise, or third-party models and use them with Poly-Glot prompt workflows, 38-language localization, and Compare Mode.</p>
+<div class="note"><strong>One MCP implementation:</strong> BYOM is implemented once in the production Poly-Glot MCP server. The same server is then available through the Official MCP Registry, MCP.so, Glama, Hugging Face, Claude, and other compatible MCP clients.</div>
+<div class="grid">
+<div class="tool-card"><h3>OpenAI-compatible endpoints</h3><p>Connect compatible hosted models by providing the endpoint, model identifier, and transient credentials required for the request.</p></div>
+<div class="tool-card"><h3>Custom HTTPS REST endpoints</h3><p>Poly-Glot can adapt supported developer endpoints while enforcing HTTPS, request limits, endpoint validation, and safe redirect behavior.</p></div>
+<div class="tool-card"><h3>Compare with your own model</h3><p>Use <span class="inline">prepare_custom_compare</span> to evaluate a BYOM model alongside supported Poly-Glot providers using the same prompt and localization context.</p></div>
+<div class="tool-card"><h3>Credential privacy</h3><p>Raw API keys, bearer tokens, and authorization headers are not stored in ordinary Neon database tables. Credentials are supplied transiently or through an approved secrets mechanism.</p></div>
+</div>
+<h3>BYOM request path</h3>
+<pre><code>Developer / MCP Client
+        |
+        v
+Poly-Glot MCP Server
+        |
+        +---- prompt building + localization
+        +---- endpoint validation + entitlements
+        +---- BYOM adapter
+        |
+        v
+Developer-Controlled Model Endpoint
+        |
+        v
+Poly-Glot Compare / Response Workflow
+
+Neon stores configuration, entitlement state, and analytics metadata.
+Raw provider credentials are not persisted.</code></pre>
+<p class="small">Localhost, <span class="inline">.local</span>, loopback, RFC1918/private-network, link-local, and cloud metadata endpoints are blocked from the public remote MCP path. A local/private model must be exposed through a secure supported HTTPS endpoint or a future local bridge.</p>
 </section>
 <section id="prompt"><h2>Example: Build a Developer Prompt</h2><p>A user can describe an outcome without knowing the underlying tool names:</p><pre><code>Search Poly-Glot for LinkedIn templates and build me
 one about AI productivity.</code></pre><pre><code>User request
@@ -222,6 +262,7 @@ User --> MCP Client --> Poly-Glot MCP Server
 <a href="#claude-prerequisites">Prerequisites</a>
 <a href="#claude-setup">Setup (Step by Step)</a>
 <a href="#claude-tools">Available Tools</a>
+<a href="#claude-byom">BYOM with Claude</a>
 <a href="#claude-permissions">Tool Permissions</a>
 <a href="#claude-example">Example Conversation</a>
 <a href="#claude-entitlements">Entitlements &amp; Paywall</a>
@@ -352,6 +393,20 @@ User --> MCP Client --> Poly-Glot MCP Server
 </section>
 
 <!-- Tool Permissions -->
+
+<section id="claude-byom"><h2>BYOM with Claude</h2>
+<p>Claude connects to the <strong>same production Poly-Glot MCP server</strong> used by the other Poly-Glot MCP distribution surfaces. There is no separate Claude BYOM backend. What differs is the Claude client experience: connection setup, tool discovery, permission prompts, and how Claude invokes the MCP tools during a conversation.</p>
+<div class="note"><strong>Claude-specific behavior:</strong> once the BYOM tools are deployed to Poly-Glot, Claude can discover and invoke <span class="inline">get_custom_model_capabilities</span>, <span class="inline">validate_custom_model</span>, <span class="inline">run_custom_model</span>, and <span class="inline">prepare_custom_compare</span> through the existing Poly-Glot MCP connection, subject to Claude's tool approval and permission flow.</div>
+<div class="grid">
+<div class="tool-card"><h3>Use Claude as the MCP client</h3><p>Claude orchestrates Poly-Glot MCP calls while the Poly-Glot server performs prompt preparation, localization, entitlement checks, BYOM endpoint validation, and model routing.</p></div>
+<div class="tool-card"><h3>Compare Claude and BYOM models</h3><p>A developer-controlled model can participate in Poly-Glot Compare Mode alongside Claude and other supported providers without requiring a separate BYOM database or MCP deployment.</p></div>
+</div>
+<h3>Example Claude request</h3>
+<div class="chat-bubble chat-user"><div class="chat-label">You</div>Use Poly-Glot to validate my custom model endpoint, localize this prompt to Spanish, and prepare a comparison between my model and Claude.</div>
+<div class="chat-bubble chat-claude"><div class="chat-label">Claude</div>Claude can coordinate the Poly-Glot tools for endpoint validation, localization, BYOM execution/compare preparation, and entitlement checks. Tool approval behavior follows the Claude MCP client experience.</div>
+<h3>Credentials and permissions</h3>
+<p>Do not save raw model API keys in Poly-Glot's Neon tables. BYOM credentials should be supplied transiently or through an approved secrets mechanism. Claude's own MCP permissions remain separate from Poly-Glot's server-side endpoint validation and subscription controls.</p>
+</section>
 <section id="claude-permissions">
 <h2>Tool Permissions</h2>
 <p>Claude shows each tool with a permission control. You can configure when Claude is allowed to use each tool:</p>
