@@ -1,0 +1,72 @@
+name: Fix hard guide links
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-hard-guide-links.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Force distinct top-level guide URLs
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          src = Path('dev-guide.html')
+          html = src.read_text(encoding='utf-8')
+
+          html = re.sub(
+              r'<a class="tab-btn(?: active)?" href="/dev-guide/developer-mcp-guide/"[^>]*>Developer Guide</a>',
+              '<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/" target="_top" onclick="window.top.location.href=this.href;return false;">Developer Guide</a>',
+              html,
+              count=1
+          )
+          html = re.sub(
+              r'<a class="tab-btn(?: active)?" href="/dev-guide/claude-mcp-guide/"[^>]*>Claude Integration Guide</a>',
+              '<a class="tab-btn" href="/dev-guide/claude-mcp-guide/" target="_top" onclick="window.top.location.href=this.href;return false;">Claude Integration Guide</a>',
+              html,
+              count=1
+          )
+
+          # Remove obsolete JS-only tab navigation and old hash routing.
+          html = re.sub(r'\nfunction navigateTab\(tab\) \{.*?\n\}\n', '\n', html, flags=re.S)
+          html = re.sub(r'\nfunction switchTab\(tab\) \{.*?\n\}\n', '\n', html, flags=re.S)
+          html = re.sub(r'<script id="polyglot-hash-tab-routing">.*?</script>\s*', '', html, flags=re.S)
+
+          src.write_text(html, encoding='utf-8')
+
+          developer = html
+          claude = html
+
+          # Developer page state.
+          developer = developer.replace('<div id="tab-developer" class="tab-content">', '<div id="tab-developer" class="tab-content active">', 1)
+          developer = developer.replace('<div id="tab-claude" class="tab-content active">', '<div id="tab-claude" class="tab-content">', 1)
+          developer = developer.replace('<a class="tab-btn" href="/dev-guide/developer-mcp-guide/"', '<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/"', 1)
+          developer = developer.replace('<a class="tab-btn active" href="/dev-guide/claude-mcp-guide/"', '<a class="tab-btn" href="/dev-guide/claude-mcp-guide/"', 1)
+
+          # Claude page state.
+          claude = claude.replace('<div id="tab-developer" class="tab-content active">', '<div id="tab-developer" class="tab-content">', 1)
+          claude = claude.replace('<div id="tab-claude" class="tab-content">', '<div id="tab-claude" class="tab-content active">', 1)
+          claude = claude.replace('<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/"', '<a class="tab-btn" href="/dev-guide/developer-mcp-guide/"', 1)
+          claude = claude.replace('<a class="tab-btn" href="/dev-guide/claude-mcp-guide/"', '<a class="tab-btn active" href="/dev-guide/claude-mcp-guide/"', 1)
+
+          Path('dev-guide/developer-mcp-guide').mkdir(parents=True, exist_ok=True)
+          Path('dev-guide/claude-mcp-guide').mkdir(parents=True, exist_ok=True)
+          Path('dev-guide/developer-mcp-guide/index.html').write_text(developer, encoding='utf-8')
+          Path('dev-guide/claude-mcp-guide/index.html').write_text(claude, encoding='utf-8')
+
+      - name: Commit hard-link routing
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html dev-guide/developer-mcp-guide/index.html dev-guide/claude-mcp-guide/index.html
+          git commit -m "Force guide tabs to distinct top-level URLs"
+          git push
