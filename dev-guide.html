@@ -15,7 +15,7 @@ a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 .hero-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.btn{display:inline-block;padding:9px 16px;border-radius:7px;font-weight:700;font-size:14px;border:1px solid var(--border)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 /* Tab bar */
 .tab-bar{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;gap:0;border-bottom:2px solid var(--border)}
-.tab-btn{padding:14px 28px;font-size:15px;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;margin-bottom:-2px}
+.tab-btn{text-decoration:none;padding:14px 28px;font-size:15px;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;margin-bottom:-2px}
 .tab-btn:hover{color:var(--accent)}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
 .tab-content{display:none}.tab-content.active{display:block}
@@ -52,8 +52,8 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 
 <!-- ===== TAB BAR ===== -->
 <div class="tab-bar">
-<button class="tab-btn active" onclick="navigateTab('developer')">Developer Guide</button>
-<button class="tab-btn" onclick="navigateTab('claude')">Claude Integration Guide</button>
+<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>
+<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>
 </div>
 
 <!-- ============================================================ -->

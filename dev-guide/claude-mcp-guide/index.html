@@ -3,14 +3,573 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Poly-Glot AI Workspace — Claude MCP Guide</title>
-<meta name="description" content="Poly-Glot AI Workspace Claude MCP Integration Guide.">
+<title>Poly-Glot AI Workspace: Developer Integration Guide | Harold Moses II</title>
+<meta name="description" content="Developer integration guide for Poly-Glot AI Workspace, including MCP architecture, tools, localization workflows, compare mode, Claude integration, and troubleshooting.">
+<meta name="author" content="Harold Moses II">
 <style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}
-iframe{display:block;width:100%;height:100%;border:0}
+:root{--bg:#fff;--text:#1a1a1a;--muted:#5c6470;--accent:#4d65ff;--accent-light:#eef1ff;--border:#e3e6ee;--card:#fafbff;--code:#111827;--green:#16a34a;--shadow:0 2px 14px rgba(77,101,255,.08)}
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.hero{max-width:980px;margin:0 auto;padding:56px 24px 34px;text-align:center;border-bottom:2px solid var(--accent)}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2.6px;color:var(--accent);font-weight:800;margin-bottom:10px}.hero h1{margin:0 0 10px;font-size:42px;line-height:1.08;letter-spacing:-1px}.hero p{max-width:760px;margin:0 auto 18px;color:var(--muted)}
+.hero-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.btn{display:inline-block;padding:9px 16px;border-radius:7px;font-weight:700;font-size:14px;border:1px solid var(--border)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* Tab bar */
+.tab-bar{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;gap:0;border-bottom:2px solid var(--border)}
+.tab-btn{text-decoration:none;padding:14px 28px;font-size:15px;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;margin-bottom:-2px}
+.tab-btn:hover{color:var(--accent)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}.tab-content.active{display:block}
+.layout{max-width:1120px;margin:0 auto;padding:34px 24px 60px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:34px}.toc{position:sticky;top:22px;align-self:start;border:1px solid var(--border);border-radius:10px;background:var(--card);padding:18px}.toc h2{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:0 0 10px}.toc a{display:block;color:#3b4350;font-size:13px;padding:5px 0}.content h2{font-size:26px;margin:38px 0 12px;padding-top:8px}.content h3{font-size:19px;margin:28px 0 8px}.content p{margin:10px 0;color:#303642}.content ul,.content ol{padding-left:24px}.content li{margin:6px 0}.note{background:var(--accent-light);border:1px solid #d7ddff;border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:18px 0}.tool-card{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:18px;margin:14px 0;box-shadow:var(--shadow)}.tool-card h3{margin-top:0}.tool-name{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent)}
+pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding:16px;font-size:13px;line-height:1.55} code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.inline{background:#f3f4f6;padding:2px 6px;border-radius:5px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pill{display:inline-block;background:#f2f4ff;border:1px solid #d9dfff;color:var(--accent);border-radius:999px;padding:4px 9px;font-size:12px;font-weight:600;margin:2px}.footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:var(--muted);font-size:13px}.small{font-size:13px;color:var(--muted)}
+/* Claude tab extras */
+.step-card{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:20px;margin:14px 0;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start}
+.step-num{width:36px;height:36px;min-width:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center}
+.step-body h3{margin:0 0 6px;font-size:17px}.step-body p{margin:0;color:var(--muted)}
+.endpoint-box{background:var(--code);color:#f8fafc;border-radius:9px;padding:14px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;margin:10px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;word-break:break-all}
+.copy-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}.copy-btn:hover{opacity:.85}.copy-btn.copied{background:var(--green)}
+.tools-table{width:100%;border-collapse:collapse;margin:14px 0}.tools-table th,.tools-table td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px}.tools-table th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);background:var(--accent-light)}.tools-table tr:last-child td{border-bottom:none}
+.chat-bubble{border-radius:10px;padding:14px 18px;margin:10px 0;font-size:14px;line-height:1.6}.chat-user{background:#f3f4f6;border:1px solid var(--border)}.chat-claude{background:var(--accent-light);border:1px solid #d7ddff}
+.chat-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.entitlement-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:14px 0}
+.entitlement-card{border:1px solid var(--border);border-radius:10px;background:var(--card);padding:18px;text-align:center;box-shadow:var(--shadow)}
+.entitlement-card h4{margin:0 0 8px;font-size:15px}.entitlement-card .tier{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px}
+.entitlement-card ul{text-align:left;padding-left:18px;margin:0;font-size:13px;color:var(--muted)}.entitlement-card li{margin:4px 0}
+.check{color:var(--green);font-weight:700}.lock{color:#dc2626;font-weight:700}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto}.hero h1{font-size:31px}.grid{grid-template-columns:1fr}.entitlement-grid{grid-template-columns:1fr}.tab-btn{padding:12px 16px;font-size:13px}}
 </style>
 </head>
 <body>
-<iframe src="/dev-guide.html#claude" title="Poly-Glot Claude MCP Guide"></iframe>
+<header class="hero">
+<div class="eyebrow">Technical Writing Sample · Developer Documentation</div>
+<h1>Poly-Glot AI Workspace: Developer Integration Guide</h1>
+<p>A practical guide to integrating MCP-compatible AI assistants with Poly-Glot AI Workspace, including architecture, tool workflows, localization, multi-model comparison, and troubleshooting.</p>
+<div class="hero-links">
+<a class="btn primary" href="https://hmoses.github.io/poly-glot-site/">Poly-Glot Website</a>
+<a class="btn" href="https://github.com/hmoses">GitHub</a>
+
+</div>
+</header>
+
+<!-- ===== TAB BAR ===== -->
+<div class="tab-bar">
+<a class="tab-btn" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>
+<a class="tab-btn active" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 1: DEVELOPER GUIDE (existing content)                     -->
+<!-- ============================================================ -->
+<div id="tab-developer" class="tab-content">
+<div class="layout">
+<nav class="toc">
+<h2>On this page</h2>
+<a href="#overview">Overview</a><a href="#availability">Availability &amp; Distribution</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#tools">Tool Reference (11 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
+</nav>
+<main class="content">
+<section id="overview"><h2>Overview</h2>
+<p>Poly-Glot AI Workspace is an AI productivity and localization platform for creating prompts, working across multiple AI providers, and comparing model responses. The product includes more than 1,000 prompt templates, multiple input methods, and a localized interface across 38 languages.</p>
+<p>For developer and agentic workflows, Poly-Glot exposes functionality through the <strong>Model Context Protocol (MCP)</strong>. An MCP-compatible assistant can discover templates, build prompts, select languages, check subscription state, prepare multi-model comparisons, and open the broader workspace.</p>
+<div class="note"><strong>Core idea:</strong> users express intent in natural language while the agent coordinates discrete Poly-Glot tools behind the scenes.</div></section>
+<section id="availability"><h2>Availability &amp; Distribution</h2><p>The Poly-Glot MCP server is deployed and available across multiple distribution surfaces:</p>
+<div class="grid">
+<div class="tool-card"><h3>Official MCP Registry</h3><p>Listed on the <a href="https://registry.modelcontextprotocol.io/">Model Context Protocol Registry</a> for discovery by MCP-compatible clients.</p></div>
+<div class="tool-card"><h3>MCP.so</h3><p>Published on <a href="https://mcp.so/">MCP.so</a>, a community directory of MCP servers and integrations.</p></div>
+<div class="tool-card"><h3>Glama</h3><p>Available on <a href="https://glama.ai/mcp/servers">Glama</a> for AI workflow orchestration and server discovery.</p></div>
+<div class="tool-card"><h3>Hugging Face</h3><p>Hosted on <a href="https://huggingface.co/">Hugging Face</a> for model and tool ecosystem integration.</p></div>
+</div>
+<p>This is not a hypothetical integration. The Poly-Glot MCP server is deployed, registered across multiple discovery surfaces, and actively serving requests.</p></section>
+<section id="architecture"><h2>Architecture</h2><p>Poly-Glot separates the user-facing workspace from the MCP integration layer. The integration exposes focused tools that can be composed into agent workflows.</p><pre><code>Developer / User
+       |
+       v
+MCP-Compatible AI Assistant
+       |
+       | Model Context Protocol
+       v
+Poly-Glot MCP Server
+       |
+       +---- search_templates
+       +---- get_template
+       +---- build_prompt
+       +---- prepare_compare
+       +---- get_language_options
+       +---- get_subscription_status
+       +---- open_workspace
+       +---- transcribe_audio
+       +---- detect_language
+       +---- translate_text
+       +---- localize_text
+       |
+       v
+Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead of locating a template, copying it, filling variables, and then setting up multiple model sessions, an agent can orchestrate those actions as tool calls.</p></section>
+<section id="endpoint"><h2>MCP Endpoint</h2><p>Poly-Glot publishes the following MCP endpoint for compatible clients:</p><pre><code>https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code></pre><p class="small">Use this endpoint only with MCP-compatible clients that allow custom connectors.</p></section>
+<section id="tools"><h2>MCP Tool Reference (11 Tools)</h2>
+<p>Poly-Glot exposes 11 tools through MCP: 7 interactive tools for template workflows and 4 language processing tools.</p>
+<h3 style="margin-top:28px;color:var(--accent);">Interactive Tools (7)</h3>
+<div class="tool-card"><h3 class="tool-name">search_templates</h3><p>Searches the Poly-Glot prompt library by task or topic.</p><pre><code>Find templates for writing a LinkedIn post.
+Search for coding templates.
+Find a template for salary negotiation.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">get_template</h3><p>Retrieves the selected template after discovery. A common pattern is <span class="inline">search_templates</span> followed by <span class="inline">get_template</span>.</p></div>
+<div class="tool-card"><h3 class="tool-name">build_prompt</h3><p>Populates a selected template using user-provided requirements and produces a completed prompt for downstream use.</p></div>
+<div class="tool-card"><h3 class="tool-name">prepare_compare</h3><p>Prepares the same prompt for side-by-side evaluation across multiple AI providers. Poly-Glot Compare Mode supports workflows spanning 2 to 9 AIs.</p></div>
+<div class="tool-card"><h3 class="tool-name">get_language_options</h3><p>Returns supported language options. Poly-Glot supports 38 languages across interface and output workflows.</p></div>
+<div class="tool-card"><h3 class="tool-name">get_subscription_status</h3><p>Checks the user's current Poly-Glot plan or subscription state before gated functionality is used.</p></div>
+<div class="tool-card"><h3 class="tool-name">open_workspace</h3><p>Transitions the user from an MCP-driven conversational workflow into the full Poly-Glot Workspace.</p></div>
+<h3 style="margin-top:28px;color:var(--accent);">Language Processing Tools (4)</h3>
+<div class="tool-card"><h3 class="tool-name">transcribe_audio</h3><p>Transcribes supplied audio for cross-platform Poly-Glot workflows. Accepts an HTTPS audio URL or base64-encoded audio data. Supports optional language hints and language detection.</p><pre><code>Transcribe this audio file for me.
+Convert this voice memo to text.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">detect_language</h3><p>Detects the language of supplied text and maps it to a supported Poly-Glot language. Useful for routing multilingual input to the correct workflow.</p><pre><code>What language is this text in?
+Detect the language before translating.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">translate_text</h3><p>Translates text into a supported Poly-Glot language. Preserves meaning, formatting, names, code, and URLs.</p><pre><code>Translate this email to Spanish.
+Convert this paragraph to Japanese.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">localize_text</h3><p>Localizes text for a target language, locale, audience, and tone — not merely literal translation. Adapts idioms, cultural references, and register for the target audience.</p><pre><code>Localize this marketing copy for a German audience.
+Adapt this message for a formal Japanese business context.</code></pre></div>
+</section>
+<section id="prompt"><h2>Example: Build a Developer Prompt</h2><p>A user can describe an outcome without knowing the underlying tool names:</p><pre><code>Search Poly-Glot for LinkedIn templates and build me
+one about AI productivity.</code></pre><pre><code>User request
+     |
+     v
+search_templates
+     |
+     v
+get_template
+     |
+     v
+build_prompt
+     |
+     v
+Completed prompt</code></pre><p>The agent handles template discovery and construction while the user remains focused on the desired outcome.</p></section>
+<section id="compare"><h2>Example: Compare Multiple Models</h2><p>After building a prompt, a user can extend the workflow:</p><pre><code>Now compare that across ChatGPT, Claude, and Gemini.</code></pre><p>The agent can invoke <span class="inline">prepare_compare</span> and stage the prompt for the selected providers.</p><pre><code>User
+ |
+ | "Compare it across ChatGPT, Claude, and Gemini."
+ v
+prepare_compare
+ |
+ v
+Poly-Glot Workspace
+ |
+ +---- ChatGPT
+ +---- Claude
+ +---- Gemini
+ |
+ v
+Human evaluation</code></pre><p>This preserves human judgment at the end of the workflow: the system prepares alternatives, but the user decides which response best satisfies the task.</p></section>
+<section id="localization"><h2>Localization Workflow</h2><p>Localization is a first-class workflow rather than an output-only translation step. Poly-Glot distinguishes between application language and requested AI output language.</p><pre><code>User intent
+    |
+    v
+get_language_options
+    |
+    v
+Select supported language
+    |
+    v
+search_templates
+    |
+    v
+get_template
+    |
+    v
+build_prompt
+    |
+    v
+AI workflow</code></pre><p>This allows multilingual behavior to be incorporated into orchestration rather than added only after content generation.</p></section>
+<section id="privacy"><h2>Privacy and Execution Model</h2><p>The native Poly-Glot application is designed around local workflows. MCP integrations introduce an external assistant and MCP service into the execution path, so developers should evaluate the privacy and data-handling policies of the client and AI provider they use.</p><pre><code>Native workflow
+User --> Poly-Glot --> User-selected AI experience
+
+MCP workflow
+User --> MCP Client --> Poly-Glot MCP Server
+              |
+              +--> AI assistant</code></pre></section>
+<section id="principles"><h2>Integration Design Principles</h2><div class="grid"><div class="tool-card"><h3>Intent over implementation</h3><p>Users state goals while the agent selects and sequences tools.</p></div><div class="tool-card"><h3>Composable tools</h3><p>Discovery, retrieval, construction, localization, comparison, entitlement, and workspace access remain separate capabilities.</p></div><div class="tool-card"><h3>Human in the loop</h3><p>Multi-model comparison preserves human evaluation instead of assuming a single model is always best.</p></div><div class="tool-card"><h3>Progressive interaction</h3><p>A task can begin conversationally and transition into the full workspace when a richer interface is useful.</p></div></div></section>
+<section id="troubleshooting"><h2>Troubleshooting</h2><h3>Poly-Glot tools do not appear</h3><p>Confirm that the MCP endpoint is correct and that the connector is enabled in the client.</p><h3>A template cannot be found</h3><p>Use a broader, task-oriented search rather than an exact template title.</p><pre><code>Find a template for creating developer documentation.</code></pre><h3>Compare Mode does not include the expected provider</h3><p>Confirm that the intended providers were selected when the comparison was prepared.</p><h3>The requested language is unavailable</h3><p>Use <span class="inline">get_language_options</span> to determine currently supported languages.</p><h3>A feature is unavailable for the current account</h3><p>Use <span class="inline">get_subscription_status</span> before proceeding with gated functionality.</p></section>
+<section id="summary"><h2>Developer Workflow Summary</h2><pre><code>1.  Receive user intent
+           |
+2.  Discover template       -> search_templates
+           |
+3.  Retrieve template       -> get_template
+           |
+4.  Determine language      -> get_language_options
+           |
+5.  Detect input language   -> detect_language
+           |
+6.  Construct prompt        -> build_prompt
+           |
+7.  Translate output        -> translate_text
+           |
+8.  Localize output         -> localize_text
+           |
+9.  Transcribe audio input  -> transcribe_audio
+           |
+10. Prepare providers       -> prepare_compare
+           |
+11. Open workspace          -> open_workspace
+           |
+12. Compare outputs
+           |
+13. Human selects result</code></pre><p>This architecture turns a prompt library into a set of agent-accessible, composable capabilities while preserving human control over the final output.</p></section>
+<section id="sample"><h2>About This Sample</h2><p><strong>Poly-Glot AI Workspace: Developer Integration Guide</strong> is an independent technical writing sample based on the publicly documented Poly-Glot AI Workspace product and MCP integration.</p><p>It demonstrates developer documentation, information architecture, procedural documentation, conceptual documentation, API/tool reference organization, AI workflow documentation, localization concepts, and docs-as-code-oriented content design.</p><p><strong>Author:</strong> Harold Moses II<br><strong>Product:</strong> Poly-Glot AI Workspace<br><strong>Reference:</strong> <a href="https://hmoses.github.io/poly-glot-site/">hmoses.github.io/poly-glot-site</a></p><p><span class="pill">Developer Docs</span><span class="pill">MCP</span><span class="pill">Agentic AI</span><span class="pill">Docs-as-Code</span><span class="pill">Localization</span><span class="pill">Multi-Model Workflows</span></p></section>
+</main>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 2: CLAUDE INTEGRATION GUIDE (new content)                 -->
+<!-- ============================================================ -->
+<div id="tab-claude" class="tab-content active">
+<div class="layout">
+<nav class="toc">
+<h2>On this page</h2>
+<a href="#claude-overview">Overview</a>
+<a href="#claude-prerequisites">Prerequisites</a>
+<a href="#claude-setup">Setup (Step by Step)</a>
+<a href="#claude-tools">Available Tools</a>
+<a href="#claude-permissions">Tool Permissions</a>
+<a href="#claude-example">Example Conversation</a>
+<a href="#claude-entitlements">Entitlements &amp; Paywall</a>
+<a href="#claude-languages">38 Languages</a>
+<a href="#claude-faq">FAQ</a>
+<a href="#claude-troubleshooting">Troubleshooting</a>
+</nav>
+<main class="content">
+
+<!-- Overview -->
+<section id="claude-overview">
+<h2>Overview</h2>
+<p>Poly-Glot connects to Claude through <strong>MCP (Model Context Protocol)</strong> — Anthropic's standard for connecting AI assistants to external tools. Once connected, Claude can search 1,000+ prompt templates, build prompts, compare model responses, and check subscription status — all from within your chat. No app download required.</p>
+<div class="note"><strong>How it works:</strong> You add Poly-Glot as a connector in Claude's settings. Claude calls Poly-Glot's tools behind the scenes and presents results inline in your conversation. There is no separate GUI — everything happens in the chat interface.</div>
+</section>
+
+<!-- Prerequisites -->
+<section id="claude-prerequisites">
+<h2>Prerequisites</h2>
+<div class="grid">
+<div class="tool-card">
+<h3>Claude Desktop App or Claude.ai</h3>
+<p>Works with Claude Free, Pro, Team, and Enterprise plans. Both the desktop app and web interface support MCP connectors.</p>
+</div>
+<div class="tool-card">
+<h3>MCP Endpoint URL</h3>
+<p>You will need the Poly-Glot MCP endpoint. Copy it from the setup section below.</p>
+</div>
+</div>
+</section>
+
+<!-- Setup -->
+<section id="claude-setup">
+<h2>Setup (Step by Step)</h2>
+
+<div class="step-card">
+<div class="step-num">1</div>
+<div class="step-body">
+<h3>Open Claude Settings</h3>
+<p>In Claude Desktop, click your profile icon in the bottom-left corner, then select <strong>Settings</strong>. On Claude.ai, navigate to <strong>claude.ai/settings</strong>.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">2</div>
+<div class="step-body">
+<h3>Go to Connectors</h3>
+<p>In the left sidebar under <strong>Customize</strong>, click <strong>Connectors</strong>. This is where all MCP integrations are managed — alongside GitHub, Gmail, Google Drive, and others.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">3</div>
+<div class="step-body">
+<h3>Click "+ Add" and select "Add custom connector"</h3>
+<p>Click the <strong>+ Add</strong> button in the top-right corner of the Connectors panel. Select <strong>Add custom connector</strong> from the dropdown.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">4</div>
+<div class="step-body">
+<h3>Name it and paste the MCP endpoint</h3>
+<p>Enter <strong>Poly-Glot</strong> as the connector name. Paste the following URL into the endpoint field:</p>
+<div class="endpoint-box">
+<span>https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</span>
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+</div>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">5</div>
+<div class="step-body">
+<h3>Set Authentication to "None / Detected"</h3>
+<p>Under <strong>Authentication</strong>, select <strong>None / Detected</strong>. The Poly-Glot MCP server is a public tool server — no API key or OAuth is required. The yellow warning about open access is expected and safe to proceed past.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">6</div>
+<div class="step-body">
+<h3>Save the connector</h3>
+<p>Click <strong>Save</strong> (or <strong>Add</strong>). The connector will appear in your Connectors list. Claude will display Poly-Glot's tools with a <strong>Needs approval</strong> badge — this is normal. Claude will ask permission the first time you use each tool.</p>
+</div>
+</div>
+
+<div class="step-card">
+<div class="step-num">7</div>
+<div class="step-body">
+<h3>Start a conversation</h3>
+<p>Open a new Claude conversation and try a prompt like:</p>
+<pre><code>Search Poly-Glot for email templates</code></pre>
+<p>Claude will ask to use the Poly-Glot tools. Click <strong>Allow</strong> and you are live.</p>
+</div>
+</div>
+</section>
+
+<!-- Tools -->
+<section id="claude-tools">
+<h2>Available Tools (11)</h2>
+<p>Once connected, Claude has access to <strong>11 tools</strong>: 7 interactive tools for template workflows and 4 language processing tools.</p>
+
+<h3 style="margin-top:24px;color:var(--accent);">Interactive Tools (7)</h3>
+<table class="tools-table">
+<thead><tr><th>Tool</th><th>Description</th><th>Example Prompt</th></tr></thead>
+<tbody>
+<tr><td><strong>Search Poly-Glot templates</strong></td><td>Browse 1,000+ prompt templates by keyword or category</td><td><em>"Search Poly-Glot for marketing templates"</em></td></tr>
+<tr><td><strong>Open a Poly-Glot template</strong></td><td>Pull up a specific template with full details and variables</td><td><em>"Open the LinkedIn headline template"</em></td></tr>
+<tr><td><strong>Build a Poly-Glot prompt</strong></td><td>Fill in a template and generate a ready-to-use prompt</td><td><em>"Build me a prompt for a cold outreach email"</em></td></tr>
+<tr><td><strong>Prepare Poly-Glot Compare Mode</strong></td><td>Stage a prompt for side-by-side comparison across 2–9 AI providers</td><td><em>"Compare this prompt across GPT-4 and Claude"</em></td></tr>
+<tr><td><strong>Get Poly-Glot language options</strong></td><td>List all 38 supported languages</td><td><em>"What languages does Poly-Glot support?"</em></td></tr>
+<tr><td><strong>Get Poly-Glot subscription status</strong></td><td>Check your current plan (Free, Trial, or Pro)</td><td><em>"Am I on the free or Pro plan?"</em></td></tr>
+<tr><td><strong>Open Poly-Glot AI Workspace</strong></td><td>Deep-link into the full Poly-Glot application</td><td><em>"Open Poly-Glot"</em></td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:24px;color:var(--accent);">Language Processing Tools (4)</h3>
+<table class="tools-table">
+<thead><tr><th>Tool</th><th>Description</th><th>Example Prompt</th></tr></thead>
+<tbody>
+<tr><td><strong>Transcribe audio</strong></td><td>Transcribe audio from a URL or base64 data with optional language detection</td><td><em>"Transcribe this audio file for me"</em></td></tr>
+<tr><td><strong>Detect language</strong></td><td>Identify the language of any text and map it to a Poly-Glot language</td><td><em>"What language is this text in?"</em></td></tr>
+<tr><td><strong>Translate text</strong></td><td>Translate text into any of 38 languages, preserving formatting and code</td><td><em>"Translate this email to Spanish"</em></td></tr>
+<tr><td><strong>Localize text</strong></td><td>Adapt text for a target locale, audience, and tone — beyond literal translation</td><td><em>"Localize this for a Japanese business audience"</em></td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- Tool Permissions -->
+<section id="claude-permissions">
+<h2>Tool Permissions</h2>
+<p>Claude shows each tool with a permission control. You can configure when Claude is allowed to use each tool:</p>
+<div class="grid">
+<div class="tool-card">
+<h3>Needs approval (default)</h3>
+<p>Claude asks for your confirmation before calling the tool. Recommended for first-time use so you can see what data is being sent.</p>
+</div>
+<div class="tool-card">
+<h3>Always allow</h3>
+<p>Claude uses the tool automatically without asking. Set this for tools you use frequently, like <span class="inline">search_templates</span> and <span class="inline">build_prompt</span>.</p>
+</div>
+</div>
+<p>To change permissions: go to <strong>Settings → Connectors → Poly-Glot</strong> and use the toggle icons next to each tool.</p>
+</section>
+
+<!-- Example Conversation -->
+<section id="claude-example">
+<h2>Example Conversation</h2>
+<p>Here is a typical interaction. You type natural language and Claude calls the appropriate Poly-Glot tools behind the scenes:</p>
+
+<div class="chat-bubble chat-user">
+<div class="chat-label" style="color:var(--muted);">You</div>
+Search Poly-Glot for LinkedIn templates and build me one about AI productivity
+</div>
+
+<div class="chat-bubble chat-claude">
+<div class="chat-label" style="color:var(--accent);">Claude <span class="small">(calls search_templates → get_template → build_prompt)</span></div>
+I found the <strong>LinkedIn Post Writer</strong> template. Here's your prompt:<br><br>
+<em>"Write a LinkedIn post about AI productivity tools that are changing how teams work. Use a professional but conversational tone. Goal: thought leadership. Include a call-to-action to comment with their favorite AI tool. Keep it under 200 words."</em>
+</div>
+
+<div class="chat-bubble chat-user">
+<div class="chat-label" style="color:var(--muted);">You</div>
+Now compare that prompt across ChatGPT, Claude, and Gemini
+</div>
+
+<div class="chat-bubble chat-claude">
+<div class="chat-label" style="color:var(--accent);">Claude <span class="small">(calls prepare_compare)</span></div>
+Done! I've opened the Poly-Glot workspace with your prompt staged for <strong>ChatGPT</strong>, <strong>Claude</strong>, and <strong>Gemini</strong>. Click each tab to compare responses side by side.
+</div>
+
+<div class="chat-bubble chat-user">
+<div class="chat-label" style="color:var(--muted);">You</div>
+What languages does Poly-Glot support?
+</div>
+
+<div class="chat-bubble chat-claude">
+<div class="chat-label" style="color:var(--accent);">Claude <span class="small">(calls get_language_options)</span></div>
+Poly-Glot supports <strong>38 languages</strong> including English, Español, Français, Deutsch, 日本語, 한국어, 中文, العربية, हिन्दी, and 29 more. You can set your UI language, input language, and output language independently.
+</div>
+</section>
+
+<!-- Entitlements & Paywall -->
+<section id="claude-entitlements">
+<h2>Entitlements &amp; Paywall</h2>
+<p>The same subscription model applies whether you use Poly-Glot through the iOS/macOS app or through Claude via MCP. Entitlements are enforced server-side — they cannot be bypassed by the client.</p>
+
+<div class="entitlement-grid">
+<div class="entitlement-card">
+<div class="tier">Free</div>
+<h4>25 Featured Templates</h4>
+<ul>
+<li><span class="check">✓</span> Search all templates</li>
+<li><span class="check">✓</span> View template descriptions</li>
+<li><span class="check">✓</span> Language options</li>
+<li><span class="lock">✗</span> Build prompt (locked)</li>
+<li><span class="lock">✗</span> Compare Mode (locked)</li>
+</ul>
+</div>
+<div class="entitlement-card">
+<div class="tier">Trial (3 days)</div>
+<h4>Full Access</h4>
+<ul>
+<li><span class="check">✓</span> All 1,000+ templates</li>
+<li><span class="check">✓</span> Build prompt</li>
+<li><span class="check">✓</span> Compare Mode</li>
+<li><span class="check">✓</span> All languages</li>
+<li>Starts on first use of a free template</li>
+</ul>
+</div>
+<div class="entitlement-card">
+<div class="tier">Pro</div>
+<h4>$9.99/mo or $79.99/yr</h4>
+<ul>
+<li><span class="check">✓</span> Everything in Trial</li>
+<li><span class="check">✓</span> All Pro-only templates</li>
+<li><span class="check">✓</span> Unlimited builds</li>
+<li><span class="check">✓</span> Unlimited comparisons</li>
+<li>Save 33% with annual plan</li>
+</ul>
+</div>
+</div>
+
+<p>When a feature is gated, Claude will tell the user why and include pricing information in its response:</p>
+<div class="chat-bubble chat-claude">
+<div class="chat-label" style="color:var(--accent);">Claude <span class="small">(tool returns locked status)</span></div>
+This template requires a <strong>Poly-Glot Pro</strong> subscription. Plans start at $9.99/month or $79.99/year (save 33%). Subscribe at <a href="https://hmoses.github.io/poly-glot-site/">poly-glot.ai</a> to unlock all 1,000+ templates, Compare Mode, and prompt building.
+</div>
+</section>
+
+<!-- Languages -->
+<section id="claude-languages">
+<h2>38 Languages Supported</h2>
+<p>Set your UI language, input language, and output language independently. Every template works in every language.</p>
+<div class="tool-card">
+<p style="line-height:2;">English · Español · Français · Deutsch · Italiano · Português · 日本語 · 한국어 · 中文(简体) · 中文(繁體) · العربية · हिन्दी · Türkçe · Русский · Polski · Nederlands · Svenska · Dansk · Norsk · Suomi · Čeština · Magyar · Română · Українська · Ελληνικά · עברית · ไทย · Tiếng Việt · Bahasa Indonesia · Bahasa Melayu · Filipino · Català · Hrvatski · Slovenčina · Български · Lietuvių · Latviešu · Eesti</p>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="claude-faq">
+<h2>FAQ</h2>
+
+<div class="tool-card">
+<h3>Is there a separate GUI inside Claude?</h3>
+<p>No. Poly-Glot tools are accessed entirely through natural language in the Claude chat interface. Claude calls the tools behind the scenes and presents results inline. There is no embedded widget or separate window.</p>
+</div>
+
+<div class="tool-card">
+<h3>Do I need to download the Poly-Glot app?</h3>
+<p>No. MCP works independently — connect directly from Claude. The iOS/macOS app is optional for browsing templates visually and managing your subscription.</p>
+</div>
+
+<div class="tool-card">
+<h3>Does the paywall work the same as the app?</h3>
+<p>Yes. Entitlements are enforced server-side on the MCP. The same Free, Trial, and Pro tiers apply. Users cannot bypass the paywall regardless of which client they use.</p>
+</div>
+
+<div class="tool-card">
+<h3>What AI providers work with Compare Mode?</h3>
+<p>Compare across any 2–9 providers: ChatGPT, Claude, Gemini, Grok, Groq, Copilot, Mistral, Perplexity, and DuckDuckGo AI.</p>
+</div>
+
+<div class="tool-card">
+<h3>Is my data private?</h3>
+<p>Yes. Poly-Glot does not store your prompts or conversations. Template data flows between you and your AI assistant through the MCP server. See the <a href="https://hmoses.github.io/poly-glot-site/privacy.html">Privacy Policy</a>.</p>
+</div>
+
+<div class="tool-card">
+<h3>Does this work on Claude.ai (web) or only the desktop app?</h3>
+<p>Both. The same MCP endpoint works in Claude Desktop and on Claude.ai. The setup steps are identical — go to Settings → Connectors → Add custom connector.</p>
+</div>
+
+<div class="tool-card">
+<h3>Why does Claude say "Needs approval" for each tool?</h3>
+<p>This is Claude's default security behavior. The first time Claude uses a Poly-Glot tool, it asks for your permission. You can change this to "Always allow" in Settings → Connectors → Poly-Glot for tools you use frequently.</p>
+</div>
+</section>
+
+<!-- Troubleshooting -->
+<section id="claude-troubleshooting">
+<h2>Troubleshooting</h2>
+
+<h3>Poly-Glot does not appear in Connectors</h3>
+<p>Confirm that you clicked <strong>+ Add → Add custom connector</strong> (not one of the pre-built connectors like Gmail or GitHub). Paste the full MCP endpoint URL including <span class="inline">https://</span>.</p>
+
+<h3>Tools show "Needs approval" but nothing happens</h3>
+<p>Click <strong>Allow</strong> when Claude asks to use a Poly-Glot tool. If the approval prompt does not appear, try starting a new conversation.</p>
+
+<h3>Claude says it cannot find any templates</h3>
+<p>Use a broader, task-oriented search rather than an exact template title. For example, say <em>"Search for email templates"</em> instead of the exact template name.</p>
+
+<h3>A feature returns a "locked" response</h3>
+<p>Check your subscription status by asking Claude <em>"What is my Poly-Glot subscription status?"</em> Claude will call <span class="inline">get_subscription_status</span> and tell you your current plan. Upgrade to Pro to unlock all features.</p>
+
+<h3>The connector stopped working</h3>
+<p>Go to <strong>Settings → Connectors → Poly-Glot</strong> and click <strong>Disconnect</strong>, then re-add the connector with the same endpoint URL. This refreshes the connection.</p>
+</section>
+
+</main>
+</div>
+</div>
+
+<footer class="footer">Harold Moses II · Technical Writer & Documentation Engineer · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://github.com/hmoses">GitHub</a></footer>
+
+<script>
+
+function navigateTab(tab) {
+  const url = tab === 'claude' ? '/dev-guide/claude-mcp-guide/' : '/dev-guide/developer-mcp-guide/';
+  if (window.top && window.top !== window.self) {
+    window.top.location.href = url;
+  } else {
+    window.location.href = url;
+  }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelector('[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function copyCode(btn) {
+  const box = btn.parentElement;
+  const text = box.querySelector('span').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+<script id="polyglot-hash-tab-routing">
+(function () {
+  function activateTabFromHash() {
+    const tab = window.location.hash === '#claude' ? 'claude' :
+                window.location.hash === '#developer' ? 'developer' : null;
+    if (tab && typeof window.switchTab === 'function') {
+      window.switchTab(tab);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', activateTabFromHash);
+  window.addEventListener('hashchange', activateTabFromHash);
+})();
+</script>
+
 </body>
 </html>
