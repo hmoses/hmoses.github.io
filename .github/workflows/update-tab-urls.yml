@@ -1,0 +1,51 @@
+name: Update guide tab URLs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-tab-urls.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wire tabs to separate URLs
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('dev-guide.html')
+          html = path.read_text(encoding='utf-8')
+
+          html = html.replace(
+              '<button class="tab-btn active" onclick="switchTab(\'developer\')">Developer Guide</button>',
+              '<button class="tab-btn active" onclick="navigateTab(\'developer\')">Developer Guide</button>'
+          )
+          html = html.replace(
+              '<button class="tab-btn" onclick="switchTab(\'claude\')">Claude Integration Guide</button>',
+              '<button class="tab-btn" onclick="navigateTab(\'claude\')">Claude Integration Guide</button>'
+          )
+
+          marker = 'function navigateTab(tab) {'
+          if marker not in html:
+              insert = '''\nfunction navigateTab(tab) {\n  const url = tab === 'claude' ? '/claude-guide.html' : '/developer-guide.html';\n  if (window.top && window.top !== window.self) {\n    window.top.location.href = url;\n  } else {\n    window.location.href = url;\n  }\n}\n'''
+              html = html.replace('function switchTab(tab) {', insert + '\nfunction switchTab(tab) {', 1)
+
+          path.write_text(html, encoding='utf-8')
+
+      - name: Commit URL behavior
+        run: |
+          if git diff --quiet -- dev-guide.html; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html
+          git commit -m "Make guide tabs update browser URL"
+          git push
