@@ -52,8 +52,8 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 
 <!-- ===== TAB BAR ===== -->
 <div class="tab-bar">
-<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/">Developer Guide</a>
-<a class="tab-btn" href="/dev-guide/claude-mcp-guide/">Claude Integration Guide</a>
+<a class="tab-btn active" href="/dev-guide/developer-mcp-guide/" target="_top" onclick="window.top.location.href=this.href;return false;">Developer Guide</a>
+<a class="tab-btn" href="/dev-guide/claude-mcp-guide/" target="_top" onclick="window.top.location.href=this.href;return false;">Claude Integration Guide</a>
 </div>
 
 <!-- ============================================================ -->
@@ -530,22 +530,7 @@ This template requires a <strong>Poly-Glot Pro</strong> subscription. Plans star
 
 <script>
 
-function navigateTab(tab) {
-  const url = tab === 'claude' ? '/dev-guide/claude-mcp-guide/' : '/dev-guide/developer-mcp-guide/';
-  if (window.top && window.top !== window.self) {
-    window.top.location.href = url;
-  } else {
-    window.location.href = url;
-  }
-}
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelector('[onclick="switchTab(\'' + tab + '\')"]').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 function copyCode(btn) {
   const box = btn.parentElement;
   const text = box.querySelector('span').textContent.trim();
@@ -556,20 +541,5 @@ function copyCode(btn) {
   });
 }
 </script>
-<script id="polyglot-hash-tab-routing">
-(function () {
-  function activateTabFromHash() {
-    const tab = window.location.hash === '#claude' ? 'claude' :
-                window.location.hash === '#developer' ? 'developer' : null;
-    if (tab && typeof window.switchTab === 'function') {
-      window.switchTab(tab);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', activateTabFromHash);
-  window.addEventListener('hashchange', activateTabFromHash);
-})();
-</script>
-
 </body>
 </html>
