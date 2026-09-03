@@ -364,8 +364,8 @@ User --> MCP Client --> Poly-Glot MCP Server
 
 <!-- Tools -->
 <section id="claude-tools">
-<h2>Available Tools (11)</h2>
-<p>Once connected, Claude has access to <strong>11 tools</strong>: 7 interactive tools for template workflows and 4 language processing tools.</p>
+<h2>Available Tools (15)</h2>
+<p>Once connected, Claude has access to <strong>15 tools</strong>: 7 interactive tools for template workflows, 4 language processing tools, and 4 Bring Your Own Model (BYOM) tools.</p>
 
 <h3 style="margin-top:24px;color:var(--accent);">Interactive Tools (7)</h3>
 <table class="tools-table">
@@ -389,6 +389,17 @@ User --> MCP Client --> Poly-Glot MCP Server
 <tr><td><strong>Detect language</strong></td><td>Identify the language of any text and map it to a Poly-Glot language</td><td><em>"What language is this text in?"</em></td></tr>
 <tr><td><strong>Translate text</strong></td><td>Translate text into any of 38 languages, preserving formatting and code</td><td><em>"Translate this email to Spanish"</em></td></tr>
 <tr><td><strong>Localize text</strong></td><td>Adapt text for a target locale, audience, and tone — beyond literal translation</td><td><em>"Localize this for a Japanese business audience"</em></td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:24px;color:var(--accent);">Bring Your Own Model (BYOM) Tools (4)</h3>
+<table class="tools-table">
+<thead><tr><th>Tool</th><th>Description</th><th>Example Prompt</th></tr></thead>
+<tbody>
+<tr><td><strong>Get custom model capabilities</strong></td><td>Returns supported BYOM adapter modes, endpoint patterns, and security restrictions</td><td><em>"What custom model types does Poly-Glot support?"</em></td></tr>
+<tr><td><strong>Validate custom model</strong></td><td>Validates a developer-supplied HTTPS endpoint with SSRF protection before execution</td><td><em>"Validate my custom model at https://api.example.com/v1"</em></td></tr>
+<tr><td><strong>Run custom model</strong></td><td>Executes a Poly-Glot prompt against a developer-controlled model endpoint</td><td><em>"Run this prompt against my custom model"</em></td></tr>
+<tr><td><strong>Prepare custom compare</strong></td><td>Stage a Compare Mode run mixing built-in providers and developer BYOM endpoints</td><td><em>"Compare my custom model against Claude and GPT-4"</em></td></tr>
 </tbody>
 </table>
 </section>
