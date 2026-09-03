@@ -1,0 +1,39 @@
+name: Add App Store guide chip
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/add-app-store-guide-chip.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Mac App Store chip to guide headers
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          files = [Path('dev-guide.html'), Path('dev-guide/developer-mcp-guide/index.html'), Path('dev-guide/claude-mcp-guide/index.html')]
+          old = '<a class="btn" href="https://github.com/hmoses">GitHub</a>'
+          new = old + '\n<a class="btn" href="https://apps.apple.com/us/app/poly-glot-ai-workspace/id6804499285?mt=12"> Mac App Store</a>'
+          for p in files:
+              s = p.read_text()
+              if 'id6804499285?mt=12' not in s:
+                  if old not in s:
+                      raise SystemExit(f'GitHub header chip not found in {p}')
+                  s = s.replace(old, new, 1)
+                  p.write_text(s)
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html dev-guide/developer-mcp-guide/index.html dev-guide/claude-mcp-guide/index.html
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "Add Mac App Store chip to developer guides"
+            git push
+          fi
