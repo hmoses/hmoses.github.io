@@ -470,7 +470,7 @@ Poly-Glot supports <strong>38 languages</strong> including English, Español, Fr
 <h2>Entitlements &amp; Paywall</h2>
 <p>The same subscription model applies whether you use Poly-Glot through the iOS/macOS app or through Claude via MCP. Entitlements are enforced server-side — they cannot be bypassed by the client.</p>
 
-<div class="entitlement-grid">
+<div class="entitlement-grid" style="grid-template-columns:1fr 1fr 1fr 1fr">
 <div class="entitlement-card">
 <div class="tier">Free</div>
 <h4>Discovery &amp; Read-Only</h4>
@@ -481,7 +481,7 @@ Poly-Glot supports <strong>38 languages</strong> including English, Español, Fr
 <li><span class="check">✓</span> Check subscription status</li>
 <li><span class="check">✓</span> Open workspace</li>
 <li><span class="check">✓</span> BYOM endpoint info &amp; validation</li>
-<li><span class="lock">✗</span> Build prompt (locked)</li>
+<li><span class="check">✓</span> Send to 1 AI (starts trial)</li>
 <li><span class="lock">✗</span> Compare Mode (locked)</li>
 <li><span class="lock">✗</span> Language processing (locked)</li>
 <li><span class="lock">✗</span> BYOM execution (locked)</li>
@@ -492,12 +492,27 @@ Poly-Glot supports <strong>38 languages</strong> including English, Español, Fr
 <h4>Full Access</h4>
 <ul>
 <li><span class="check">✓</span> All 1,022 templates</li>
-<li><span class="check">✓</span> Build prompt</li>
+<li><span class="check">✓</span> Unlimited sends</li>
 <li><span class="check">✓</span> Compare Mode (up to 9 providers)</li>
 <li><span class="check">✓</span> Transcription, translation, detection, localization</li>
 <li><span class="check">✓</span> BYOM model execution &amp; custom compare</li>
 <li><span class="check">✓</span> All 38 languages</li>
 <li>Starts on first use of a free template</li>
+</ul>
+</div>
+<div class="entitlement-card" style="border-color:#ea580c">
+<div class="tier" style="color:#ea580c">Expired (post-trial)</div>
+<h4>1 Free Send/Week</h4>
+<ul>
+<li><span class="check">✓</span> Browse &amp; search all templates</li>
+<li><span class="check">✓</span> Open free templates</li>
+<li><span class="check">✓</span> Send to 1 AI — 1 per week</li>
+<li><span class="check">✓</span> Copy prompt — 1 per week</li>
+<li><span class="lock">✗</span> Compare Mode (Pro only)</li>
+<li><span class="lock">✗</span> Pro templates (locked)</li>
+<li><span class="lock">✗</span> Language processing (locked)</li>
+<li><span class="lock">✗</span> BYOM execution (locked)</li>
+<li>Subscribe for unlimited access</li>
 </ul>
 </div>
 <div class="entitlement-card">
@@ -518,7 +533,7 @@ Poly-Glot supports <strong>38 languages</strong> including English, Español, Fr
 <p>When a feature is gated, Claude will tell the user why and include pricing information in its response:</p>
 <div class="chat-bubble chat-claude">
 <div class="chat-label" style="color:var(--accent);">Claude <span class="small">(tool returns locked status)</span></div>
-This template requires a <strong>Poly-Glot Pro</strong> subscription. Plans start at $9.99/month or $79.99/year (save 33%). Subscribe at <a href="https://hmoses.github.io/poly-glot-site/">poly-glot.ai</a> to unlock all 1,022 templates, Compare Mode, language processing, BYOM model execution, and unlimited prompt building.
+This template requires a <strong>Poly-Glot Pro</strong> subscription. After your trial, you get 1 free send per week to any single AI. Plans start at $9.99/month or $79.99/year (save 33%). Subscribe at <a href="https://hmoses.github.io/poly-glot-site/">poly-glot.ai</a> to unlock unlimited sends, Compare Mode, language processing, BYOM, and all 1,022 templates.
 </div>
 </section>
 
