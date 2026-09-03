@@ -1,0 +1,63 @@
+name: Add Claude tab anchor
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/add-claude-anchor.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add hash-driven tab activation
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('dev-guide.html')
+          html = path.read_text(encoding='utf-8')
+
+          marker = 'polyglot-hash-tab-routing'
+          if marker in html:
+              print('Claude hash routing already present.')
+              raise SystemExit(0)
+
+          script = r'''
+<script id="polyglot-hash-tab-routing">
+(function () {
+  function activateTabFromHash() {
+    const tab = window.location.hash === '#claude' ? 'claude' :
+                window.location.hash === '#developer' ? 'developer' : null;
+    if (tab && typeof window.switchTab === 'function') {
+      window.switchTab(tab);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', activateTabFromHash);
+  window.addEventListener('hashchange', activateTabFromHash);
+})();
+</script>
+'''
+
+          if '</body>' not in html:
+              raise SystemExit('Could not find </body> in dev-guide.html')
+
+          html = html.replace('</body>', script + '\n</body>', 1)
+          path.write_text(html, encoding='utf-8')
+
+      - name: Commit Claude anchor support
+        run: |
+          if git diff --quiet -- dev-guide.html; then
+            echo "No dev-guide.html changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dev-guide.html
+          git commit -m "Add Claude tab anchor support"
+          git push
