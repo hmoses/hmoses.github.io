@@ -15,41 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Add hash-driven tab activation
-        shell: python
+        env:
+          CLAUDE_ANCHOR_SCRIPT_B64: PHNjcmlwdCBpZD0icG9seWdsb3QtaGFzaC10YWItcm91dGluZyI+CihmdW5jdGlvbiAoKSB7CiAgZnVuY3Rpb24gYWN0aXZhdGVUYWJGcm9tSGFzaCgpIHsKICAgIGNvbnN0IHRhYiA9IHdpbmRvdy5sb2NhdGlvbi5oYXNoID09PSAnI2NsYXVkZScgPyAnY2xhdWRlJyA6CiAgICAgICAgICAgICAgICB3aW5kb3cubG9jYXRpb24uaGFzaCA9PT0gJyNkZXZlbG9wZXInID8gJ2RldmVsb3BlcicgOiBudWxsOwogICAgaWYgKHRhYiAmJiB0eXBlb2Ygd2luZG93LnN3aXRjaFRhYiA9PT0gJ2Z1bmN0aW9uJykgewogICAgICB3aW5kb3cuc3dpdGNoVGFiKHRhYik7CiAgICB9CiAgfQoKICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdET01Db250ZW50TG9hZGVkJywgYWN0aXZhdGVUYWJGcm9tSGFzaCk7CiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2hhc2hjaGFuZ2UnLCBhY3RpdmF0ZVRhYkZyb21IYXNoKTsKfSkoKTsKPC9zY3JpcHQ+Cg==
         run: |
-          from pathlib import Path
-
-          path = Path('dev-guide.html')
-          html = path.read_text(encoding='utf-8')
-
-          marker = 'polyglot-hash-tab-routing'
-          if marker in html:
-              print('Claude hash routing already present.')
-              raise SystemExit(0)
-
-          script = r'''
-<script id="polyglot-hash-tab-routing">
-(function () {
-  function activateTabFromHash() {
-    const tab = window.location.hash === '#claude' ? 'claude' :
-                window.location.hash === '#developer' ? 'developer' : null;
-    if (tab && typeof window.switchTab === 'function') {
-      window.switchTab(tab);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', activateTabFromHash);
-  window.addEventListener('hashchange', activateTabFromHash);
-})();
-</script>
-'''
-
-          if '</body>' not in html:
-              raise SystemExit('Could not find </body> in dev-guide.html')
-
-          html = html.replace('</body>', script + '\n</body>', 1)
-          path.write_text(html, encoding='utf-8')
-
+          python -c "from pathlib import Path; import os,base64; p=Path('dev-guide.html'); s=p.read_text(encoding='utf-8'); marker='polyglot-hash-tab-routing'; ins=base64.b64decode(os.environ['CLAUDE_ANCHOR_SCRIPT_B64']).decode(); p.write_text(s if marker in s else s.replace('</body>', ins+'\\n</body>', 1), encoding='utf-8')"
       - name: Commit Claude anchor support
         run: |
           if git diff --quiet -- dev-guide.html; then
