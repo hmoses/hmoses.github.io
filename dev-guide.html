@@ -63,7 +63,7 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 <div class="layout">
 <nav class="toc">
 <h2>On this page</h2>
-<a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#availability">Availability &amp; Distribution</a><a href="#connect">Connect to Claude</a><a href="#tools">Tool Reference</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
+<a href="#overview">Overview</a><a href="#architecture">Architecture</a><a href="#endpoint">MCP Endpoint</a><a href="#availability">Availability &amp; Distribution</a><a href="#tools">Tool Reference (11 Tools)</a><a href="#prompt">Build a Developer Prompt</a><a href="#compare">Compare Multiple Models</a><a href="#localization">Localization Workflow</a><a href="#privacy">Privacy & Execution</a><a href="#principles">Design Principles</a><a href="#troubleshooting">Troubleshooting</a><a href="#summary">Workflow Summary</a><a href="#sample">About This Sample</a>
 </nav>
 <main class="content">
 <section id="overview"><h2>Overview</h2>
@@ -86,6 +86,10 @@ Poly-Glot MCP Server
        +---- get_language_options
        +---- get_subscription_status
        +---- open_workspace
+       +---- transcribe_audio
+       +---- detect_language
+       +---- translate_text
+       +---- localize_text
        |
        v
 Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead of locating a template, copying it, filling variables, and then setting up multiple model sessions, an agent can orchestrate those actions as tool calls.</p></section>
@@ -100,8 +104,9 @@ Poly-Glot AI Workspace</code></pre><p>This design reduces manual steps. Instead 
 <div class="tool-card"><h3>Live MCP Endpoint</h3><p>The production endpoint is live and accepting connections from any MCP-compatible client at the URL listed above.</p></div>
 </div>
 <p>This is not a hypothetical integration. The Poly-Glot MCP server is deployed, registered across multiple discovery surfaces, and actively serving requests.</p></section>
-<section id="connect"><h2>Connect Poly-Glot to Claude</h2><ol><li>Open <strong>Claude Settings</strong>.</li><li>Navigate to <strong>MCP Connectors</strong>.</li><li>Select <strong>Add Connector</strong>.</li><li>Enter the Poly-Glot MCP endpoint.</li><li>Name the connector <strong>Poly-Glot</strong>.</li><li>Complete the connection and confirm that the Poly-Glot tools are available.</li></ol></section>
-<section id="tools"><h2>MCP Tool Reference</h2>
+<section id="tools"><h2>MCP Tool Reference (11 Tools)</h2>
+<p>Poly-Glot exposes 11 tools through MCP: 7 interactive tools for template workflows and 4 language processing tools.</p>
+<h3 style="margin-top:28px;color:var(--accent);">Interactive Tools (7)</h3>
 <div class="tool-card"><h3 class="tool-name">search_templates</h3><p>Searches the Poly-Glot prompt library by task or topic.</p><pre><code>Find templates for writing a LinkedIn post.
 Search for coding templates.
 Find a template for salary negotiation.</code></pre></div>
@@ -111,6 +116,15 @@ Find a template for salary negotiation.</code></pre></div>
 <div class="tool-card"><h3 class="tool-name">get_language_options</h3><p>Returns supported language options. Poly-Glot supports 38 languages across interface and output workflows.</p></div>
 <div class="tool-card"><h3 class="tool-name">get_subscription_status</h3><p>Checks the user's current Poly-Glot plan or subscription state before gated functionality is used.</p></div>
 <div class="tool-card"><h3 class="tool-name">open_workspace</h3><p>Transitions the user from an MCP-driven conversational workflow into the full Poly-Glot Workspace.</p></div>
+<h3 style="margin-top:28px;color:var(--accent);">Language Processing Tools (4)</h3>
+<div class="tool-card"><h3 class="tool-name">transcribe_audio</h3><p>Transcribes supplied audio for cross-platform Poly-Glot workflows. Accepts an HTTPS audio URL or base64-encoded audio data. Supports optional language hints and language detection.</p><pre><code>Transcribe this audio file for me.
+Convert this voice memo to text.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">detect_language</h3><p>Detects the language of supplied text and maps it to a supported Poly-Glot language. Useful for routing multilingual input to the correct workflow.</p><pre><code>What language is this text in?
+Detect the language before translating.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">translate_text</h3><p>Translates text into a supported Poly-Glot language. Preserves meaning, formatting, names, code, and URLs.</p><pre><code>Translate this email to Spanish.
+Convert this paragraph to Japanese.</code></pre></div>
+<div class="tool-card"><h3 class="tool-name">localize_text</h3><p>Localizes text for a target language, locale, audience, and tone — not merely literal translation. Adapts idioms, cultural references, and register for the target audience.</p><pre><code>Localize this marketing copy for a German audience.
+Adapt this message for a formal Japanese business context.</code></pre></div>
 </section>
 <section id="prompt"><h2>Example: Build a Developer Prompt</h2><p>A user can describe an outcome without knowing the underlying tool names:</p><pre><code>Search Poly-Glot for LinkedIn templates and build me
 one about AI productivity.</code></pre><pre><code>User request
@@ -169,23 +183,31 @@ User --> MCP Client --> Poly-Glot MCP Server
               +--> AI assistant</code></pre></section>
 <section id="principles"><h2>Integration Design Principles</h2><div class="grid"><div class="tool-card"><h3>Intent over implementation</h3><p>Users state goals while the agent selects and sequences tools.</p></div><div class="tool-card"><h3>Composable tools</h3><p>Discovery, retrieval, construction, localization, comparison, entitlement, and workspace access remain separate capabilities.</p></div><div class="tool-card"><h3>Human in the loop</h3><p>Multi-model comparison preserves human evaluation instead of assuming a single model is always best.</p></div><div class="tool-card"><h3>Progressive interaction</h3><p>A task can begin conversationally and transition into the full workspace when a richer interface is useful.</p></div></div></section>
 <section id="troubleshooting"><h2>Troubleshooting</h2><h3>Poly-Glot tools do not appear</h3><p>Confirm that the MCP endpoint is correct and that the connector is enabled in the client.</p><h3>A template cannot be found</h3><p>Use a broader, task-oriented search rather than an exact template title.</p><pre><code>Find a template for creating developer documentation.</code></pre><h3>Compare Mode does not include the expected provider</h3><p>Confirm that the intended providers were selected when the comparison was prepared.</p><h3>The requested language is unavailable</h3><p>Use <span class="inline">get_language_options</span> to determine currently supported languages.</p><h3>A feature is unavailable for the current account</h3><p>Use <span class="inline">get_subscription_status</span> before proceeding with gated functionality.</p></section>
-<section id="summary"><h2>Developer Workflow Summary</h2><pre><code>1. Receive user intent
-          |
-2. Discover template      -> search_templates
-          |
-3. Retrieve template      -> get_template
-          |
-4. Determine language     -> get_language_options
-          |
-5. Construct prompt       -> build_prompt
-          |
-6. Prepare providers      -> prepare_compare
-          |
-7. Open workspace         -> open_workspace
-          |
-8. Compare outputs
-          |
-9. Human selects result</code></pre><p>This architecture turns a prompt library into a set of agent-accessible, composable capabilities while preserving human control over the final output.</p></section>
+<section id="summary"><h2>Developer Workflow Summary</h2><pre><code>1.  Receive user intent
+           |
+2.  Discover template       -> search_templates
+           |
+3.  Retrieve template       -> get_template
+           |
+4.  Determine language      -> get_language_options
+           |
+5.  Detect input language   -> detect_language
+           |
+6.  Construct prompt        -> build_prompt
+           |
+7.  Translate output        -> translate_text
+           |
+8.  Localize output         -> localize_text
+           |
+9.  Transcribe audio input  -> transcribe_audio
+           |
+10. Prepare providers       -> prepare_compare
+           |
+11. Open workspace          -> open_workspace
+           |
+12. Compare outputs
+           |
+13. Human selects result</code></pre><p>This architecture turns a prompt library into a set of agent-accessible, composable capabilities while preserving human control over the final output.</p></section>
 <section id="sample"><h2>About This Sample</h2><p><strong>Poly-Glot AI Workspace: Developer Integration Guide</strong> is an independent technical writing sample based on the publicly documented Poly-Glot AI Workspace product and MCP integration.</p><p>It demonstrates developer documentation, information architecture, procedural documentation, conceptual documentation, API/tool reference organization, AI workflow documentation, localization concepts, and docs-as-code-oriented content design.</p><p><strong>Author:</strong> Harold Moses II<br><strong>Product:</strong> Poly-Glot AI Workspace<br><strong>Reference:</strong> <a href="https://hmoses.github.io/poly-glot-site/">hmoses.github.io/poly-glot-site</a></p><p><span class="pill">Developer Docs</span><span class="pill">MCP</span><span class="pill">Agentic AI</span><span class="pill">Docs-as-Code</span><span class="pill">Localization</span><span class="pill">Multi-Model Workflows</span></p></section>
 </main>
 </div>
@@ -302,8 +324,10 @@ User --> MCP Client --> Poly-Glot MCP Server
 
 <!-- Tools -->
 <section id="claude-tools">
-<h2>Available Tools</h2>
-<p>Once connected, Claude has access to 7 interactive tools and 4 resource tools. The interactive tools are the ones you will use directly:</p>
+<h2>Available Tools (11)</h2>
+<p>Once connected, Claude has access to <strong>11 tools</strong>: 7 interactive tools for template workflows and 4 language processing tools.</p>
+
+<h3 style="margin-top:24px;color:var(--accent);">Interactive Tools (7)</h3>
 <table class="tools-table">
 <thead><tr><th>Tool</th><th>Description</th><th>Example Prompt</th></tr></thead>
 <tbody>
@@ -314,6 +338,17 @@ User --> MCP Client --> Poly-Glot MCP Server
 <tr><td><strong>Get Poly-Glot language options</strong></td><td>List all 38 supported languages</td><td><em>"What languages does Poly-Glot support?"</em></td></tr>
 <tr><td><strong>Get Poly-Glot subscription status</strong></td><td>Check your current plan (Free, Trial, or Pro)</td><td><em>"Am I on the free or Pro plan?"</em></td></tr>
 <tr><td><strong>Open Poly-Glot AI Workspace</strong></td><td>Deep-link into the full Poly-Glot application</td><td><em>"Open Poly-Glot"</em></td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:24px;color:var(--accent);">Language Processing Tools (4)</h3>
+<table class="tools-table">
+<thead><tr><th>Tool</th><th>Description</th><th>Example Prompt</th></tr></thead>
+<tbody>
+<tr><td><strong>Transcribe audio</strong></td><td>Transcribe audio from a URL or base64 data with optional language detection</td><td><em>"Transcribe this audio file for me"</em></td></tr>
+<tr><td><strong>Detect language</strong></td><td>Identify the language of any text and map it to a Poly-Glot language</td><td><em>"What language is this text in?"</em></td></tr>
+<tr><td><strong>Translate text</strong></td><td>Translate text into any of 38 languages, preserving formatting and code</td><td><em>"Translate this email to Spanish"</em></td></tr>
+<tr><td><strong>Localize text</strong></td><td>Adapt text for a target locale, audience, and tone — beyond literal translation</td><td><em>"Localize this for a Japanese business audience"</em></td></tr>
 </tbody>
 </table>
 </section>
