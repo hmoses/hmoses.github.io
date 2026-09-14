@@ -59,6 +59,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 .phoenix-card{background:linear-gradient(135deg,#1a1035 0%,#0f172a 100%);border:1px solid #3730a3;border-radius:10px;padding:20px;margin:14px 0;color:#e2e8f0}
 .phoenix-card h4{color:#a78bfa;font-size:14px;font-weight:700;margin:0 0 8px}
 .phoenix-card p{font-size:13px;color:#94a3b8;line-height:1.6}
+.phoenix-card img{width:100%;border-radius:8px;margin:12px 0 4px;border:1px solid #3730a3}
 .footer{text-align:center;padding:30px 24px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
 .footer a{color:var(--accent)}
 @media(max-width:700px){.hero h1{font-size:26px}.hero-stats{gap:20px}.grid-2,.grid-3,.screenshot-grid{grid-template-columns:1fr}.stat-num{font-size:28px}}
@@ -274,16 +275,19 @@ Arize Phoenix v20.11.0 (localhost:6006)
 
 <div class="phoenix-card">
 <h4>📊 Projects Dashboard</h4>
+<img src="images/phoenix/phoenix-projects-dashboard.png" alt="Phoenix Projects Dashboard showing polyglot-free-templates project with 8 traces">
 <p>The <code>polyglot-free-templates</code> project: 8 traces (6 template tests + 1 compare check + 1 setup), P50 latency 13.2s. The default project shows 0 traces, all telemetry routed correctly via <code>openinference.project.name</code>.</p>
 </div>
 
 <div class="phoenix-card">
 <h4>📋 Trace List</h4>
+<img src="images/phoenix/phoenix-trace-list.png" alt="Phoenix Trace List showing polyglot.free_template spans">
 <p>Each row is one template test. Root span <code>polyglot.free_template</code> contains 7 child spans (navigate, open, fill, build, send, launch, evaluate). Durations 11-14s. All OK status.</p>
 </div>
 
 <div class="phoenix-card">
 <h4>🔍 Trace Detail / Waterfall</h4>
+<img src="images/phoenix/phoenix-trace-detail.png" alt="Phoenix Trace Detail showing span waterfall with parent-child hierarchy">
 <p>Parent-child span hierarchy with timing. <code>fill_fields</code> and <code>build_prompt</code> complete in milliseconds; <code>provider.*.launch</code> dominates latency. Each span carries structured attributes (template name, plan, goal, prompt length, provider key) queryable via GraphQL.</p>
 </div>
 </div>
