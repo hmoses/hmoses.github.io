@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poly-Glot × Arize Phoenix: Observability Report | Harold Moses II</title>
-<meta name="description" content="A Node.js integration case study instrumenting a multi-provider AI app with OpenTelemetry and Arize Phoenix. By Harold Moses II.">
+<meta name="description" content="A Node.js integration case study instrumenting a multi-provider AI app with OpenTelemetry and Arize Phoenix. 50 spans, 6 providers, 18/18 evals passed. By Harold Moses II.">
 <meta name="author" content="Harold Moses II">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -21,6 +21,9 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:7px;font-size:14px;font-weight:700;text-decoration:none;transition:all .2s}
 .btn.primary{background:var(--accent);color:#fff}.btn.secondary{border:1px solid var(--border);color:var(--text)}
 .container{max-width:900px;margin:0 auto;padding:0 24px}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:30px 0}
+.toc h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:10px}
+.toc ol{padding-left:24px;margin:0}.toc li{margin:4px 0;font-size:14px}.toc a{color:var(--text);font-weight:500}.toc a:hover{color:var(--accent)}
 .section{padding:40px 0 30px;border-bottom:1px solid var(--border)}
 .section:last-of-type{border-bottom:none}
 .section h2{font-size:22px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
@@ -32,55 +35,85 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .card h3{margin-top:0}
 pre{overflow-x:auto;background:var(--code-bg);color:#f8fafc;border-radius:9px;padding:16px;font-size:13px;line-height:1.55;margin:12px 0}
 code{font-family:'Fira Code',monospace}
-.inline-code{background:#f3f4f6;padding:2px 6px;border-radius:5px;font-size:13px}
+.ic{background:#f3f4f6;padding:2px 6px;border-radius:5px;font-size:13px}
 .tag{display:inline-block;background:var(--accent-light);border:1px solid #d0d8ff;color:var(--accent);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;margin:2px}
-.tag.green{background:#dcfce7;border-color:#bbf7d0;color:#166534}
-.tag.red{background:#fef2f2;border-color:#fecaca;color:#991b1b}
-.tag.orange{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
 table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);background:var(--accent-light);font-weight:700}
-.check{color:var(--green);font-weight:700}
-.fail{color:var(--red);font-weight:700}
+.ok{color:var(--green);font-weight:700}.fail{color:var(--red);font-weight:700}
 .note{background:var(--accent-light);border:1px solid #d7ddff;border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:18px 0;font-size:14px}
 .warn{background:#fff7ed;border:1px solid #fed7aa;border-left:4px solid var(--orange);border-radius:8px;padding:14px 16px;margin:18px 0;font-size:14px}
 .span-tree{font-family:'Fira Code',monospace;font-size:13px;line-height:1.8;background:var(--code-bg);color:#a5f3fc;padding:20px;border-radius:9px;margin:12px 0}
-.span-tree .root{color:#34d399;font-weight:700}
-.span-tree .child{color:#7dd3fc}
-.span-tree .timing{color:#94a3b8;font-size:11px}
+.span-tree .root{color:#34d399;font-weight:700}.span-tree .child{color:#7dd3fc}.span-tree .timing{color:#94a3b8;font-size:11px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.eval-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow)}
+.eval-card h4{font-size:14px;font-weight:700;margin:0 0 8px;color:var(--accent)}
+.eval-card ul{list-style:none;padding:0;margin:0}.eval-card li{font-size:13px;padding:3px 0}
+.screenshot-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.screenshot-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.screenshot-card .caption{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:6px}
+.screenshot-card .desc{font-size:13px;color:var(--muted)}
+.screenshot-placeholder{background:var(--code-bg);border-radius:8px;height:120px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:12px;margin-bottom:10px;font-family:'Fira Code',monospace}
+.phoenix-card{background:linear-gradient(135deg,#1a1035 0%,#0f172a 100%);border:1px solid #3730a3;border-radius:10px;padding:20px;margin:14px 0;color:#e2e8f0}
+.phoenix-card h4{color:#a78bfa;font-size:14px;font-weight:700;margin:0 0 8px}
+.phoenix-card p{font-size:13px;color:#94a3b8;line-height:1.6}
 .footer{text-align:center;padding:30px 24px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
 .footer a{color:var(--accent)}
-@media(max-width:700px){.hero h1{font-size:26px}.hero-stats{gap:20px}.grid-2{grid-template-columns:1fr}.stat-num{font-size:28px}}
+@media(max-width:700px){.hero h1{font-size:26px}.hero-stats{gap:20px}.grid-2,.grid-3,.screenshot-grid{grid-template-columns:1fr}.stat-num{font-size:28px}}
 </style>
 </head>
 <body>
 
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1: COVER                                                   -->
+<!-- ════════════════════════════════════════════════════════════════ -->
 <div class="hero">
-<div class="eyebrow">Integration Case Study</div>
+<div class="eyebrow">A Node.js Integration Case Study</div>
 <h1>🦜×🔭 Instrumenting a Multi-Provider AI App with Arize Phoenix</h1>
-<p class="subtitle">How to trace a template-driven, multi-provider AI pipeline with OpenTelemetry and Phoenix: from prompt assembly through provider dispatch to structured evaluations. Built against a production app with 1,022 templates across 35 languages and 6 AI providers.</p>
+<p class="subtitle">For AI engineers instrumenting non-standard LLM pipelines with OpenTelemetry and Arize Phoenix</p>
+<p class="subtitle" style="margin-top:-8px">How to trace a template-driven, multi-provider AI pipeline with OpenTelemetry and Phoenix: from prompt assembly through provider dispatch to structured evaluations. Built against a production app with 1,022 templates across 35 languages and 6 AI providers.</p>
 <div class="hero-stats">
 <div class="stat"><div class="stat-num">6</div><div class="stat-label">Templates Tested</div></div>
 <div class="stat"><div class="stat-num">6</div><div class="stat-label">Providers Launched</div></div>
 <div class="stat"><div class="stat-num">50</div><div class="stat-label">Spans Captured</div></div>
 <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Eval Pass Rate</div></div>
 </div>
-<div class="hero-links">
+<p style="font-size:14px;color:var(--muted)">Harold Moses II · September 2026</p>
+<div class="hero-links" style="margin-top:16px">
 <a href="https://hmoses.github.io/portfolio.html" class="btn primary">← Portfolio</a>
 <a href="https://github.com/hmoses/poly-glot-ai-workspace" class="btn secondary">Source Code</a>
-<a href="https://apps.apple.com/app/id6804499285" class="btn secondary">Mac App Store</a>
+<a href="https://apps.apple.com/app/id6804499285" class="btn secondary">📱 Mac App Store</a>
 </div>
 </div>
 
 <div class="container">
 
-<!-- INTEGRATION OVERVIEW -->
-<div class="section">
-<h2>📋 Integration Overview</h2>
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#integration-overview">Integration Overview</a></li>
+<li><a href="#architecture">Application Architecture &amp; Instrumentation</a></li>
+<li><a href="#test-results">Test Results, Provider Coverage &amp; Evaluations</a></li>
+<li><a href="#phoenix-dashboard">Phoenix Dashboard: Live Trace Data</a></li>
+<li><a href="#test-flow">Application Test Flow Screenshots</a></li>
+<li><a href="#nodejs-setup">Node.js Setup Guide: Protobuf OTLP + ESM</a></li>
+<li><a href="#span-reference">Span Reference &amp; Production Context</a></li>
+<li><a href="#mcp-surface">Production MCP Server &amp; Tool Surface</a></li>
+</ol>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2: INTEGRATION OVERVIEW                                    -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="integration-overview">
+<h2>1. Integration Overview</h2>
+<h3>The Pattern</h3>
 <p>This case study instruments <strong>Poly-Glot AI Workspace</strong>, a production app with 1,022 prompt templates across 35 languages, with <strong>Arize Phoenix</strong> observability. The pipeline is template-driven and multi-provider: it assembles prompts from structured templates and dispatches to 6 AI providers (ChatGPT, Claude, Gemini, Perplexity, Grok, DuckDuckGo). All 6 test cases are automated with Playwright, producing real OpenTelemetry traces with parent/child span hierarchies and structured evaluations flowing into Phoenix.</p>
 
 <h3>What Makes This Integration Different</h3>
+<p>Most Phoenix examples trace direct LLM API calls. This app doesn't make server-side LLM calls at all. It builds prompts and routes them to provider web UIs. Phoenix still captures the full pipeline because the instrumentation targets the application logic, not the model call:</p>
 <ul>
 <li><strong>Non-LLM-call tracing:</strong> Every stage from template selection through prompt assembly to provider dispatch is a traced span, without wrapping an LLM SDK.</li>
 <li><strong>Multi-provider dispatch:</strong> 6 providers in one test run, each with its own traced launch span and delivery method (auto-fill vs. clipboard paste).</li>
@@ -88,18 +121,20 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 <li><strong>Evaluation-as-observability:</strong> Structured pass/fail evaluations attached to spans (18/18 passed), not just latency metrics.</li>
 </ul>
 
-<div class="note"><strong>Key Finding:</strong> Phoenix v20+ only accepts protobuf OTLP and returns HTTP 415 for JSON-encoded traces. Most Node.js OpenTelemetry tutorials default to JSON. The exact package pins and ESM compatibility workarounds that work are documented below.</div>
+<div class="note"><strong>Node.js Setup: Key Finding —</strong> Phoenix v20+ only accepts protobuf OTLP and returns HTTP 415 for JSON-encoded traces. Most Node.js OpenTelemetry tutorials default to JSON. The exact package pins and ESM compatibility workarounds that work are documented in <a href="#nodejs-setup">Section 6</a>.</div>
 </div>
 
-<!-- APPLICATION ARCHITECTURE -->
-<div class="section">
-<h2>🏗️ Application Architecture &amp; Instrumentation</h2>
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3: APPLICATION ARCHITECTURE & INSTRUMENTATION              -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="architecture">
+<h2>2. Application Architecture &amp; Instrumentation</h2>
 
 <div class="grid-2">
 <div class="card">
 <h3>The Application</h3>
+<p>Poly-Glot AI Workspace is a multilingual prompt platform with 1,022 templates across 35 languages. It ships as a native Mac/iOS app and a remote MCP server (15 tools on 4+ registries).</p>
 <ul>
-<li>1,022 templates across 35 languages</li>
 <li>25 free / 997 Pro templates</li>
 <li>Compare Mode: same prompt to multiple AIs</li>
 <li>BYOM: Bring Your Own Model endpoints</li>
@@ -122,10 +157,10 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 </div>
 </div>
 
-<h3>Instrumentation Stack</h3>
+<h3>Instrumentation Architecture</h3>
 <pre><code>Playwright Test Runner (Node.js ESM)
 ├─ @opentelemetry/sdk-trace-base 1.30.1 (BasicTracerProvider)
-├─ @opentelemetry/exporter-trace-otlp-proto 0.57.2 (protobuf)
+├─ @opentelemetry/exporter-trace-otlp-proto 0.57.2 (protobuf — required by Phoenix)
 ├─ @opentelemetry/resources 1.30.1
 │   └─ Resource: openinference.project.name = "polyglot-free-templates"
 ▼
@@ -135,6 +170,8 @@ Arize Phoenix v20.11.0 (localhost:6006)
 └─ Web UI: traces, spans, evaluations</code></pre>
 
 <h3>Span Hierarchy (Per Test Case)</h3>
+<div class="grid-2">
+<div>
 <div class="span-tree">
 <span class="root">polyglot.free_template (ROOT)</span><br>
 <span class="child">├─ template.navigate</span> <span class="timing">~1s</span><br>
@@ -145,48 +182,243 @@ Arize Phoenix v20.11.0 (localhost:6006)
 <span class="child">├─ provider.*.launch</span> <span class="timing">~10.5s</span><br>
 <span class="child">└─ template.evaluate</span> <span class="timing">&lt;1ms</span>
 </div>
-
-<h3>Key Span Attributes</h3>
+</div>
+<div>
+<h3 style="margin-top:0">Key Span Attributes</h3>
 <table>
 <tr><th>Attribute</th><th>Description</th></tr>
-<tr><td><code>template.name</code></td><td>Display name</td></tr>
-<tr><td><code>template.plan</code></td><td>"free"</td></tr>
-<tr><td><code>template.goal</code></td><td>Category</td></tr>
-<tr><td><code>prompt.length</code></td><td>Char count</td></tr>
-<tr><td><code>provider.key</code></td><td>Provider ID</td></tr>
-<tr><td><code>provider.autofill</code></td><td>?q= support</td></tr>
-<tr><td><code>provider.url</code></td><td>URL opened</td></tr>
-<tr><td><code>test.status</code></td><td>passed/failed</td></tr>
+<tr><td><code class="ic">template.name</code></td><td>Display name</td></tr>
+<tr><td><code class="ic">template.plan</code></td><td>"free"</td></tr>
+<tr><td><code class="ic">template.goal</code></td><td>Category</td></tr>
+<tr><td><code class="ic">prompt.length</code></td><td>Char count</td></tr>
+<tr><td><code class="ic">provider.key</code></td><td>Provider ID</td></tr>
+<tr><td><code class="ic">provider.autofill</code></td><td>?q= support</td></tr>
+<tr><td><code class="ic">provider.url</code></td><td>URL opened</td></tr>
+<tr><td><code class="ic">test.status</code></td><td>passed/failed</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4: TEST RESULTS, PROVIDER COVERAGE & EVALUATIONS           -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="test-results">
+<h2>3. Test Results: 6 Free Templates × 6 Providers</h2>
+
+<table>
+<tr><th>#</th><th>Template</th><th>Goal</th><th>Provider</th><th>Delivery</th><th>Fields</th><th>Prompt</th><th>Evals</th><th>Status</th></tr>
+<tr><td>1</td><td>Code Review Assistant</td><td>Code &amp; Dev</td><td>ChatGPT</td><td>Auto-fill (?q=)</td><td>4</td><td>892ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+<tr><td>2</td><td>Interview Coach</td><td>Career</td><td>Grok</td><td>Auto-fill (?q=)</td><td>5</td><td>734ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+<tr><td>3</td><td>Summarization Tool</td><td>Writing</td><td>Perplexity</td><td>Clipboard</td><td>6</td><td>1,203ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+<tr><td>4</td><td>Study Guide Creator</td><td>School</td><td>DuckDuckGo</td><td>Clipboard</td><td>5</td><td>612ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+<tr><td>5</td><td>LinkedIn Post Writer</td><td>Content</td><td>Gemini</td><td>Clipboard</td><td>5</td><td>487ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+<tr><td>6</td><td>Recipe Generator</td><td>Cooking</td><td>Claude</td><td>Clipboard</td><td>5</td><td>395ch</td><td>3/3</td><td><span class="ok">✅</span></td></tr>
+</table>
+
+<div class="hero-stats" style="padding:20px 0">
+<div class="stat"><div class="stat-num">8</div><div class="stat-label">Traces</div></div>
+<div class="stat"><div class="stat-num">50</div><div class="stat-label">Spans</div></div>
+<div class="stat"><div class="stat-num">18/18</div><div class="stat-label">Evals Passed</div></div>
+<div class="stat"><div class="stat-num">0</div><div class="stat-label">Defects</div></div>
+</div>
+
+<h3>Evaluation Details (18/18 Passed)</h3>
+<div class="grid-3">
+<div class="eval-card">
+<h4>1. Summarization Tool</h4>
+<ul><li><span class="ok">✅</span> bullet_count_range</li><li><span class="ok">✅</span> content_present</li><li><span class="ok">✅</span> conciseness</li></ul>
+</div>
+<div class="eval-card">
+<h4>2. Code Review</h4>
+<ul><li><span class="ok">✅</span> empty_list_risk</li><li><span class="ok">✅</span> markdown_output</li><li><span class="ok">✅</span> actionable_rec</li></ul>
+</div>
+<div class="eval-card">
+<h4>3. Interview Coach</h4>
+<ul><li><span class="ok">✅</span> question_count_5</li><li><span class="ok">✅</span> tech_behav_mix</li><li><span class="ok">✅</span> role_relevance</li></ul>
+</div>
+<div class="eval-card">
+<h4>4. Study Guide</h4>
+<ul><li><span class="ok">✅</span> trace_span_eval</li><li><span class="ok">✅</span> question_count_5</li><li><span class="ok">✅</span> structured_sections</li></ul>
+</div>
+<div class="eval-card">
+<h4>5. LinkedIn Post</h4>
+<ul><li><span class="ok">✅</span> word_count_150_200</li><li><span class="ok">✅</span> professional_tone</li><li><span class="ok">✅</span> cta_present</li></ul>
+</div>
+<div class="eval-card">
+<h4>6. Recipe Generator</h4>
+<ul><li><span class="ok">✅</span> ingredient_list</li><li><span class="ok">✅</span> cooking_steps</li><li><span class="ok">✅</span> dietary_notes</li></ul>
+</div>
+</div>
+
+<h3>Provider Coverage (6 of 9)</h3>
+<table>
+<tr><th>Provider</th><th>Delivery</th><th>Method</th><th>Template</th><th>Status</th></tr>
+<tr><td>ChatGPT</td><td>Auto-fill (?q=)</td><td>URL param</td><td>Code Review Assistant</td><td><span class="ok">✅</span></td></tr>
+<tr><td>Grok</td><td>Auto-fill (?q=)</td><td>URL param</td><td>Interview Coach</td><td><span class="ok">✅</span></td></tr>
+<tr><td>Perplexity</td><td>Paste-required</td><td>Clipboard</td><td>Summarization Tool</td><td><span class="ok">✅</span></td></tr>
+<tr><td>DuckDuckGo</td><td>Paste-required</td><td>Clipboard</td><td>Study Guide Creator</td><td><span class="ok">✅</span></td></tr>
+<tr><td>Gemini</td><td>Paste-required</td><td>Clipboard</td><td>LinkedIn Post Writer</td><td><span class="ok">✅</span></td></tr>
+<tr><td>Claude</td><td>Paste-required</td><td>Clipboard</td><td>Recipe Generator</td><td><span class="ok">✅</span></td></tr>
+<tr><td colspan="4" style="color:var(--muted)">Copilot / Mistral / HuggingChat — Not in rotation (paste-required, available for future runs)</td><td></td></tr>
 </table>
 </div>
 
-<!-- TEST RESULTS -->
-<div class="section">
-<h2>🧪 Test Results: 6 Templates × 6 Providers</h2>
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 5: PHOENIX DASHBOARD: LIVE TRACE DATA                      -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="phoenix-dashboard">
+<h2>4. Phoenix Dashboard: Live Trace Data</h2>
+<p>Arize Phoenix v20.11.0 running locally during the test run. All traces routed to <code class="ic">polyglot-free-templates</code> project via protobuf OTLP.</p>
 
-<table>
-<tr><th>#</th><th>Template</th><th>Goal</th><th>Provider</th><th>Delivery</th><th>Status</th></tr>
-<tr><td>1</td><td>Code Review Assistant</td><td>Code &amp; Dev</td><td>ChatGPT</td><td>Auto-fill (?q=)</td><td><span class="check">✅ PASS</span></td></tr>
-<tr><td>2</td><td>Interview Coach</td><td>Career</td><td>Grok</td><td>Auto-fill (?q=)</td><td><span class="check">✅ PASS</span></td></tr>
-<tr><td>3</td><td>Summarization Tool</td><td>Writing</td><td>Perplexity</td><td>Clipboard</td><td><span class="check">✅ PASS</span></td></tr>
-<tr><td>4</td><td>Study Guide Creator</td><td>Education</td><td>DuckDuckGo</td><td>Clipboard</td><td><span class="check">✅ PASS</span></td></tr>
-<tr><td>5</td><td>LinkedIn Post Writer</td><td>Marketing</td><td>Gemini</td><td>Clipboard</td><td><span class="check">✅ PASS</span></td></tr>
-<tr><td>6</td><td>Recipe Generator</td><td>Lifestyle</td><td>Claude</td><td>Clipboard</td><td><span class="check">✅ PASS</span></td></tr>
-</table>
+<div class="phoenix-card">
+<h4>📊 Projects Dashboard</h4>
+<p>The <code>polyglot-free-templates</code> project: 8 traces (6 template tests + 1 compare check + 1 setup), P50 latency 13.2s. The default project shows 0 traces, all telemetry routed correctly via <code>openinference.project.name</code>.</p>
+</div>
+
+<div class="phoenix-card">
+<h4>📋 Trace List</h4>
+<p>Each row is one template test. Root span <code>polyglot.free_template</code> contains 7 child spans (navigate, open, fill, build, send, launch, evaluate). Durations 11-14s. All OK status.</p>
+</div>
+
+<div class="phoenix-card">
+<h4>🔍 Trace Detail / Waterfall</h4>
+<p>Parent-child span hierarchy with timing. <code>fill_fields</code> and <code>build_prompt</code> complete in milliseconds; <code>provider.*.launch</code> dominates latency. Each span carries structured attributes (template name, plan, goal, prompt length, provider key) queryable via GraphQL.</p>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 6: APPLICATION TEST FLOW SCREENSHOTS                       -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="test-flow">
+<h2>5. Application Test Flow Screenshots</h2>
+<p>Playwright captures of the template, fill, build, dispatch flow exercised during each traced test.</p>
+
+<div class="screenshot-grid">
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">Free templates filtered (25)</div>
+<div class="desc">Template picker showing 25 free templates available</div>
+</div>
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">Summarization Tool (6 fields)</div>
+<div class="desc">Template with 6 dynamic input fields populated by test</div>
+</div>
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">Code Review (Python input)</div>
+<div class="desc">Code Review Assistant with Python code pasted as input</div>
+</div>
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">Interview Coach (Grok auto-fill)</div>
+<div class="desc">Interview Coach dispatched to Grok via ?q= auto-fill</div>
+</div>
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">LinkedIn Post (Gemini paste)</div>
+<div class="desc">LinkedIn Post Writer dispatched to Gemini via clipboard paste</div>
+</div>
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Screenshot</div>
+<div class="caption">Recipe Generator (Claude paste)</div>
+<div class="desc">Recipe Generator dispatched to Claude via clipboard paste</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:20px">
+<h3>Compare Mode Verification</h3>
+<p>Compare Mode verified as available (trial active). Locks behind Pro paywall after 3-day trial. Confirmed via DOM inspection of <code class="ic">_appTrialExpired</code> and <code class="ic">_isPro</code>. Generated its own trace in Phoenix.</p>
+<div class="screenshot-grid" style="grid-template-columns:1fr">
+<div class="screenshot-card">
+<div class="screenshot-placeholder">📸 Compare Mode (available during trial)</div>
+<div class="caption">Compare Mode UI — verified unlocked during trial period</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 7: NODE.JS SETUP GUIDE                                     -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="nodejs-setup">
+<h2>6. Node.js Setup Guide: Protobuf OTLP + ESM</h2>
+
+<div class="warn"><strong>🔑 The Setup Problem:</strong> Phoenix v20+ only accepts protobuf-encoded OTLP traces. The default Node.js package (<code class="ic">@opentelemetry/exporter-trace-otlp-http</code>) sends JSON-encoded OTLP, which Phoenix rejects with <strong>HTTP 415 Unsupported Media Type</strong> and no useful error message. Traces silently vanish.</div>
+
+<div class="grid-2">
+<div class="card">
+<h3>❌ What Most Tutorials Show</h3>
+<pre><code>npm install @opentelemetry/exporter-trace-otlp-http</code></pre>
+<ul>
+<li>→ Sends <code class="ic">Content-Type: application/json</code></li>
+<li>→ Phoenix returns HTTP 415</li>
+<li>→ Traces silently lost</li>
+<li>→ No error in your app</li>
+</ul>
+</div>
+<div class="card">
+<h3>✅ What Actually Works</h3>
+<pre><code>npm install @opentelemetry/exporter-trace-otlp-proto</code></pre>
+<ul>
+<li>→ Sends <code class="ic">Content-Type: application/x-protobuf</code></li>
+<li>→ Phoenix accepts traces</li>
+<li>→ Spans appear in UI</li>
+<li>→ One package name difference</li>
+</ul>
+</div>
+</div>
+
+<h3>📦 ESM Compatibility — The Second Gotcha</h3>
+<p>OpenTelemetry v2 packages have ESM/CJS module conflicts that crash <code class="ic">NodeTracerProvider</code> in ESM projects. The fix: pin to the 1.x SDK line and use <code class="ic">BasicTracerProvider</code>:</p>
+<pre><code>@opentelemetry/api@1.9.0
+@opentelemetry/sdk-trace-base@1.30.1          ← BasicTracerProvider, not NodeTracerProvider
+@opentelemetry/exporter-trace-otlp-proto@0.57.2    ← protobuf, not JSON
+@opentelemetry/resources@1.30.1</code></pre>
+
+<h3>🏷️ Project Routing via Resource Attribute</h3>
+<p>Phoenix project assignment uses <code class="ic">openinference.project.name</code> as a resource attribute — not an HTTP header, query param, or endpoint path. Must be set at TracerProvider creation time:</p>
+<pre><code>const resource = new Resource({
+  "openinference.project.name": "my-project",
+});
+const provider = new BasicTracerProvider({ resource });</code></pre>
+
+<h3>Recommendations for Phoenix Docs</h3>
+<ul>
+<li><strong>Quickstart:</strong> Add a callout that <code class="ic">/v1/traces</code> requires protobuf, not JSON. The HTTP 415 response body should include "Expected Content-Type: application/x-protobuf".</li>
+<li><strong>Node.js guide:</strong> Show <code class="ic">exporter-trace-otlp-proto</code> as the default package, not <code class="ic">exporter-trace-otlp-http</code>.</li>
+<li><strong>ESM compatibility:</strong> Document the 1.x SDK pin requirement for ESM projects.</li>
+</ul>
+
+<h3>Known Instrumentation Gaps</h3>
+<ul>
+<li><strong>Response detection:</strong> Cross-origin prevents reading provider page content.</li>
+<li><strong>Token counts:</strong> Not available — Poly-Glot dispatches to web UIs, not APIs.</li>
+<li><strong>Compare Mode multi-provider:</strong> Not tested (consumes trial sends). Verified unlocked.</li>
+<li><strong>Provider-side latency:</strong> TTFT not measurable through web UI dispatch.</li>
+</ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 8: SPAN REFERENCE & PRODUCTION CONTEXT                     -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="span-reference">
+<h2>7. Span Reference &amp; Production Context</h2>
 
 <h3>Span Counts Summary</h3>
 <table>
 <tr><th>Span Name</th><th>Count</th><th>Status</th></tr>
-<tr><td><code>polyglot.free_template</code> (root)</td><td>6</td><td><span class="check">✅ All OK</span></td></tr>
-<tr><td><code>template.navigate</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>template.open</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>template.fill_fields</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>template.build_prompt</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>template.send_attempt</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>provider.*.launch</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>template.evaluate</code></td><td>6</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>polyglot.compare_mode_check</code></td><td>1</td><td><span class="check">✅</span></td></tr>
-<tr><td><code>phoenix.test.span</code></td><td>1</td><td><span class="check">✅</span></td></tr>
+<tr><td><code class="ic">polyglot.free_template</code> (root)</td><td>6</td><td><span class="ok">✅ All OK</span></td></tr>
+<tr><td><code class="ic">template.navigate</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">template.open</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">template.fill_fields</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">template.build_prompt</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">template.send_attempt</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">provider.*.launch</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">template.evaluate</code></td><td>6</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">polyglot.compare_mode_check</code></td><td>1</td><td><span class="ok">✅</span></td></tr>
+<tr><td><code class="ic">phoenix.test.span</code></td><td>1</td><td><span class="ok">✅</span></td></tr>
 <tr><td><strong>Total</strong></td><td><strong>50</strong></td><td></td></tr>
 </table>
 
@@ -199,62 +431,9 @@ Arize Phoenix v20.11.0 (localhost:6006)
 <tr><td>dailyFreeSends</td><td>1 (DAILY_FREE_SENDS)</td></tr>
 <tr><td>Compare Mode</td><td>Available (trial active). Locks after 3-day expiry.</td></tr>
 </table>
-</div>
+<p style="font-size:13px;color:var(--muted);margin-top:8px">No production behavior modified. Real trial/entitlement system exercised. First free send triggered trial automatically.</p>
 
-<!-- NODE.JS SETUP GUIDE -->
-<div class="section">
-<h2>🔧 Node.js Setup Guide: Protobuf OTLP + ESM</h2>
-
-<div class="warn"><strong>🔑 The Setup Problem:</strong> Phoenix v20+ only accepts protobuf-encoded OTLP traces. The default Node.js package (<code class="inline-code">@opentelemetry/exporter-trace-otlp-http</code>) sends JSON-encoded OTLP, which Phoenix rejects with <strong>HTTP 415 Unsupported Media Type</strong> and no useful error message. Traces silently vanish.</div>
-
-<div class="grid-2">
-<div class="card">
-<h3>❌ What Most Tutorials Show</h3>
-<pre><code>npm install @opentelemetry/exporter-trace-otlp-http</code></pre>
-<ul>
-<li>Sends <code class="inline-code">Content-Type: application/json</code></li>
-<li>Phoenix returns HTTP 415</li>
-<li>Traces silently lost</li>
-<li>No error in your app</li>
-</ul>
-</div>
-<div class="card">
-<h3>✅ What Actually Works</h3>
-<pre><code>npm install @opentelemetry/exporter-trace-otlp-proto</code></pre>
-<ul>
-<li>Sends <code class="inline-code">Content-Type: application/x-protobuf</code></li>
-<li>Phoenix accepts traces</li>
-<li>Spans appear in UI</li>
-<li>One package name difference</li>
-</ul>
-</div>
-</div>
-
-<h3>📦 ESM Compatibility — The Second Gotcha</h3>
-<p>OpenTelemetry v2 packages have ESM/CJS module conflicts that crash <code class="inline-code">NodeTracerProvider</code> in ESM projects. The fix: pin to the 1.x SDK line and use <code class="inline-code">BasicTracerProvider</code>:</p>
-<pre><code>@opentelemetry/api@1.9.0
-@opentelemetry/sdk-trace-base@1.30.1        ← BasicTracerProvider, not NodeTracerProvider
-@opentelemetry/exporter-trace-otlp-proto@0.57.2  ← protobuf, not JSON
-@opentelemetry/resources@1.30.1</code></pre>
-
-<h3>🏷️ Project Routing via Resource Attribute</h3>
-<p>Phoenix project assignment uses <code class="inline-code">openinference.project.name</code> as a resource attribute — not an HTTP header, query param, or endpoint path. Must be set at TracerProvider creation time:</p>
-<pre><code>const resource = new Resource({
-  "openinference.project.name": "my-project",
-});
-const provider = new BasicTracerProvider({ resource });</code></pre>
-
-<h3>Recommendations for Phoenix Docs</h3>
-<ul>
-<li><strong>Quickstart:</strong> Add a callout that <code class="inline-code">/v1/traces</code> requires protobuf, not JSON. The HTTP 415 response body should include "Expected Content-Type: application/x-protobuf".</li>
-<li><strong>Node.js guide:</strong> Show <code class="inline-code">exporter-trace-otlp-proto</code> as the default package, not <code class="inline-code">exporter-trace-otlp-http</code>.</li>
-<li><strong>ESM compatibility:</strong> Document the 1.x SDK pin requirement for ESM projects.</li>
-</ul>
-</div>
-
-<!-- PRODUCTION RELIABILITY -->
-<div class="section">
-<h2>🛠️ Production Reliability (Post-Remediation)</h2>
+<h3>Production Reliability (Post-Remediation)</h3>
 <p>The observability work surfaced <strong>6 production error classes</strong> in the MCP server logs. All were remediated and deployed as v1.9.2.</p>
 
 <div class="hero-stats" style="padding:20px 0">
@@ -264,81 +443,79 @@ const provider = new BasicTracerProvider({ resource });</code></pre>
 <div class="stat"><div class="stat-num">v1.9.2</div><div class="stat-label">Deployed</div></div>
 </div>
 
+<h3>Errors Remediated (22 events → 0)</h3>
 <table>
 <tr><th>Class</th><th>Error</th><th>Count</th><th>Fix</th><th>Status</th></tr>
-<tr><td>A</td><td>Transport/UI crash (_meta.ui)</td><td>7</td><td>safe-ext-apps.js wrapper</td><td><span class="check">FIXED</span></td></tr>
-<tr><td>B</td><td>HTTP 429 rate limit</td><td>7</td><td>Backoff + jitter + Retry-After</td><td><span class="check">FIXED</span></td></tr>
-<tr><td>C</td><td>Missing template fields crash</td><td>3</td><td>Null-safe field access</td><td><span class="check">FIXED</span></td></tr>
-<tr><td>D</td><td>Entitlement check timeout</td><td>2</td><td>Circuit breaker + fallback</td><td><span class="check">FIXED</span></td></tr>
-<tr><td>E</td><td>TEMPLATE_NOT_FOUND</td><td>2</td><td>Template index rebuild</td><td><span class="check">FIXED</span></td></tr>
-<tr><td>F</td><td>Stale cache serving old templates</td><td>1</td><td>Cache invalidation on deploy</td><td><span class="check">FIXED</span></td></tr>
+<tr><td>A</td><td>Transport/UI crash (_meta.ui)</td><td>7</td><td>safe-ext-apps.js wrapper</td><td><span class="ok">FIXED</span></td></tr>
+<tr><td>B</td><td>HTTP 429 rate limit</td><td>7</td><td>Backoff + jitter + Retry-After</td><td><span class="ok">FIXED</span></td></tr>
+<tr><td>C</td><td>Transcription 400</td><td>3</td><td>Input validation</td><td><span class="ok">FIXED</span></td></tr>
+<tr><td>D</td><td>Audio 404</td><td>1</td><td>AudioFetchError class</td><td><span class="ok">FIXED</span></td></tr>
+<tr><td>E</td><td>Missing OPENAI_API_KEY</td><td>3</td><td>ProviderError class</td><td><span class="ok">FIXED</span></td></tr>
+<tr><td>F</td><td>Template not found</td><td>1</td><td>TEMPLATE_NOT_FOUND handler</td><td><span class="ok">FIXED</span></td></tr>
 </table>
 </div>
 
-<!-- MCP TOOLS -->
-<div class="section">
-<h2>🔌 Production MCP Server &amp; Tool Surface</h2>
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PAGE 9: PRODUCTION MCP SERVER & TOOL SURFACE                    -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="section" id="mcp-surface">
+<h2>8. Production MCP Server &amp; Tool Surface</h2>
 
 <table>
 <tr><th>Surface</th><th>Status</th><th>Tools</th><th>Notes</th></tr>
-<tr><td>Official MCP Registry</td><td><span class="check">✅ LIVE</span></td><td>15</td><td>Active, verified</td></tr>
-<tr><td>MCP.so</td><td><span class="check">✅ LIVE</span></td><td>15</td><td>Verified + Featured</td></tr>
-<tr><td>Glama</td><td><span class="check">✅ LIVE</span></td><td>15</td><td>Auto-syncs from GitHub</td></tr>
-<tr><td>HuggingFace Space</td><td><span class="check">✅ LIVE</span></td><td>15</td><td>Static readme</td></tr>
+<tr><td>Official MCP Registry</td><td><span class="ok">✅ LIVE</span></td><td>15</td><td>Active, verified</td></tr>
+<tr><td>MCP.so</td><td><span class="ok">✅ LIVE</span></td><td>15</td><td>Verified + Featured</td></tr>
+<tr><td>Glama</td><td><span class="ok">✅ LIVE</span></td><td>15</td><td>Auto-syncs from GitHub</td></tr>
+<tr><td>HuggingFace Space</td><td><span class="ok">✅ LIVE</span></td><td>15</td><td>Static readme</td></tr>
+<tr><td>Awesome MCP Servers</td><td style="color:var(--muted)">PR closed</td><td>—</td><td>Resubmit available</td></tr>
+<tr><td>MCP.Directory</td><td style="color:var(--muted)">Pending</td><td>—</td><td>Awaiting review</td></tr>
 </table>
 
 <h3>15 Canonical MCP Tools</h3>
-<div class="grid-2">
+<div class="grid-3">
 <div class="card">
 <h3>Core (7)</h3>
 <ul>
-<li><code class="inline-code">search_templates</code></li>
-<li><code class="inline-code">get_template</code></li>
-<li><code class="inline-code">build_prompt</code></li>
-<li><code class="inline-code">prepare_compare</code></li>
-<li><code class="inline-code">get_language_options</code></li>
-<li><code class="inline-code">get_subscription_status</code></li>
-<li><code class="inline-code">open_workspace</code></li>
+<li><code class="ic">search_templates</code></li>
+<li><code class="ic">get_template</code></li>
+<li><code class="ic">build_prompt</code></li>
+<li><code class="ic">prepare_compare</code></li>
+<li><code class="ic">get_language_options</code></li>
+<li><code class="ic">get_subscription_status</code></li>
+<li><code class="ic">open_workspace</code></li>
 </ul>
 </div>
 <div class="card">
-<h3>BYOM (4) + Language (4)</h3>
+<h3>BYOM (4)</h3>
 <ul>
-<li><code class="inline-code">get_custom_model_capabilities</code></li>
-<li><code class="inline-code">validate_custom_model</code></li>
-<li><code class="inline-code">run_custom_model</code></li>
-<li><code class="inline-code">prepare_custom_compare</code></li>
-</ul>
-<hr style="margin:8px 0;border-color:var(--border)">
-<ul>
-<li><code class="inline-code">transcribe_audio</code></li>
-<li><code class="inline-code">detect_language</code></li>
-<li><code class="inline-code">translate_text</code></li>
-<li><code class="inline-code">localize_text</code></li>
+<li><code class="ic">get_custom_model_capabilities</code></li>
+<li><code class="ic">validate_custom_model</code></li>
+<li><code class="ic">run_custom_model</code></li>
+<li><code class="ic">prepare_custom_compare</code></li>
 </ul>
 </div>
-</div>
-
-<div class="note"><strong>Production Endpoint:</strong><br><code class="inline-code">https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code><br>Health: ok | Version: 1.9.2 | Tools: 15 | Templates: 1,022 | Languages: 35</div>
-</div>
-
-<!-- KNOWN GAPS -->
-<div class="section">
-<h2>📝 Known Instrumentation Gaps</h2>
+<div class="card">
+<h3>Language (4)</h3>
 <ul>
-<li><strong>Response detection:</strong> Cross-origin prevents reading provider page content.</li>
-<li><strong>Token counts:</strong> Not available — Poly-Glot dispatches to web UIs, not APIs.</li>
-<li><strong>Compare Mode multi-provider:</strong> Not tested (consumes trial sends). Verified unlocked.</li>
-<li><strong>Provider-side latency:</strong> TTFT not measurable through web UI dispatch.</li>
+<li><code class="ic">transcribe_audio</code></li>
+<li><code class="ic">detect_language</code></li>
+<li><code class="ic">translate_text</code></li>
+<li><code class="ic">localize_text</code></li>
 </ul>
 </div>
+</div>
+
+<div class="note"><strong>Production Endpoint:</strong><br><code class="ic">https://br-steep-leaf-ae2o29qz-mcp.compute.c-2.us-east-2.aws.neon.tech/mcp</code><br>Health: ok | Version: 1.9.2 | Tools: 15 | Templates: 1,022 | Languages: 35</div>
+</div>
 
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
-<p><strong>Harold Moses II</strong> · Documentation Engineer</p>
-<p style="margin-top:6px"><a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://github.com/hmoses">GitHub</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a> · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a></p>
-<p style="margin-top:8px;font-size:12px;color:#999">September 2026 · Built with Playwright, OpenTelemetry, and Arize Phoenix v20.11.0</p>
+<p><strong>Built and documented by Harold Moses II</strong></p>
+<p style="margin-top:6px"><a href="https://apps.apple.com/app/id6804499285">Mac App Store</a> · <a href="https://poly-glot.ai">poly-glot.ai</a> · <a href="https://github.com/hmoses">GitHub</a></p>
+<p style="margin-top:4px">Documentation Engineer</p>
+<p style="margin-top:12px"><a href="https://hmoses.github.io/portfolio.html">← Back to Portfolio</a></p>
 </div>
 
 </body>
