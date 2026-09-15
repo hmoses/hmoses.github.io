@@ -82,7 +82,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 <div class="eyebrow">A Node.js Integration Case Study</div>
 <h1>🦜×🔭 Instrumenting a Multi-Provider AI App with Arize Phoenix</h1>
 <p class="subtitle">For AI engineers instrumenting non-standard LLM pipelines with OpenTelemetry and Arize Phoenix</p>
-<p class="subtitle" style="margin-top:-8px">How to trace a template-driven, multi-provider AI pipeline with OpenTelemetry and Phoenix: from prompt assembly through provider dispatch to structured evaluations. Built against a production app with 1,022 templates across 35 languages and 6 AI providers.</p>
+<p class="subtitle" style="margin-top:-8px">How to trace a template-driven, multi-provider AI pipeline with OpenTelemetry and Phoenix: from prompt assembly through provider dispatch to structured evaluations. Built against a production app with 1,022 templates across 38 languages and 9 AI providers.</p>
 <div class="hero-stats">
 <div class="stat"><div class="stat-num">6</div><div class="stat-label">Templates Tested</div></div>
 <div class="stat"><div class="stat-num">6</div><div class="stat-label">Providers Launched</div></div>
@@ -101,7 +101,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 <div style="max-width:900px;margin:20px auto;padding:0 24px">
 <div class="card" style="margin-bottom:20px;border:1px solid #7c3aed;background:linear-gradient(135deg,#1a1035,#0f172a)">
 <h3 style="color:#a78bfa;margin:0 0 10px">🦜 About Poly-Glot AI — The System Under Test</h3>
-<p style="font-size:13px;line-height:1.7;color:#cbd5e1"><strong>Poly-Glot AI Workspace</strong> is a production app I built — a universal AI prompt workspace with <strong>1,022 templates</strong> across <strong>35 languages</strong>, dispatching to <strong>9 AI providers</strong> (ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot, Mistral, DuckDuckGo AI, HuggingChat). Users pick a template, fill smart fields, and send the assembled prompt to one or multiple AIs via Compare Mode.</p>
+<p style="font-size:13px;line-height:1.7;color:#cbd5e1"><strong>Poly-Glot AI Workspace</strong> is a production app I built — a universal AI prompt workspace with <strong>1,022 templates</strong> across <strong>38 languages</strong>, dispatching to <strong>9 AI providers</strong> (ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot, Mistral, DuckDuckGo AI, HuggingChat). Users pick a template, fill smart fields, and send the assembled prompt to one or multiple AIs via Compare Mode.</p>
 <p style="font-size:13px;line-height:1.7;color:#cbd5e1;margin-top:14px"><strong>Why I tested it:</strong> This report documents how I instrumented my own non-standard, template-driven, multi-provider AI pipeline with OpenTelemetry and Arize Phoenix — tracing the full lifecycle from prompt assembly through provider dispatch to structured evaluations. The goal: demonstrate production-grade observability for LLM applications that don't follow the typical chat-completion pattern.</p>
 </div>
 </div>
@@ -129,7 +129,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 <div class="section" id="integration-overview">
 <h2>1. Integration Overview</h2>
 <h3>The Pattern</h3>
-<p>This case study instruments <strong>Poly-Glot AI Workspace</strong>, a production app with 1,022 prompt templates across 35 languages, with <strong>Arize Phoenix</strong> observability. The pipeline is template-driven and multi-provider: it assembles prompts from structured templates and dispatches to 6 AI providers (ChatGPT, Claude, Gemini, Perplexity, Grok, DuckDuckGo). All 6 test cases are automated with Playwright, producing real OpenTelemetry traces with parent/child span hierarchies and structured evaluations flowing into Phoenix.</p>
+<p>This case study instruments <strong>Poly-Glot AI Workspace</strong>, a production app with 1,022 prompt templates across 38 languages, with <strong>Arize Phoenix</strong> observability. The pipeline is template-driven and multi-provider: it assembles prompts from structured templates and dispatches to 9 AI providers (ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot, Mistral, DuckDuckGo AI, HuggingChat). All 6 test cases are automated with Playwright, producing real OpenTelemetry traces with parent/child span hierarchies and structured evaluations flowing into Phoenix.</p>
 
 <h3>What Makes This Integration Different</h3>
 <p>Most Phoenix examples trace direct LLM API calls. This app doesn't make server-side LLM calls at all. It builds prompts and routes them to provider web UIs. Phoenix still captures the full pipeline because the instrumentation targets the application logic, not the model call:</p>
@@ -152,7 +152,7 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent
 <div class="grid-2">
 <div class="card">
 <h3>The Application</h3>
-<p>Poly-Glot AI Workspace is a multilingual prompt platform with 1,022 templates across 35 languages. It ships as a native Mac/iOS app and a remote MCP server (15 tools on 4+ registries).</p>
+<p>Poly-Glot AI Workspace is a multilingual prompt platform with 1,022 templates across 38 languages. It ships as a native Mac/iOS app and a remote MCP server (15 tools on 4+ registries).</p>
 <ul>
 <li>25 free / 997 Pro templates</li>
 <li>Compare Mode: same prompt to multiple AIs</li>
