@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arize AX: UI & Functionality Guide — Harold Moses II</title>
+<meta name="description" content="A practical guide to Arize AX covering the full AI engineering loop: instrument, observe, evaluate, diagnose, experiment, ship, and monitor. Written by Harold Moses II.">
+<meta name="keywords" content="Arize AX, AI observability, tracing, evaluations, experiments, agent debugging, LLM monitoring, documentation engineer">
+<meta name="author" content="Harold Moses II">
+<meta property="og:title" content="Arize AX: UI & Functionality Guide">
+<meta property="og:description" content="Product documentation sample covering the Arize AX AI engineering platform — traces, evaluations, experiments, agent debugging, and production monitoring.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://hmoses.github.io/arize-ax.html">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e1a;--surface:#111827;--card:#1a1f35;--border:#1e293b;--text:#e2e8f0;--muted:#94a3b8;--accent:#818cf8;--accent2:#a78bfa}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.7}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code{background:rgba(99,102,241,.12);padding:2px 6px;border-radius:4px;font-size:12px;font-family:'Fira Code','SF Mono',monospace;color:#c4b5fd}
+.hero{max-width:900px;margin:0 auto;padding:56px 24px 34px;text-align:center;border-bottom:2px solid var(--accent)}
+.hero h1{font-size:36px;font-weight:900;letter-spacing:-1px;margin-bottom:12px;line-height:1.1}
+.hero .subtitle{font-size:16px;color:var(--muted);max-width:720px;margin:0 auto 20px;line-height:1.7}
+.hero-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:28px 0}
+.toc h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--accent2)}
+.toc ol{padding-left:20px}
+.toc li{margin:4px 0;font-size:13px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin:20px 0}
+h2{font-size:22px;font-weight:800;margin:36px 0 14px;padding-top:20px;border-top:1px solid var(--border);color:var(--text)}
+h3{font-size:16px;font-weight:700;margin:18px 0 8px;color:var(--accent2)}
+h4{font-size:14px;font-weight:700;margin:14px 0 6px;color:var(--accent)}
+ul,ol{padding-left:20px;margin:8px 0}
+li{margin:4px 0;font-size:13px}
+.graphic-card{background:linear-gradient(135deg,#1a1035,#0f172a);border:1px solid #3730a3;border-radius:10px;padding:20px;margin:14px 0;color:#e2e8f0}
+.graphic-card h4{color:#a78bfa;font-size:14px;font-weight:700;margin:0 0 8px}
+.graphic-card p{font-size:13px;color:#94a3b8;line-height:1.6}
+.graphic-card .diagram{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:8px;padding:16px;margin:12px 0;font-family:'Fira Code','SF Mono',monospace;font-size:12px;color:#c4b5fd;white-space:pre;overflow-x:auto;text-align:center;line-height:1.8}
+.use-case{background:rgba(99,102,241,.06);border-left:3px solid var(--accent);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0;font-size:13px}
+.use-case strong{color:var(--accent)}
+.interview-tip{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c4b5fd}
+.interview-tip::before{content:"💡 Interview: ";font-weight:700}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+th{background:var(--surface);color:var(--accent);text-align:left;padding:8px 10px;font-weight:700;border:1px solid var(--border)}
+td{padding:8px 10px;border:1px solid var(--border);color:#cbd5e1}
+.footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@media(max-width:700px){.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>📊 Arize AX: UI & Functionality Guide</h1>
+<p class="subtitle">A practical guide to the Arize AX AI engineering platform — covering the full loop from instrumentation through observability, evaluation, experimentation, and production monitoring.</p>
+<p style="font-size:14px;color:var(--muted)">Harold Moses II · September 2026 · Product Documentation Sample</p>
+<div class="hero-links" style="margin-top:16px">
+<a href="https://hmoses.github.io/portfolio.html" class="btn primary">← Portfolio</a>
+<a href="https://hmoses.github.io/phoenix-report.html" class="btn secondary">Phoenix Report →</a>
+</div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#engineering-loop">End-to-End AX Engineering Loop</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#tracing">Tracing: Traces & Spans</a></li>
+<li><a href="#evaluations">Evaluations</a></li>
+<li><a href="#datasets">Datasets</a></li>
+<li><a href="#experiments">Experiments</a></li>
+<li><a href="#agents">Agents & Tool-Use Debugging</a></li>
+<li><a href="#sessions">Sessions</a></li>
+<li><a href="#dashboards">Dashboards & Monitoring</a></li>
+<li><a href="#alyx">Alyx — AI Engineering Agent</a></li>
+<li><a href="#troubleshooting">Practical Troubleshooting Flow</a></li>
+<li><a href="#visual-guide">Visual Guide: 7 Core Graphics</a></li>
+<li><a href="#interview">Interview Summary</a></li>
+</ol>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="engineering-loop">1. End-to-End AX Engineering Loop</h2>
+
+<div class="card">
+<p><strong>What is Arize AX?</strong> An AI engineering platform for observing, evaluating, and improving AI applications and agents. Engineers instrument applications to send traces into AX, inspect traces, spans, and sessions to understand behavior, apply evaluations to identify quality or agent failures, turn representative cases into datasets, experiment with prompts, models, retrieval, or agent configurations, and measure whether changes improve performance before and after deployment.</p>
+</div>
+
+<div class="graphic-card">
+<h4>🔄 The Engineering Loop</h4>
+<div class="diagram">Production AI App → Observe → Evaluate → Diagnose → Experiment → Measure → Ship
+                          ↑                                                                    |
+                          └────────────── Continuous production feedback loop ──────────────────┘</div>
+<p>AX is not just a trace viewer. It supports a continuous improvement loop: observe production behavior, evaluate quality, diagnose failures, test changes, measure them, ship the improvement, and observe again.</p>
+</div>
+
+<div class="interview-tip">Document AX around the user workflow, not only around screens: instrument → observe → diagnose → evaluate → build a dataset → experiment → compare → deploy → monitor.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="projects">2. Projects</h2>
+
+<div class="card">
+<p>Projects are the top-level organizational unit. All traces, evaluations, datasets, and experiments live inside a project. Separating applications or environments into different projects keeps telemetry isolated and organized.</p>
+<p style="margin-top:8px">Teams typically create one project per application or environment (e.g., <code>support-agent-prod</code>, <code>support-agent-staging</code>).</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="tracing">3. Tracing: Traces & Spans</h2>
+
+<div class="graphic-card">
+<h4>📊 Trace & Span Hierarchy</h4>
+<div class="diagram">                    TRACE: One End-to-End Request
+
+  SPAN: Agent  →  SPAN: Retriever  →  SPAN: LLM  →  SPAN: Tool Call
+
+Inspect inputs, outputs, latency, tokens, attributes, status, and evaluations at each step.
+        Trace = complete story. Span = one operation inside the story.</div>
+</div>
+
+<div class="card">
+<h3>Traces</h3>
+<p>A trace represents one complete end-to-end request through an AI application. When a user asks a question and the system retrieves context, calls a model, and returns an answer, the entire sequence is one trace.</p>
+
+<h3>Spans</h3>
+<p>Spans are the individual operations inside a trace: agent logic, retrieval, model calls, tools, embeddings, or other instrumented work. Each span records:</p>
+<ul>
+<li><strong>Inputs & outputs</strong> — what went in, what came out</li>
+<li><strong>Timing</strong> — start time, duration, latency</li>
+<li><strong>Status</strong> — OK, ERROR, with error messages</li>
+<li><strong>Token usage</strong> — prompt tokens, completion tokens, total</li>
+<li><strong>Attributes</strong> — structured metadata (model name, temperature, etc.)</li>
+<li><strong>Evaluations</strong> — quality scores attached at the span level</li>
+</ul>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> The final answer is wrong. Instead of guessing that the model failed, the engineer opens the trace and discovers that the retriever span returned irrelevant documents. The actual root cause is retrieval, not generation.</div>
+
+<div class="interview-tip">A trace tells me what happened end to end; spans tell me where it happened.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="evaluations">4. Evaluations</h2>
+
+<div class="graphic-card">
+<h4>🎯 Evaluation Pipeline</h4>
+<div class="diagram">User Input → AI Output → Evaluator (LLM / Code) → Correctness
+                                                    → Relevance
+                                                    → Groundedness
+                                                    → Tool Quality</div>
+<p>Software can return HTTP 200 and still produce a bad AI answer. Evaluations measure semantic quality and behavior, not merely system uptime.</p>
+</div>
+
+<div class="card">
+<h3>Evaluation Types</h3>
+<table>
+<tr><th>Type</th><th>Method</th><th>Best For</th></tr>
+<tr><td>Correctness</td><td>LLM-as-judge</td><td>Is the answer factually right?</td></tr>
+<tr><td>Relevance</td><td>LLM-as-judge</td><td>Does the answer address the question?</td></tr>
+<tr><td>Groundedness</td><td>LLM-as-judge</td><td>Is the answer supported by retrieved context?</td></tr>
+<tr><td>Hallucination</td><td>LLM-as-judge / code</td><td>Does the answer contain fabricated information?</td></tr>
+<tr><td>Safety</td><td>LLM-as-judge / code</td><td>Does the output violate safety guidelines?</td></tr>
+<tr><td>Tool Selection</td><td>Deterministic</td><td>Did the agent pick the right tool?</td></tr>
+</table>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> A customer-service response is fast and error-free but states a 90-day return policy when the actual policy is 30 days. A correctness or groundedness evaluator flags the response even though the request technically succeeded.</div>
+
+<div class="interview-tip">Traditional observability asks "did the system run?" AI evaluation asks "did it behave well?"</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="datasets">5. Datasets</h2>
+
+<div class="graphic-card">
+<h4>📁 Production Failure → Dataset → Experiment</h4>
+<div class="diagram">Production Failure → Trace → Dataset → Experiment → Measured Improvement
+
+           Turn real failures into repeatable regression tests.</div>
+</div>
+
+<div class="card">
+<p>Bad production traces are valuable test material. Instead of fixing one incident and forgetting it, teams preserve representative cases in datasets and use them to test future versions.</p>
+<ul>
+<li>Capture failing traces as dataset rows</li>
+<li>Include inputs, expected outputs, and context</li>
+<li>Use datasets as regression tests for experiments</li>
+<li>Build golden datasets for evaluation baselines</li>
+</ul>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> Twenty users trigger the same retrieval failure. Those cases become a dataset. The team tests a new retrieval strategy and evaluates whether it fixes those failures without degrading other cases.</div>
+
+<div class="interview-tip">AX helps connect production observability to development experimentation. That feedback loop is one of the strongest reasons to use an AI engineering platform.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="experiments">6. Experiments</h2>
+
+<div class="graphic-card">
+<h4>🧪 Prompt / Model Experiment Comparison</h4>
+<div class="diagram">                    Test Dataset
+
+Baseline A                              Candidate B
+Correctness: 0.81                       Correctness: 0.94
+Hallucination: 8%                       Hallucination: 2%
+Latency: 1.2s                           Latency: 1.3s</div>
+</div>
+
+<div class="card">
+<p>AX experiments make changes measurable. A team can compare prompts, models, agent configurations, or other application variants against the same dataset and evaluation criteria.</p>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> A stricter system prompt improves groundedness but increases latency slightly. The experiment exposes the tradeoff so the team can make an engineering decision based on evidence rather than intuition.</div>
+<div class="use-case"><strong>Use case:</strong> Compare two model providers for quality, latency, and cost-sensitive token behavior before changing production routing.</div>
+
+<div class="interview-tip">Prompt engineering becomes an experiment with a baseline, candidate, dataset, metrics, and repeatable results.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="agents">7. Agents & Tool-Use Debugging</h2>
+
+<div class="graphic-card">
+<h4>🤖 Agent Tool-Use Investigation</h4>
+<div class="diagram">User → Agent → Select Tool → Tool Result → Reason / Continue → Answer
+
+     Evaluate the path, not only the final answer.
+     Tool selection · parameters · sequence · errors · convergence · final quality</div>
+</div>
+
+<div class="card">
+<p>Agent quality includes the route an agent takes, not just the text it eventually returns. Tool selection, arguments, ordering, repeated calls, failures, and convergence can all be inspected and evaluated.</p>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> An agent gives the correct weather answer but calls three unrelated tools first, wasting time and tokens. Final-answer evaluation may pass, while trajectory/tool-use evaluation exposes inefficiency.</div>
+<div class="use-case"><strong>Use case:</strong> An account-support agent chooses the correct <code>lookup_account</code> tool but passes the wrong customer identifier. Span-level inspection separates tool-selection quality from parameter-extraction quality.</div>
+
+<div class="interview-tip">Agent observability is about understanding both outcome and execution path.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="sessions">8. Sessions</h2>
+
+<div class="graphic-card">
+<h4>💬 Sessions & Production Monitoring</h4>
+<div class="diagram">SESSION: One User Conversation          PRODUCTION MONITORING
+
+Trace 1: Where is my order?             Correctness          96%
+Trace 2: When will it arrive?           Hallucination rate    2%
+Trace 3: Change delivery address?       P99 latency         4.8s
+                                        Tool failure rate     1%
+
+      Dashboards + alerts surface trends and regressions.</div>
+</div>
+
+<div class="card">
+<p>Sessions group multiple traces from the same conversation or interaction sequence. This enables multi-turn analysis that single-trace inspection misses.</p>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> Every individual answer in a support conversation looks plausible, but the user repeatedly asks the same question because the agent never resolves the issue. Session-level evaluation reveals unresolved conversations or frustration that single-turn analysis misses.</div>
+
+<div class="interview-tip">AX supports multiple levels of analysis: span → trace → session → population-level monitoring.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="dashboards">9. Dashboards & Monitoring</h2>
+
+<div class="card">
+<p>Dashboards move from debugging one request to understanding system-wide behavior. Teams can track aggregate quality, latency, token usage, errors, evaluator results, and other production signals.</p>
+<ul>
+<li><strong>Aggregate quality tracking</strong> — correctness, relevance, groundedness over time</li>
+<li><strong>Latency monitoring</strong> — P50, P95, P99 across spans and traces</li>
+<li><strong>Token usage</strong> — cost analysis per model, per feature</li>
+<li><strong>Error rates</strong> — system errors vs. semantic quality failures</li>
+<li><strong>Alerting</strong> — surface regressions after deployments</li>
+</ul>
+</div>
+
+<div class="use-case"><strong>Use case:</strong> A new deployment causes groundedness scores to fall and P99 latency to rise. Dashboards expose the trend; alerts surface the regression; engineers drill from aggregate metrics into representative traces and spans.</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="alyx">10. Alyx — AI Engineering Agent</h2>
+
+<div class="card">
+<p>Alyx is Arize's AI engineering agent within AX. It helps users investigate telemetry and engineering workflows through natural-language interaction across traces, evaluations, prompts, experiments, and related data.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="troubleshooting">11. Practical Troubleshooting Flow</h2>
+
+<div class="card" style="border:1px solid var(--accent)">
+<div class="diagram" style="background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:8px;padding:16px;font-family:'Fira Code',monospace;font-size:12px;color:#c4b5fd;white-space:pre;text-align:center;line-height:2">Find trace → Isolate span → Inspect I/O → Review evaluations
+     ↓              ↓              ↓                ↓
+ Dataset → Experiment → Compare results → Ship → Monitor</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="visual-guide">12. How the Seven Graphics Fit Together</h2>
+
+<div class="card">
+<ol>
+<li><strong>Engineering loop</strong> explains the overall AX workflow</li>
+<li><strong>Trace/span hierarchy</strong> explains the telemetry model</li>
+<li><strong>Evaluation pipeline</strong> explains how AI quality is measured</li>
+<li><strong>Failure-to-dataset loop</strong> connects production problems to regression testing</li>
+<li><strong>Experiment comparison</strong> shows evidence-based improvement</li>
+<li><strong>Agent tool-use flow</strong> explains agent-specific debugging</li>
+<li><strong>Sessions and monitoring</strong> shows conversation-level and production-scale observability</li>
+</ol>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 id="interview">13. Interview Summary</h2>
+
+<div class="card" style="border:1px solid #7c3aed;background:linear-gradient(135deg,#1a1035,#0f172a)">
+<p style="font-size:15px;line-height:1.8;color:#e2e8f0"><strong style="color:#a78bfa">One-sentence summary:</strong> Arize AX lets AI engineering teams observe what their applications and agents did, evaluate whether the behavior was good, diagnose where failures occurred, test improvements against repeatable datasets, and continuously monitor those improvements in production.</p>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+<p>Harold Moses II · Documentation Engineer · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://github.com/hmoses">GitHub</a></p>
+</div>
+
+</body>
+</html>
