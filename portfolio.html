@@ -126,7 +126,7 @@
     <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality monitoring:</span> <span class="map">Proto API Monitor, CI/CD Parity Pipeline</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents:</span> <span class="map">Poly-Glot Markdown, Dev Guide, MCP tools</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials &amp; cookbooks:</span> <span class="map">Dev Integration Guide, Phoenix Observability Report</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Integration partner docs:</span> <span class="map">MCP Registry listings, Hugging Face, Glama</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis:</span> <span class="map">Arize Docs Audit (7 gaps, proposed fixes)</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Developer onboarding:</span> <span class="map">Dev Guide onboarding flow, product walkthrough</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Community → product insights:</span> <span class="map">Proto API Monitor stakeholder comms</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">SEO &amp; answer-engine content:</span> <span class="map">Poly-Glot Markdown GEO optimizer</span></div>
@@ -292,34 +292,35 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 7: MCP DISTRIBUTION & PARTNER DOCS                        -->
+<!-- PROJECT 7: ARIZE DOCS AUDIT                                       -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
-    <h3>🔌 Multi-Surface Integration Partner Documentation</h3>
-    <span class="card-badge badge-community">Integration &amp; Partner Docs</span>
+    <h3><a href="https://hmoses.github.io/arize-docs-audit.html">🔍 Arize Phoenix &amp; AX Documentation Audit</a></h3>
+    <span class="card-badge badge-docs">Documentation Audit</span>
   </div>
-  <div class="resp-map"><span class="resp-label">Maps to:</span> Get documented accurately outside your own site — working with integration partners, framework maintainers, and course authors</div>
-  <div class="card-desc">I built Poly-Glot AI Workspace's MCP server and published it across four external discovery platforms — each requiring its own metadata format, documentation conventions, and submission process. This demonstrates the ability to get a product documented accurately on third-party sites, adapting content to each platform's audience and standards.</div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Own documentation health; detect doc drift; automated doc-quality monitoring; make docs work for coding agents</div>
+  <div class="card-desc">I audited Arize's Phoenix and AX documentation from a developer's perspective, identifying 7 specific documentation gaps with proposed fixes. Findings include missing framework-agnostic TypeScript setup paths, undocumented Node.js protobuf/ESM gotchas, no unified Phoenix→AX migration guide, Python-heavy cookbook library, and the absence of agent-readability measurement — the role's most novel requirement.</div>
   <ul class="card-highlights">
-    <li><strong>Official MCP Registry:</strong> canonical listing for <code>io.github.hmoses/poly-glot-ai-workspace</code>, versioned with production releases</li>
-    <li><strong>MCP.so:</strong> public directory listing exposing server capabilities and developer-facing tool documentation</li>
-    <li><strong>Glama:</strong> MCP directory presence adapted to Glama's discovery and inspection format</li>
-    <li><strong>Hugging Face:</strong> running Space providing an additional public demo and documentation surface</li>
-    <li><strong>Consistent accuracy:</strong> each listing maintained in sync with the production server via automated parity checks</li>
+    <li><strong>7 gaps identified:</strong> 3 high severity, 3 medium severity, 1 innovation opportunity — each with a specific proposed fix</li>
+    <li><strong>TypeScript quickstart gap:</strong> only covers Mastra framework — no framework-agnostic path for Express, Fastify, or custom Node.js</li>
+    <li><strong>Phoenix→AX migration:</strong> scattered across 3+ pages — proposed a single "Graduate to AX" guide showing the 3-line code diff</li>
+    <li><strong>Node.js protobuf &amp; ESM:</strong> HTTP 415 gotcha and ESM compatibility undocumented — discovered and fixed during my own Phoenix instrumentation</li>
+    <li><strong>Agent-readability measurement:</strong> job posting requires it, docs don't have it — proposed adapting my RAG/GEO scoring engine (0–100)</li>
+    <li><strong>Cookbook parity:</strong> only 2–3 of 20+ cookbooks are TypeScript despite growing Mastra/Vercel AI SDK ecosystem</li>
   </ul>
   <div class="card-tags">
-    <span class="tag">Integration Partners</span>
-    <span class="tag">MCP Registry</span>
-    <span class="tag">Hugging Face</span>
-    <span class="tag">Third-Party Documentation</span>
-    <span class="tag">Multi-Platform</span>
+    <span class="tag">Documentation Audit</span>
+    <span class="tag">Arize Phoenix</span>
+    <span class="tag">Arize AX</span>
+    <span class="tag">TypeScript</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">OpenTelemetry</span>
+    <span class="tag">Agent-Readability</span>
   </div>
   <div class="card-links">
-    <a href="https://registry.modelcontextprotocol.io/?q=poly-glot-ai-workspace">MCP Registry →</a>
-    <a href="https://mcp.so/servers/poly-glot-ai-workspace">MCP.so →</a>
-    <a href="https://glama.ai/mcp/servers/hmoses/poly-glot-ai-workspace">Glama →</a>
-    <a href="https://huggingface.co/spaces/HWM2/poly-glot-ai-workspace">Hugging Face →</a>
+    <a href="https://hmoses.github.io/arize-docs-audit.html">Full Audit Report →</a>
+    <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Case Study →</a>
   </div>
 </div>
 
@@ -368,7 +369,7 @@
     <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality / drift detection</span><br><span class="map">→ Proto API Monitor, CI/CD Parity Pipeline</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + measurement</span><br><span class="map">→ Poly-Glot Markdown (RAG scorer), structured MCP docs</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials, cookbooks, demo repos</span><br><span class="map">→ Dev Integration Guide, Phoenix Observability Report, Goose Docs Extension</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Integration partner documentation</span><br><span class="map">→ MCP Registry, MCP.so, Glama, Hugging Face listings</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis</span><br><span class="map">→ Arize Docs Audit: 7 gaps with severity, fixes, and interview lines</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Onboarding to first working result</span><br><span class="map">→ Dev Guide progressive flow, Phoenix Report troubleshooting flow</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Community feedback → product insights</span><br><span class="map">→ Proto API Monitor stakeholder comms</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">SEO / answer-engine content</span><br><span class="map">→ Poly-Glot Markdown GEO optimizer, keyword emphasis, frontmatter</span></div>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arize Docs Audit — Harold Moses</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --green: #3fb950;
+    --orange: #f0883e;
+    --red: #f85149;
+    --yellow: #d29922;
+    --cyan: #39d2c0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 60px 30px 50px;
+    border-bottom: 2px solid var(--blue);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cover-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .cover h1 {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .cover .subtitle {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .cover .date {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .cover .author {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--blue);
+    font-weight: 600;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 24px 60px;
+  }
+
+  .summary-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .summary-stat .num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--blue);
+  }
+
+  .summary-stat .label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .gap-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+    page-break-inside: avoid;
+  }
+
+  .gap-card:hover {
+    border-color: var(--blue);
+  }
+
+  .gap-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .gap-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: #fff;
+  }
+
+  .gap-1 .gap-number { background: var(--red); }
+  .gap-2 .gap-number { background: var(--orange); }
+  .gap-3 .gap-number { background: var(--purple); }
+  .gap-4 .gap-number { background: var(--red); }
+  .gap-5 .gap-number { background: var(--orange); }
+  .gap-6 .gap-number { background: var(--green); }
+  .gap-7 .gap-number { background: var(--yellow); }
+
+  .gap-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .gap-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .meta-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-where {
+    background: rgba(88, 166, 255, 0.15);
+    color: var(--blue);
+  }
+
+  .tag-severity-high {
+    background: rgba(248, 81, 73, 0.15);
+    color: var(--red);
+  }
+
+  .tag-severity-med {
+    background: rgba(240, 136, 62, 0.15);
+    color: var(--orange);
+  }
+
+  .tag-severity-opportunity {
+    background: rgba(63, 185, 80, 0.15);
+    color: var(--green);
+  }
+
+  .gap-section {
+    margin-bottom: 14px;
+  }
+
+  .gap-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .title-issue { color: var(--red); }
+  .title-fix { color: var(--green); }
+  .title-line { color: var(--purple); }
+
+  .gap-section p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .interview-line {
+    background: var(--surface2);
+    border-left: 3px solid var(--purple);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .interview-line::before {
+    content: "💬 ";
+  }
+
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(88, 166, 255, 0.08);
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 4px;
+    margin-right: 6px;
+    word-break: break-all;
+    transition: background 0.2s;
+  }
+
+  .doc-link:hover {
+    background: rgba(88, 166, 255, 0.18);
+  }
+
+  .doc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  code {
+    background: rgba(88, 166, 255, 0.1);
+    color: var(--blue);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .footer a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  @media print {
+    body { background: #0d1117; }
+    .gap-card { break-inside: avoid; }
+  }
+
+  @media (max-width: 600px) {
+    .summary-bar { grid-template-columns: 1fr; }
+    .cover h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-icon">🔍</div>
+  <h1>Arize Phoenix & AX Documentation Audit</h1>
+  <div class="subtitle">7 Real Gaps Found — With Specific Fixes & Interview Talking Points</div>
+  <div class="date">Prepared September 15, 2026</div>
+  <div class="author">Harold Moses II · <a href="https://hmoses.github.io/portfolio.html" style="color:#58a6ff;text-decoration:none">Portfolio</a> · <a href="https://hmoses.github.io/phoenix-report.html" style="color:#58a6ff;text-decoration:none">Phoenix Report</a></div>
+</div>
+
+<div class="container">
+
+<!-- Summary Bar -->
+<div class="summary-bar">
+  <div class="summary-stat">
+    <div class="num">7</div>
+    <div class="label">Gaps Found</div>
+  </div>
+  <div class="summary-stat">
+    <div class="num">3</div>
+    <div class="label">High Severity</div>
+  </div>
+  <div class="summary-stat">
+    <div class="num">7</div>
+    <div class="label">Interview Lines Ready</div>
+  </div>
+</div>
+
+<!-- GAP 1 -->
+<div class="gap-card gap-1">
+  <div class="gap-header">
+    <div class="gap-number">1</div>
+    <div class="gap-title">No Framework-Agnostic TypeScript Quickstart</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">TS Get-Started Page</span>
+    <span class="meta-tag tag-severity-high">High Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/get-started/ts-get-started-tracing" target="_blank">📄 TS Quickstart →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/sdk-api-reference/typescript/packages/phoenix-otel/manual-spans" target="_blank">📄 phoenix-otel SDK Ref →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>The TypeScript quickstart ONLY covers the Mastra framework path. If a developer uses Express, Fastify, Hono, or custom Node.js, there's no "raw OTLP + <code>@arizeai/phoenix-otel</code>" quickstart. The Python quickstart has <code>auto_instrument=True</code> for any framework, but TS has no equivalent generic path in the getting-started flow. The SDK reference page has the info — but it's not surfaced in the quickstart where devs land first.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Add a "Framework-agnostic" tab to the TS quickstart showing raw <code>register()</code> + manual span creation with <code>@arizeai/phoenix-otel</code>. Mirror the Python quickstart's framework-agnostic approach.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">Your TS quickstart assumes Mastra. A dev using Hono or Fastify has to piece together the SDK reference page themselves. I'd add a framework-agnostic tab — just like your Python quickstart already handles any framework.</div>
+  </div>
+</div>
+
+<!-- GAP 2 -->
+<div class="gap-card gap-2">
+  <div class="gap-header">
+    <div class="gap-number">2</div>
+    <div class="gap-title">PROMPT.md Doesn't Cover Non-LLM Span Patterns</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">PROMPT.md (Agent Setup)</span>
+    <span class="meta-tag tag-severity-med">Medium Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://raw.githubusercontent.com/Arize-ai/phoenix/main/docs/PROMPT.md" target="_blank">📄 PROMPT.md (Raw) →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/agent-assisted-setup" target="_blank">📄 Agent-Assisted Setup →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>PROMPT.md is excellent for LLM call instrumentation — the routing table, phase 1/2 approach, and framework detection are well-designed. But it doesn't cover how to trace non-LLM operations: template selection, prompt assembly, data retrieval, custom business logic spans. Complex agents do far more than call LLMs — they orchestrate pipelines. I traced these exact patterns in my <a href="https://hmoses.github.io/phoenix-report.html" style="color:#58a6ff">Phoenix Report</a> (template selection → prompt assembly → provider dispatch) and this pattern isn't documented for agents to follow.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Add a "Custom spans for non-LLM operations" section to PROMPT.md showing how to create <code>CHAIN</code>, <code>TOOL</code>, and <code>RETRIEVER</code> spans for business logic. Include the <code>withSpan()</code> helper from <code>@arizeai/phoenix-otel</code>.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">When I instrumented Poly-Glot, the hardest part was tracing non-LLM operations — template selection, prompt assembly. PROMPT.md doesn't cover that pattern, and it's exactly what complex agents need. I documented how I solved it in my Phoenix Report.</div>
+  </div>
+</div>
+
+<!-- GAP 3 -->
+<div class="gap-card gap-3">
+  <div class="gap-header">
+    <div class="gap-number">3</div>
+    <div class="gap-title">No Unified Phoenix OSS → Arize AX Migration Guide</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">Scattered Across 3+ Pages</span>
+    <span class="meta-tag tag-severity-high">High Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/resources/frequently-asked-questions/what-is-the-difference-between-phoenix-and-arize" target="_blank">📄 Phoenix vs AX FAQ →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/self-hosting" target="_blank">📄 Self-Hosting Docs →</a>
+    <a class="doc-link" href="https://docs.arize.com/arize" target="_blank">📄 Arize AX Docs →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>There's a "What is the difference between Phoenix and Arize" FAQ page, but no single "I'm running Phoenix locally, now I want to move to Arize AX" migration guide. The information exists across the self-hosting docs, AX quickstart, and the comparison page — but a developer doing the actual migration has to assemble it themselves. This is a critical conversion funnel gap: Phoenix OSS → paid AX customer.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Create a single "Graduate from Phoenix to Arize AX" page with: 1) What changes (endpoint, API key, features gained), 2) Code diff showing the 3-line change, 3) What you keep vs. what's new. Make it the obvious next step from every self-hosting page.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">The Phoenix-to-AX migration is documented across 3+ pages. I'd create one 'Graduate to AX' guide showing the exact code diff — it's literally 3 lines. That's also a direct revenue enablement doc.</div>
+  </div>
+</div>
+
+<!-- GAP 4 -->
+<div class="gap-card gap-4">
+  <div class="gap-header">
+    <div class="gap-number">4</div>
+    <div class="gap-title">Node.js Protobuf OTLP Requirement — HTTP 415 Gotcha</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">TS Manual Setup Path</span>
+    <span class="meta-tag tag-severity-high">High Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/get-started/ts-get-started-tracing" target="_blank">📄 TS Quickstart →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/tracing/concepts-tracing/faqs-tracing" target="_blank">📄 Tracing FAQ →</a>
+    <a class="doc-link" href="https://hmoses.github.io/phoenix-report.html" target="_blank">📄 My Phoenix Report →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>Node.js requires <code>@opentelemetry/exporter-trace-otlp-proto</code> instead of the default HTTP JSON exporter — otherwise you get HTTP 415 errors with zero explanation. The quickstart uses <code>@arizeai/phoenix-otel</code> which handles this internally, but if anyone follows the manual OTel setup path (common for existing apps with OTel already configured), this gotcha isn't documented until you hit the error. I discovered and documented this in my <a href="https://hmoses.github.io/phoenix-report.html" style="color:#58a6ff">Phoenix Report</a>.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Add a troubleshooting callout to the TS quickstart and the tracing FAQ: "Getting HTTP 415? You need the protobuf OTLP exporter (<code>@opentelemetry/exporter-trace-otlp-proto</code>), not the default HTTP JSON exporter."</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">I hit the protobuf OTLP gotcha myself — HTTP 415 with zero explanation. I documented the fix in my Phoenix Report. That's exactly the kind of setup friction I'd eliminate on day one.</div>
+  </div>
+</div>
+
+<!-- GAP 5 -->
+<div class="gap-card gap-5">
+  <div class="gap-header">
+    <div class="gap-number">5</div>
+    <div class="gap-title">ESM Compatibility Not Documented for TypeScript</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">TS/JS Setup Docs</span>
+    <span class="meta-tag tag-severity-med">Medium Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/get-started/ts-get-started-tracing" target="_blank">📄 TS Quickstart →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/sdk-api-reference/typescript/packages/phoenix-otel/manual-spans" target="_blank">📄 phoenix-otel SDK Ref →</a>
+    <a class="doc-link" href="https://hmoses.github.io/phoenix-report.html" target="_blank">📄 My Phoenix Report →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>ESM (ES Modules) vs. CommonJS compatibility is a well-known pain point in the Node.js OpenTelemetry ecosystem. I had to pin specific package versions to get ESM working with Phoenix. The docs don't mention ESM at all — not in the quickstart, not in the SDK reference, not in troubleshooting. Every modern Node.js project using <code>"type": "module"</code> in package.json will hit this.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Add an "ESM / CommonJS" section to the TS setup docs noting which packages need version pinning and what <code>"type": "module"</code> means for OTel initialization order.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">ESM compatibility with OpenTelemetry is a known pain point. Your docs don't mention it — I'd add a troubleshooting section because every Node.js dev using ESM will hit it.</div>
+  </div>
+</div>
+
+<!-- GAP 6 -->
+<div class="gap-card gap-6">
+  <div class="gap-header">
+    <div class="gap-number">6</div>
+    <div class="gap-title">Agent-Readability Measurement — Innovation Opportunity</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">Across All Docs</span>
+    <span class="meta-tag tag-severity-opportunity">Innovation Opportunity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/agent-assisted-setup" target="_blank">📄 Agent-Assisted Setup →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/sdk-api-reference/typescript/arizeai-phoenix-cli#px-setup" target="_blank">📄 px setup CLI Ref →</a>
+    <a class="doc-link" href="https://hmoses.github.io/poly-glot-markdown/" target="_blank">📄 My RAG/GEO Scorer →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>The job posting says "make documentation work for coding agents as well as humans" and "real measurement of whether agents can complete tasks using docs alone." The <code>px setup</code> CLI's exit code 6 (configured but unverified) is a start. But there's no broader framework for measuring whether docs are agent-readable — no scoring, no automated testing, no benchmarks. This is the role's most novel requirement and the biggest whitespace.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Build an agent-readability scoring system for Arize docs. I've already built this: my <a href="https://hmoses.github.io/poly-glot-markdown/" style="color:#58a6ff">Poly-Glot Markdown RAG/GEO scorer</a> measures documentation quality for AI consumption on a 0–100 scale. Adapt this approach to score Arize docs for: frontmatter completeness, heading hierarchy, chunk boundaries, code sample correctness, and agent task-completion rate.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">You want docs that work for coding agents AND measurement of whether that works. I built a RAG scoring engine that measures exactly this — 0 to 100 agent-readability score. I'd bring that approach to Arize docs.</div>
+  </div>
+</div>
+
+<!-- GAP 7 -->
+<div class="gap-card gap-7">
+  <div class="gap-header">
+    <div class="gap-number">7</div>
+    <div class="gap-title">Cookbooks Are Overwhelmingly Python — TS Parity Gap</div>
+  </div>
+  <div class="gap-meta">
+    <span class="meta-tag tag-where">Phoenix Cookbooks</span>
+    <span class="meta-tag tag-severity-med">Medium Severity</span>
+  </div>
+  <div class="doc-links">
+    <a class="doc-link" href="https://docs.arize.com/phoenix/cookbook" target="_blank">📄 Cookbooks Index →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/cookbook/ai-engineering-workflows/iterative-evaluation-and-experimentation-workflow-typescript" target="_blank">📄 TS Eval Cookbook (exists) →</a>
+    <a class="doc-link" href="https://docs.arize.com/phoenix/cookbook/tracing/agentic-rag-tracing" target="_blank">📄 Agentic RAG (Python-only) →</a>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-issue">⚠️ Issue</div>
+    <p>Of 20+ cookbooks listed in the Phoenix docs, only 2–3 are TypeScript. The vast majority are Python-only. Given the explosive growth of the TS/JS agent ecosystem — Mastra, Vercel AI SDK, LangChain.js, OpenAI Agents SDK (Node) — this is a significant coverage gap. Arize already supports these frameworks, but there's no cookbook showing a complete workflow.</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-fix">✅ Proposed Fix</div>
+    <p>Create TypeScript versions of the top 5 most-visited Python cookbooks. Prioritize: Agentic RAG Tracing, Structured Data Extraction, and the Iterative Eval & Experimentation workflow (which already has a TS version — good precedent to follow).</p>
+  </div>
+  <div class="gap-section">
+    <div class="gap-section-title title-line">💬 Interview Line</div>
+    <div class="interview-line">Your cookbook library is overwhelmingly Python. With Mastra, Vercel AI SDK, and LangChain.js growing fast, I'd prioritize TypeScript cookbook parity — starting with the top 5 most-visited recipes.</div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Report</a> · <a href="https://github.com/hmoses">GitHub</a></p>
+  <p style="margin-top:6px;font-size:11px;color:#555">Bay Area, CA · Prepared for Arize AI Documentation Engineer interview · September 2026</p>
+</div>
+
+</body>
+</html>
