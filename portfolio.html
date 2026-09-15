@@ -124,7 +124,7 @@
   <h3>🎯 How These Projects Map to Documentation Engineer Responsibilities</h3>
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Doc ownership &amp; rewrites:</span> <span class="map">Proto API Monitor, Dev Integration Guide</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality monitoring:</span> <span class="map">Proto API Monitor, CI/CD Parity Pipeline</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials &amp; progressive guides:</span> <span class="map">Python for Doc Engineers, Dev Integration Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents:</span> <span class="map">Poly-Glot Markdown, Dev Guide, MCP tools</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials &amp; cookbooks:</span> <span class="map">Dev Integration Guide, Phoenix Observability Report</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis:</span> <span class="map">Arize Docs Audit (7 gaps, proposed fixes)</span></div>
@@ -234,34 +234,34 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 4: CI/CD PARITY PIPELINE                                  -->
+<!-- PROJECT 4: PYTHON FOR DOC ENGINEERS                               -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
-    <h3><a href="https://github.com/hmoses/poly-glot-ai-workspace">⚙️ CI/CD Parity &amp; Doc-Quality Automation Pipeline</a></h3>
-    <span class="card-badge badge-automation">Automated Quality Systems</span>
+    <h3><a href="https://hmoses.github.io/python-for-doc-engineers.html">🐍 Python for Documentation Engineers — Progressive Guide</a></h3>
+    <span class="card-badge badge-docs">Tutorial &amp; Learning Guide</span>
   </div>
-  <div class="resp-map"><span class="resp-label">Maps to:</span> Build automated systems that monitor documentation quality, detect drift between docs and code, and test that code samples still work</div>
-  <div class="card-desc">I built the parity-driven release pipeline for Poly-Glot AI Workspace that validates documentation, capabilities, entitlements, and metadata stay synchronized across multiple distribution surfaces. When any surface drifts, CI fails. This is the same pattern needed for keeping product docs accurate as engineering ships — automated checks that catch documentation debt before it reaches users.</div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Write and refresh tutorials, cookbooks, and open-source demonstration repositories that take a developer from introduction to value quickly</div>
+  <div class="card-desc">I developed a progressive Python guide built specifically for documentation engineers. Instead of teaching Python in the abstract, every example builds toward a real use case: making documentation accessible to AI agents programmatically. The guide goes from a 6-line dictionary lookup to a fully traced AI agent that serves documentation as a tool — the exact architecture used in Arize Phoenix, LangChain, and MCP servers.</div>
   <ul class="card-highlights">
-    <li><strong>Parity validation:</strong> CI workflow runs on every push/PR and fails when documentation or capabilities drift from the source of truth</li>
-    <li><strong>Regression testing:</strong> automated tests protect shared feature behavior and documentation accuracy</li>
-    <li><strong>Webhook-driven sync:</strong> repository-dispatch events trigger documentation updates when upstream changes land</li>
-    <li><strong>Generated capability contracts:</strong> machine-readable parity source keeps docs, code, and distribution metadata aligned</li>
-    <li><strong>Release policy enforcement:</strong> validation, regression tests, smoke tests, and deployment rules gate every release</li>
+    <li><strong>6-step progressive path:</strong> doc lookup → searchable tool → agent tool invocation → Phoenix tracing → real-world use case → API patterns</li>
+    <li><strong>Every step includes "How to Describe This":</strong> ready-to-use explanations of what each concept does and why it matters</li>
+    <li><strong>Architecture diagrams:</strong> visual flow from User → Agent → Documentation Tool → Answer, showing exactly how tool invocation works</li>
+    <li><strong>Phoenix tracing integration:</strong> shows how <code>register()</code> and <code>OpenAIInstrumentor</code> capture traces, spans, tool calls, and latency</li>
+    <li><strong>The 8 Python concepts:</strong> variables, strings, lists, dictionaries, functions, conditions, loops, and API calls — everything needed to read and document production code</li>
+    <li><strong>Real use case:</strong> developer error → agent → doc tool → instant answer (zero context switches vs. 6+ with manual search)</li>
   </ul>
   <div class="card-tags">
-    <span class="tag">GitHub Actions</span>
-    <span class="tag">CI/CD</span>
-    <span class="tag">Parity Validation</span>
-    <span class="tag">Doc Drift Detection</span>
-    <span class="tag">Regression Tests</span>
-    <span class="tag">Release Automation</span>
+    <span class="tag">Python</span>
+    <span class="tag">Tutorial</span>
+    <span class="tag">AI Agents</span>
+    <span class="tag">Tool Invocation</span>
+    <span class="tag">Phoenix Tracing</span>
+    <span class="tag">Documentation Engineering</span>
+    <span class="tag">Progressive Guide</span>
   </div>
   <div class="card-links">
-    <a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/docs/PARITY_CHANGELOG.md">Parity Changelog →</a>
-    <a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/docs/OWNER_SETUP.md">Pipeline Setup Docs →</a>
-    <a href="https://github.com/hmoses/poly-glot-ai-workspace/blob/main/config/polyglot-product-parity.json">Parity Contract →</a>
+    <a href="https://hmoses.github.io/python-for-doc-engineers.html">Live Guide →</a>
   </div>
 </div>
 
@@ -370,10 +370,10 @@
   <h3>📋 Full Responsibility Coverage Matrix</h3>
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health / rewrite stale docs</span><br><span class="map">→ Proto API Monitor, Dev Integration Guide</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality / drift detection</span><br><span class="map">→ Proto API Monitor, CI/CD Parity Pipeline</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Progressive tutorials &amp; learning guides</span><br><span class="map">→ Python for Doc Engineers: 6-step path from lookup to traced agent</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + measurement</span><br><span class="map">→ Poly-Glot Markdown (RAG scorer), structured MCP docs</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials, cookbooks, demo repos</span><br><span class="map">→ Dev Integration Guide, Phoenix Observability Report, Goose Docs Extension</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis</span><br><span class="map">→ Arize Docs Audit: 7 gaps with severity, fixes, and interview lines</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis</span><br><span class="map">→ Arize Docs Audit: 7 gaps with severity ratings and proposed fixes</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Onboarding to first working result</span><br><span class="map">→ Dev Guide progressive flow, Phoenix Report troubleshooting flow</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Community feedback → product insights</span><br><span class="map">→ Proto API Monitor stakeholder comms</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">SEO / answer-engine content</span><br><span class="map">→ Poly-Glot Markdown GEO optimizer, keyword emphasis, frontmatter</span></div>

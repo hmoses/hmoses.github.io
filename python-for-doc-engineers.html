@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python for Documentation Engineers — Harold Moses</title>
+<meta name="description" content="A progressive guide to Python for documentation engineers — from simple doc lookups to AI agent tool integration with Arize Phoenix tracing.">
+<meta name="keywords" content="Python, documentation engineer, AI agents, Arize Phoenix, OpenTelemetry, tracing, MCP, tool invocation, developer documentation">
+<meta name="author" content="Harold Moses II">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --surface3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --green: #3fb950;
+    --orange: #f0883e;
+    --red: #f85149;
+    --yellow: #d29922;
+    --cyan: #39d2c0;
+    --pink: #f778ba;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding: 60px 30px 50px;
+    border-bottom: 2px solid var(--blue);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .cover-icon { font-size: 52px; margin-bottom: 12px; }
+
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+  }
+
+  .cover .subtitle {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .cover .author {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--blue);
+    font-weight: 600;
+  }
+
+  .cover .author a { color: var(--blue); text-decoration: none; }
+  .cover .author a:hover { text-decoration: underline; }
+
+  /* Container */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* Intro */
+  .intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 36px;
+  }
+
+  .intro h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  .intro p {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .intro p:last-child { margin-bottom: 0; }
+
+  /* Step cards */
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 28px;
+    page-break-inside: avoid;
+  }
+
+  .step-card:hover { border-color: var(--blue); }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .step-1 .step-number { background: var(--blue); }
+  .step-2 .step-number { background: var(--green); }
+  .step-3 .step-number { background: var(--purple); }
+  .step-4 .step-number { background: var(--orange); }
+  .step-5 .step-number { background: var(--cyan); }
+  .step-6 .step-number { background: var(--pink); }
+  .step-7 .step-number { background: var(--yellow); }
+
+  .step-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .step-desc strong { color: var(--text); }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  .code-header {
+    background: var(--surface3);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .code-header .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  .code-body {
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: var(--text);
+  }
+
+  .code-body .comment { color: var(--text-dim); }
+  .code-body .keyword { color: var(--purple); }
+  .code-body .string { color: var(--green); }
+  .code-body .function { color: var(--blue); }
+  .code-body .variable { color: var(--orange); }
+  .code-body .builtin { color: var(--cyan); }
+
+  /* Breakdown boxes */
+  .breakdown {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+
+  .breakdown-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    color: var(--green);
+  }
+
+  .breakdown-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--text-dim);
+  }
+
+  .breakdown-item code {
+    background: rgba(88, 166, 255, 0.1);
+    color: var(--blue);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  /* Architecture diagrams */
+  .architecture {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--text-dim);
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .architecture .highlight { color: var(--blue); font-weight: 600; }
+  .architecture .accent { color: var(--green); font-weight: 600; }
+  .architecture .warn { color: var(--orange); font-weight: 600; }
+
+  /* Concept callouts */
+  .concept {
+    background: rgba(88, 166, 255, 0.06);
+    border: 1px solid rgba(88, 166, 255, 0.2);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+
+  .concept-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+
+  .concept p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Use-case boxes */
+  .usecase {
+    background: rgba(63, 185, 80, 0.06);
+    border: 1px solid rgba(63, 185, 80, 0.2);
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+
+  .usecase-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .usecase p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .cover h1 { font-size: 26px; }
+    .step-title { font-size: 18px; }
+    .code-body { font-size: 12px; }
+  }
+
+  @media print {
+    body { background: #0d1117; }
+    .step-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-icon">🐍</div>
+  <h1>Python for Documentation Engineers</h1>
+  <div class="subtitle">A progressive guide from simple doc lookups to AI agent tool integration with Phoenix tracing — 6 steps, zero fluff</div>
+  <div class="author">Harold Moses II · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Report</a> · <a href="https://github.com/hmoses">GitHub</a></div>
+</div>
+
+<div class="container">
+
+<!-- INTRO -->
+<div class="intro">
+  <h2>What This Guide Is</h2>
+  <p>This is a progressive Python guide built specifically for documentation engineers. Instead of teaching Python in the abstract, every example builds toward a real use case: <strong>making documentation accessible to AI agents programmatically</strong>.</p>
+  <p>You'll go from a 6-line dictionary lookup to a fully traced AI agent that serves documentation as a tool — the exact architecture used in production systems like Arize Phoenix, LangChain, and MCP servers.</p>
+  <p><strong>You don't need a CS degree.</strong> If you can read and modify 8 Python concepts (variables, strings, lists, dictionaries, functions, conditions, loops, and API calls), you can follow — and explain — production agent code.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 1                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-1">
+  <div class="step-header">
+    <div class="step-number">1</div>
+    <div class="step-title">Start with the simplest documentation lookup</div>
+  </div>
+
+  <div class="step-desc">This is the first Python you need. A function that takes a topic and returns documentation. That's it — no frameworks, no APIs, no AI.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot"></span> Python</div>
+    <div class="code-body"><span class="keyword">def</span> <span class="function">get_doc</span>(<span class="variable">topic</span>):
+    <span class="variable">docs</span> = {
+        <span class="string">"tracing"</span>: <span class="string">"Tracing records what your AI application did."</span>,
+        <span class="string">"span"</span>: <span class="string">"A span represents one operation in a trace."</span>,
+        <span class="string">"evaluation"</span>: <span class="string">"Evaluations measure the quality of AI behavior."</span>
+    }
+
+    <span class="keyword">return</span> <span class="variable">docs</span>.<span class="function">get</span>(<span class="variable">topic</span>, <span class="string">"Documentation not found."</span>)
+
+
+<span class="builtin">print</span>(<span class="function">get_doc</span>(<span class="string">"tracing"</span>))</div>
+  </div>
+
+  <div class="breakdown">
+    <div class="breakdown-title">What Each Line Does</div>
+    <div class="breakdown-item"><code>def</code> — creates a function (a reusable block of logic)</div>
+    <div class="breakdown-item"><code>topic</code> — information coming into the function (the input parameter)</div>
+    <div class="breakdown-item"><code>docs</code> — a dictionary: a collection of key→value pairs (like a real documentation index)</div>
+    <div class="breakdown-item"><code>.get()</code> — looks up a key in the dictionary, returns a fallback if not found</div>
+    <div class="breakdown-item"><code>return</code> — sends the result back to whoever called the function</div>
+    <div class="breakdown-item"><code>print()</code> — displays the result in the terminal</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title">Why This Matters</div>
+    <p>This is already conceptually relevant to documentation engineering. Instead of making someone leave their workflow to search docs manually, you expose documentation <strong>programmatically</strong> — as data that code can consume.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 2                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-2">
+  <div class="step-header">
+    <div class="step-number">2</div>
+    <div class="step-title">Turn documentation into a searchable tool</div>
+  </div>
+
+  <div class="step-desc">Now make it realistic. Instead of exact-match lookup, add search — a user types a partial query and gets the matching doc.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--green)"></span> Python</div>
+    <div class="code-body"><span class="keyword">def</span> <span class="function">search_docs</span>(<span class="variable">query</span>):
+    <span class="string">"""Search product documentation."""</span>
+
+    <span class="variable">docs</span> = {
+        <span class="string">"trace"</span>: <span class="string">"A trace represents an end-to-end request."</span>,
+        <span class="string">"span"</span>: <span class="string">"A span represents an individual operation."</span>,
+        <span class="string">"tool"</span>: <span class="string">"A tool allows an agent to perform an action."</span>,
+        <span class="string">"evaluation"</span>: <span class="string">"An evaluation measures application quality."</span>
+    }
+
+    <span class="keyword">for</span> <span class="variable">topic</span>, <span class="variable">content</span> <span class="keyword">in</span> <span class="variable">docs</span>.<span class="function">items</span>():
+        <span class="keyword">if</span> <span class="variable">query</span>.<span class="function">lower</span>() <span class="keyword">in</span> <span class="variable">topic</span>.<span class="function">lower</span>():
+            <span class="keyword">return</span> <span class="variable">content</span>
+
+    <span class="keyword">return</span> <span class="string">"No documentation found."</span>
+
+
+<span class="variable">result</span> = <span class="function">search_docs</span>(<span class="string">"span"</span>)
+<span class="builtin">print</span>(<span class="variable">result</span>)</div>
+  </div>
+
+  <div class="breakdown">
+    <div class="breakdown-title">New Concepts</div>
+    <div class="breakdown-item"><code>"""docstring"""</code> — describes what a function does (agents read these to decide when to call a tool)</div>
+    <div class="breakdown-item"><code>for ... in</code> — loops through every item in the dictionary</div>
+    <div class="breakdown-item"><code>.lower()</code> — converts text to lowercase for case-insensitive matching</div>
+    <div class="breakdown-item"><code>if ... in</code> — checks if the query appears inside the topic name</div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-title">The Architecture You're Building</div>
+    <p><strong>User → Agent → Documentation Tool → Documentation Source → Answer</strong></p>
+    <p>That flow is exactly the architecture you should be comfortable discussing. The important concept isn't memorizing the syntax — it's understanding this pipeline.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 3                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-3">
+  <div class="step-header">
+    <div class="step-number">3</div>
+    <div class="step-title">Give an AI agent a documentation tool</div>
+  </div>
+
+  <div class="step-desc">This is where it gets real. You define a function, then describe it as a <strong>tool</strong> that an AI model can choose to call. This is exactly how production agent systems work.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--purple)"></span> Python — The Tool Function</div>
+    <div class="code-body"><span class="keyword">def</span> <span class="function">search_arize_docs</span>(<span class="variable">topic</span>):
+    <span class="string">"""Return documentation for an Arize concept."""</span>
+
+    <span class="variable">docs</span> = {
+        <span class="string">"trace"</span>: <span class="string">"A trace represents the complete execution path."</span>,
+        <span class="string">"span"</span>: <span class="string">"A span represents one operation inside a trace."</span>,
+        <span class="string">"evaluation"</span>: <span class="string">"Evaluations measure application behavior."</span>
+    }
+
+    <span class="keyword">return</span> <span class="variable">docs</span>.<span class="function">get</span>(<span class="variable">topic</span>.<span class="function">lower</span>(), <span class="string">"Documentation not found."</span>)</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--purple)"></span> JSON — The Tool Description (what the model sees)</div>
+    <div class="code-body"><span class="variable">tools</span> = [
+    {
+        <span class="string">"name"</span>: <span class="string">"search_arize_docs"</span>,
+        <span class="string">"description"</span>: <span class="string">"Search Arize product documentation"</span>,
+        <span class="string">"parameters"</span>: {
+            <span class="string">"topic"</span>: <span class="string">"Documentation topic to search"</span>
+        }
+    }
+]</div>
+  </div>
+
+  <div class="step-desc">When a user asks <strong>"What is a span?"</strong>, here's what happens:</div>
+
+  <div class="architecture"><span class="highlight">User asks:</span> "What is a span?"
+       │
+       ▼
+<span class="highlight">Agent determines:</span> I need documentation.
+       │
+       ▼
+<span class="accent">search_arize_docs("span")</span>
+       │
+       ▼
+<span class="accent">Documentation returned</span>
+       │
+       ▼
+<span class="highlight">Agent generates answer</span> using the retrieved doc</div>
+
+  <div class="concept">
+    <div class="concept-title">Key Insight</div>
+    <p>Now you're talking about <strong>tool invocation</strong>, not merely Python. The model reads the tool description (the docstring + parameters), decides it needs documentation, calls your function, and uses the result to generate an answer. This is exactly how MCP tools, OpenAI function calling, and LangChain tools work.</p>
+  </div>
+
+  <div class="usecase">
+    <div class="usecase-title">How to Describe This</div>
+    <p>"I defined a documentation lookup function and exposed it as a tool that an AI agent can invoke. The agent reads the tool description, determines when documentation is needed, calls the function with the right parameters, and uses the result to generate an accurate answer. This is the same pattern used in MCP servers and OpenAI function calling."</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 4                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-4">
+  <div class="step-header">
+    <div class="step-number">4</div>
+    <div class="step-title">Add Phoenix tracing</div>
+  </div>
+
+  <div class="step-desc">This is where it becomes production-grade. Arize Phoenix traces every step the agent takes — so you can see what happened, what went wrong, and how to improve it.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--orange)"></span> Python — Register Phoenix Tracing</div>
+    <div class="code-body"><span class="keyword">from</span> phoenix.otel <span class="keyword">import</span> <span class="function">register</span>
+
+<span class="variable">tracer_provider</span> = <span class="function">register</span>(
+    <span class="variable">project_name</span>=<span class="string">"documentation-agent"</span>
+)</div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--orange)"></span> Python — Instrument OpenAI</div>
+    <div class="code-body"><span class="keyword">from</span> openinference.instrumentation.openai <span class="keyword">import</span> <span class="function">OpenAIInstrumentor</span>
+
+<span class="function">OpenAIInstrumentor</span>().<span class="function">instrument</span>(
+    <span class="variable">tracer_provider</span>=<span class="variable">tracer_provider</span>
+)</div>
+  </div>
+
+  <div class="step-desc">Now every agent operation is traced. Here's what Phoenix captures:</div>
+
+  <div class="architecture"><span class="highlight">USER</span>
+ │
+ ▼
+<span class="highlight">AI AGENT</span>
+ │
+ ├── <span class="accent">LLM call</span>             → Phoenix captures prompt, model, tokens
+ │
+ ├── <span class="accent">search_docs()</span>        → Phoenix captures tool name, input, output
+ │
+ ├── <span class="accent">documentation retrieved</span> → Phoenix captures the doc content returned
+ │
+ └── <span class="accent">answer generated</span>     → Phoenix captures the final response
+       │
+       ▼
+    <span class="warn">PHOENIX DASHBOARD</span>
+       │
+       ├── Trace (the full request)
+       ├── Spans (each individual step)
+       ├── Tool calls (which tools, what inputs)
+       ├── Inputs / Outputs (what went in, what came out)
+       └── Latency (how long each step took)</div>
+
+  <div class="breakdown">
+    <div class="breakdown-title">What Each Part Does</div>
+    <div class="breakdown-item"><code>register()</code> — connects your app to Phoenix and starts recording traces</div>
+    <div class="breakdown-item"><code>tracer_provider</code> — the connection object that all instrumentors use</div>
+    <div class="breakdown-item"><code>OpenAIInstrumentor</code> — automatically traces all OpenAI API calls (prompts, responses, tokens)</div>
+    <div class="breakdown-item"><code>.instrument()</code> — activates the tracing for that specific provider</div>
+  </div>
+
+  <div class="usecase">
+    <div class="usecase-title">How to Describe This</div>
+    <p>"Phoenix tracing records every step an agent takes — the LLM calls, tool invocations, inputs, outputs, and latency. I register a tracer provider, instrument the LLM client, and then every operation becomes visible in the Phoenix dashboard. I've done this in production — I instrumented my own multi-provider app with Phoenix, captured 50 spans across 6 AI providers, and documented the setup process including Node.js-specific gotchas."</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 5                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-5">
+  <div class="step-header">
+    <div class="step-number">5</div>
+    <div class="step-title">Build the documentation-engineering use case</div>
+  </div>
+
+  <div class="step-desc">Here's the real-world scenario. A developer hits an error. Instead of leaving their IDE to search docs manually, an AI agent serves the relevant documentation instantly.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--cyan)"></span> Python — Error → Doc Lookup</div>
+    <div class="code-body"><span class="variable">error</span> = <span class="string">"AuthenticationError: API key invalid"</span>
+
+<span class="comment"># Agent receives the error and calls the doc tool</span>
+<span class="variable">result</span> = <span class="function">search_docs</span>(<span class="string">"authentication"</span>)
+
+<span class="comment"># Returns:</span>
+<span class="comment"># "Authentication errors usually indicate an invalid,</span>
+<span class="comment">#  expired, or incorrectly configured API key."</span></div>
+  </div>
+
+  <div class="step-desc"><strong>Without</strong> a documentation agent, the developer's workflow looks like this:</div>
+
+  <div class="architecture"><span class="warn">Developer</span> → stop coding → open Google → search "Arize auth error"
+→ find docs site → navigate to authentication page
+→ read through docs → find the relevant section
+→ return to IDE → apply the fix
+
+<span class="highlight">Total context switches: 6+</span>
+<span class="highlight">Time lost: 5–15 minutes</span></div>
+
+  <div class="step-desc"><strong>With</strong> a documentation agent:</div>
+
+  <div class="architecture"><span class="accent">Developer</span> → error appears → AI assistant catches it
+→ calls documentation tool → relevant doc returned
+→ answer appears in IDE
+
+<span class="highlight">Total context switches: 0</span>
+<span class="highlight">Time: seconds</span></div>
+
+  <div class="usecase">
+    <div class="usecase-title">How to Describe This</div>
+    <p>"The value of documentation engineering isn't just writing good docs — it's making docs accessible where developers already work. A documentation tool lets an AI agent serve the right doc at the right moment without the developer ever leaving their IDE. That's what reduces time-to-resolution from minutes to seconds."</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 6                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-6">
+  <div class="step-header">
+    <div class="step-number">6</div>
+    <div class="step-title">Learn the API pattern</div>
+  </div>
+
+  <div class="step-desc">Production documentation systems don't hardcode docs in dictionaries — they call APIs. Here's the fundamental pattern for every API call you'll encounter:</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--pink)"></span> Python — API Request Pattern</div>
+    <div class="code-body"><span class="keyword">import</span> <span class="variable">requests</span>
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">"ARIZE_API_ENDPOINT"</span>,
+    <span class="variable">headers</span>={
+        <span class="string">"Authorization"</span>: <span class="string">"YOUR_API_KEY"</span>
+    }
+)
+
+<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()
+<span class="builtin">print</span>(<span class="variable">data</span>)</div>
+  </div>
+
+  <div class="breakdown">
+    <div class="breakdown-title">What Each Line Does</div>
+    <div class="breakdown-item"><code>import requests</code> — loads the HTTP library (like opening a browser programmatically)</div>
+    <div class="breakdown-item"><code>requests.get()</code> — sends an HTTP GET request to a URL</div>
+    <div class="breakdown-item"><code>headers</code> — authentication credentials sent with the request</div>
+    <div class="breakdown-item"><code>.json()</code> — converts the API response into Python data you can work with</div>
+  </div>
+
+  <div class="step-desc">Once you understand this pattern, SDK operations become readable:</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--pink)"></span> Python — SDK Operations</div>
+    <div class="code-body"><span class="variable">datasets</span> = <span class="function">get_datasets</span>()       <span class="comment"># Fetch all datasets</span>
+<span class="variable">experiments</span> = <span class="function">get_experiments</span>()  <span class="comment"># Fetch all experiments</span>
+<span class="variable">monitors</span> = <span class="function">get_monitors</span>()       <span class="comment"># Fetch all monitors</span></div>
+  </div>
+
+  <div class="usecase">
+    <div class="usecase-title">How to Describe This</div>
+    <p>"Every API follows the same pattern: import, authenticate, request, parse response. Once you recognize that pattern, you can read and document any SDK — whether it's Arize AX, OpenAI, or a custom internal API. The specific endpoints and authentication methods change, but the structure is always the same."</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STEP 7: THE 8 PYTHON CONCEPTS                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="step-card step-7">
+  <div class="step-header">
+    <div class="step-number">7</div>
+    <div class="step-title">The 8 Python concepts you actually need</div>
+  </div>
+
+  <div class="step-desc">You don't need a full Python course. If you can read, modify, and explain these 8 things, you can follow a surprising amount of production Python used in documentation and SDK examples.</div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang-dot" style="background:var(--yellow)"></span> Python — The Complete Reference</div>
+    <div class="code-body"><span class="comment"># 1. Variables — store a value</span>
+<span class="variable">topic</span> = <span class="string">"tracing"</span>
+
+<span class="comment"># 2. Strings — text data</span>
+<span class="variable">message</span> = <span class="string">"Search the documentation"</span>
+
+<span class="comment"># 3. Lists — ordered collection</span>
+<span class="variable">topics</span> = [<span class="string">"tracing"</span>, <span class="string">"spans"</span>, <span class="string">"evaluations"</span>]
+
+<span class="comment"># 4. Dictionaries — key→value pairs (like JSON)</span>
+<span class="variable">doc</span> = {
+    <span class="string">"title"</span>: <span class="string">"Tracing"</span>,
+    <span class="string">"url"</span>: <span class="string">"/docs/tracing"</span>
+}
+
+<span class="comment"># 5. Functions — reusable logic</span>
+<span class="keyword">def</span> <span class="function">search_docs</span>(<span class="variable">query</span>):
+    <span class="keyword">return</span> <span class="string">"documentation"</span>
+
+<span class="comment"># 6. Conditions — make decisions</span>
+<span class="keyword">if</span> <span class="variable">topic</span> == <span class="string">"tracing"</span>:
+    <span class="builtin">print</span>(<span class="string">"Tracing documentation"</span>)
+
+<span class="comment"># 7. Loops — repeat for each item</span>
+<span class="keyword">for</span> <span class="variable">topic</span> <span class="keyword">in</span> <span class="variable">topics</span>:
+    <span class="builtin">print</span>(<span class="variable">topic</span>)
+
+<span class="comment"># 8. API/SDK calls — interact with services</span>
+<span class="variable">response</span> = <span class="variable">client</span>.<span class="function">some_operation</span>()</div>
+  </div>
+
+  <div class="usecase">
+    <div class="usecase-title">How to Describe This</div>
+    <p>"I focus on the 8 Python patterns that appear in every SDK and documentation example: variables, strings, lists, dictionaries, functions, conditions, loops, and API calls. I don't need to be a Python developer — I need to read, modify, and accurately document code that uses these patterns. That's what documentation engineers do."</p>
+  </div>
+</div>
+
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Report</a> · <a href="https://github.com/hmoses">GitHub</a></p>
+  <p style="margin-top:6px;font-size:11px;color:#555">Bay Area, CA · September 2026</p>
+</div>
+
+</body>
+</html>
