@@ -200,6 +200,38 @@
     line-height: 1.8;
     overflow-x: auto;
     color: var(--text);
+    white-space: pre;
+    tab-size: 4;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .copy-btn:hover {
+    background: rgba(88, 166, 255, 0.1);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .copy-btn.copied {
+    background: rgba(63, 185, 80, 0.15);
+    border-color: var(--green);
+    color: var(--green);
   }
 
   .code-body .comment { color: var(--text-dim); }
@@ -369,7 +401,7 @@
   <div class="step-desc">This is the first Python you need. A function that takes a topic and returns documentation. That's it — no frameworks, no APIs, no AI.</div>
 
   <div class="code-block">
-    <div class="code-header"><span class="lang-dot"></span> Python</div>
+    <div class="code-header"><span class="lang-dot"></span> Python <span class="copy-btn" onclick="copyCode(this)">📋 Copy</span></div>
     <div class="code-body"><span class="keyword">def</span> <span class="function">get_doc</span>(<span class="variable">topic</span>):
     <span class="variable">docs</span> = {
         <span class="string">"tracing"</span>: <span class="string">"Tracing records what your AI application did."</span>,
@@ -412,7 +444,7 @@
   <div class="step-desc">Now make it realistic. Instead of exact-match lookup, add search — a user types a partial query and gets the matching doc.</div>
 
   <div class="code-block">
-    <div class="code-header"><span class="lang-dot" style="background:var(--green)"></span> Python</div>
+    <div class="code-header"><span class="lang-dot" style="background:var(--green)"></span> Python <span class="copy-btn" onclick="copyCode(this)">📋 Copy</span></div>
     <div class="code-body"><span class="keyword">def</span> <span class="function">search_docs</span>(<span class="variable">query</span>):
     <span class="string">"""Search product documentation."""</span>
 
@@ -462,7 +494,7 @@
   <div class="step-desc">This is where it gets real. You define a function, then describe it as a <strong>tool</strong> that an AI model can choose to call. This is exactly how production agent systems work.</div>
 
   <div class="code-block">
-    <div class="code-header"><span class="lang-dot" style="background:var(--purple)"></span> Python — The Tool Function</div>
+    <div class="code-header"><span class="lang-dot" style="background:var(--purple)"></span> Python — The Tool Function <span class="copy-btn" onclick="copyCode(this)">📋 Copy</span></div>
     <div class="code-body"><span class="keyword">def</span> <span class="function">search_arize_docs</span>(<span class="variable">topic</span>):
     <span class="string">"""Return documentation for an Arize concept."""</span>
 
@@ -596,7 +628,7 @@
   <div class="step-desc">Here's the real-world scenario. A developer hits an error. Instead of leaving their IDE to search docs manually, an AI agent serves the relevant documentation instantly.</div>
 
   <div class="code-block">
-    <div class="code-header"><span class="lang-dot" style="background:var(--cyan)"></span> Python — Error → Doc Lookup</div>
+    <div class="code-header"><span class="lang-dot" style="background:var(--cyan)"></span> Python — Error → Doc Lookup <span class="copy-btn" onclick="copyCode(this)">📋 Copy</span></div>
     <div class="code-body"><span class="variable">error</span> = <span class="string">"AuthenticationError: API key invalid"</span>
 
 <span class="comment"># Agent receives the error and calls the doc tool</span>
@@ -695,7 +727,7 @@
   <div class="step-desc">You don't need a full Python course. If you can read, modify, and explain these 8 things, you can follow a surprising amount of production Python used in documentation and SDK examples.</div>
 
   <div class="code-block">
-    <div class="code-header"><span class="lang-dot" style="background:var(--yellow)"></span> Python — The Complete Reference</div>
+    <div class="code-header"><span class="lang-dot" style="background:var(--yellow)"></span> Python — The Complete Reference <span class="copy-btn" onclick="copyCode(this)">📋 Copy</span></div>
     <div class="code-body"><span class="comment"># 1. Variables — store a value</span>
 <span class="variable">topic</span> = <span class="string">"tracing"</span>
 
@@ -741,5 +773,21 @@
   <p style="margin-top:6px;font-size:11px;color:#555">Bay Area, CA · September 2026</p>
 </div>
 
+<script>
+function copyCode(btn) {
+  var block = btn.closest('.code-block');
+  var body = block.querySelector('.code-body');
+  var text = body.textContent || body.innerText;
+  text = text.replace(/^\s*\n/, '').replace(/\n\s*$/, '');
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = '📋 Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
 </body>
 </html>
