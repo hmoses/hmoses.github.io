@@ -39,7 +39,7 @@ li{margin:4px 0;font-size:13px}
 .graphic-card{background:linear-gradient(135deg,#1a1035,#0f172a);border:1px solid #3730a3;border-radius:10px;padding:20px;margin:14px 0;color:#e2e8f0}
 .graphic-card h4{color:#a78bfa;font-size:14px;font-weight:700;margin:0 0 8px}
 .graphic-card p{font-size:13px;color:#94a3b8;line-height:1.6}
-.graphic-card .diagram{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:8px;padding:16px;margin:12px 0;font-family:'Fira Code','SF Mono',monospace;font-size:12px;color:#c4b5fd;white-space:pre;overflow-x:auto;text-align:center;line-height:1.8}
+.graphic-card .diagram{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);border-radius:8px;padding:16px 20px;margin:12px 0;font-family:'Fira Code','SF Mono',monospace;font-size:12px;color:#c4b5fd;white-space:pre;overflow-x:auto;text-align:left;line-height:1.8}
 .use-case{background:rgba(99,102,241,.06);border-left:3px solid var(--accent);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0;font-size:13px}
 .use-case strong{color:var(--accent)}
 .interview-tip{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:12px;color:#c4b5fd}
@@ -48,7 +48,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
 th{background:var(--surface);color:var(--accent);text-align:left;padding:8px 10px;font-weight:700;border:1px solid var(--border)}
 td{padding:8px 10px;border:1px solid var(--border);color:#cbd5e1}
 .footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
-@media(max-width:700px){.hero h1{font-size:26px}}
+@media(max-width:700px){.hero h1{font-size:26px}.hero{padding:36px 16px 24px}.container{padding:0 16px}.card,.graphic-card{padding:16px}.graphic-card .diagram{font-size:11px;padding:12px 14px}table{font-size:11px;display:block;overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -286,7 +286,7 @@ Trace 3: Change delivery address?       P99 latency         4.8s
 <h2 id="troubleshooting">11. Practical Troubleshooting Flow</h2>
 
 <div class="card" style="border:1px solid var(--accent)">
-<div class="diagram" style="background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:8px;padding:16px;font-family:'Fira Code',monospace;font-size:12px;color:#c4b5fd;white-space:pre;text-align:center;line-height:2">Find trace → Isolate span → Inspect I/O → Review evaluations
+<div class="diagram" style="background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:8px;padding:16px 20px;font-family:'Fira Code',monospace;font-size:12px;color:#c4b5fd;white-space:pre;text-align:left;line-height:2;overflow-x:auto">Find trace → Isolate span → Inspect I/O → Review evaluations
      ↓              ↓              ↓                ↓
  Dataset → Experiment → Compare results → Ship → Monitor</div>
 </div>
