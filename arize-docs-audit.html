@@ -209,7 +209,7 @@
 
   .title-issue { color: var(--red); }
   .title-fix { color: var(--green); }
-  .title-line { color: var(--purple); }
+  .title-point { color: var(--purple); }
 
   .gap-section p {
     font-size: 14px;
@@ -217,7 +217,7 @@
     line-height: 1.7;
   }
 
-  .interview-line {
+  .talking-point {
     background: var(--surface2);
     border-left: 3px solid var(--purple);
     padding: 16px 20px;
@@ -229,7 +229,7 @@
     margin-top: 4px;
   }
 
-  .interview-line::before {
+  .talking-point::before {
     content: "💬 ";
   }
 
@@ -349,8 +349,8 @@
     <p>Add a "Framework-agnostic" tab to the TS quickstart showing raw <code>register()</code> + manual span creation with <code>@arizeai/phoenix-otel</code>. Mirror the Python quickstart's framework-agnostic approach.</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">Your TS quickstart assumes Mastra. A dev using Hono or Fastify has to piece together the SDK reference page themselves. I'd add a framework-agnostic tab — just like your Python quickstart already handles any framework.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">Your TS quickstart assumes Mastra. A dev using Hono or Fastify has to piece together the SDK reference page themselves. I'd add a framework-agnostic tab — just like your Python quickstart already handles any framework.</div>
   </div>
 </div>
 
@@ -377,8 +377,8 @@
     <p>Add a "Custom spans for non-LLM operations" section to PROMPT.md showing how to create <code>CHAIN</code>, <code>TOOL</code>, and <code>RETRIEVER</code> spans for business logic. Include the <code>withSpan()</code> helper from <code>@arizeai/phoenix-otel</code>.</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">When I instrumented Poly-Glot, the hardest part was tracing non-LLM operations — template selection, prompt assembly. PROMPT.md doesn't cover that pattern, and it's exactly what complex agents need. I documented how I solved it in my Phoenix Report.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">When I instrumented Poly-Glot, the hardest part was tracing non-LLM operations — template selection, prompt assembly. PROMPT.md doesn't cover that pattern, and it's exactly what complex agents need. I documented how I solved it in my Phoenix Report.</div>
   </div>
 </div>
 
@@ -406,8 +406,8 @@
     <p>Create a single "Graduate from Phoenix to Arize AX" page with: 1) What changes (endpoint, API key, features gained), 2) Code diff showing the 3-line change, 3) What you keep vs. what's new. Make it the obvious next step from every self-hosting page.</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">The Phoenix-to-AX migration is documented across 3+ pages. I'd create one 'Graduate to AX' guide showing the exact code diff — it's literally 3 lines. That's also a direct revenue enablement doc.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">The Phoenix-to-AX migration is documented across 3+ pages. I'd create one 'Graduate to AX' guide showing the exact code diff — it's literally 3 lines. That's also a direct revenue enablement doc.</div>
   </div>
 </div>
 
@@ -435,8 +435,8 @@
     <p>Add a troubleshooting callout to the TS quickstart and the tracing FAQ: "Getting HTTP 415? You need the protobuf OTLP exporter (<code>@opentelemetry/exporter-trace-otlp-proto</code>), not the default HTTP JSON exporter."</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">I hit the protobuf OTLP gotcha myself — HTTP 415 with zero explanation. I documented the fix in my Phoenix Report. That's exactly the kind of setup friction I'd eliminate on day one.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">I hit the protobuf OTLP gotcha myself — HTTP 415 with zero explanation. I documented the fix in my Phoenix Report. That's exactly the kind of setup friction I'd eliminate on day one.</div>
   </div>
 </div>
 
@@ -464,8 +464,8 @@
     <p>Add an "ESM / CommonJS" section to the TS setup docs noting which packages need version pinning and what <code>"type": "module"</code> means for OTel initialization order.</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">ESM compatibility with OpenTelemetry is a known pain point. Your docs don't mention it — I'd add a troubleshooting section because every Node.js dev using ESM will hit it.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">ESM compatibility with OpenTelemetry is a known pain point. Your docs don't mention it — I'd add a troubleshooting section because every Node.js dev using ESM will hit it.</div>
   </div>
 </div>
 
@@ -493,8 +493,8 @@
     <p>Build an agent-readability scoring system for Arize docs. I've already built this: my <a href="https://hmoses.github.io/poly-glot-markdown/" style="color:#58a6ff">Poly-Glot Markdown RAG/GEO scorer</a> measures documentation quality for AI consumption on a 0–100 scale. Adapt this approach to score Arize docs for: frontmatter completeness, heading hierarchy, chunk boundaries, code sample correctness, and agent task-completion rate.</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">You want docs that work for coding agents AND measurement of whether that works. I built a RAG scoring engine that measures exactly this — 0 to 100 agent-readability score. I'd bring that approach to Arize docs.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">You want docs that work for coding agents AND measurement of whether that works. I built a RAG scoring engine that measures exactly this — 0 to 100 agent-readability score. I'd bring that approach to Arize docs.</div>
   </div>
 </div>
 
@@ -522,8 +522,8 @@
     <p>Create TypeScript versions of the top 5 most-visited Python cookbooks. Prioritize: Agentic RAG Tracing, Structured Data Extraction, and the Iterative Eval & Experimentation workflow (which already has a TS version — good precedent to follow).</p>
   </div>
   <div class="gap-section">
-    <div class="gap-section-title title-line">💬 Interview Line</div>
-    <div class="interview-line">Your cookbook library is overwhelmingly Python. With Mastra, Vercel AI SDK, and LangChain.js growing fast, I'd prioritize TypeScript cookbook parity — starting with the top 5 most-visited recipes.</div>
+    <div class="gap-section-title title-point">💬 Talking Point</div>
+    <div class="talking-point">Your cookbook library is overwhelmingly Python. With Mastra, Vercel AI SDK, and LangChain.js growing fast, I'd prioritize TypeScript cookbook parity — starting with the top 5 most-visited recipes.</div>
   </div>
 </div>
 
@@ -531,7 +531,7 @@
 
 <div class="footer">
   <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://hmoses.github.io/portfolio.html">Portfolio</a> · <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Report</a> · <a href="https://github.com/hmoses">GitHub</a></p>
-  <p style="margin-top:6px;font-size:11px;color:#555">Bay Area, CA · Prepared for Arize AI Documentation Engineer interview · September 2026</p>
+  <p style="margin-top:6px;font-size:11px;color:#555">Bay Area, CA · September 2026</p>
 </div>
 
 </body>
