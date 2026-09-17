@@ -235,11 +235,7 @@ function escHtml(s) {
 }
 
 // Load index
-var indexURL = 'assets/data/phoenix_tfidf_index.json';
-// If embedded in iframe from portfolio, try relative to parent
-if (window.location.pathname.indexOf('phoenix-search') >= 0) {
-  indexURL = 'assets/data/phoenix_tfidf_index.json';
-}
+var indexURL = 'assets/data/phoenix_tfidf_index.json?v=3';
 fetch(indexURL).then(function(r) { return r.json(); }).then(function(data) {
   INDEX = data;
   loader.innerHTML = '<div class="empty"><span class="icon">🔍</span>Type a question above to search Phoenix documentation</div>';
