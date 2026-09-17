@@ -25,18 +25,20 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--orange:#f59e0b;--shadow:0 2px 12px rgba(77,101,255,.08)}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+/* Dark theme (default) */
+:root,[data-theme="dark"]{--bg:#0d1117;--text:#e6edf3;--text-secondary:#8b949e;--accent:#58a6ff;--accent-light:#1c2128;--border:#30363d;--card-bg:#161b22;--tag-bg:#1f2937;--tag-border:#374151;--green:#3fb950;--neon:#39ff14;--orange:#f59e0b;--shadow:0 2px 12px rgba(0,0,0,.3);--hero-border:#58a6ff;--banner-bg:linear-gradient(135deg,#161b22,#1c2128);--resp-bg:#1c2128;--resp-border:#374151;--badge-primary-bg:rgba(63,185,80,.15);--badge-primary-text:#3fb950;--badge-docs-bg:rgba(245,158,11,.15);--badge-docs-text:#f59e0b;--badge-rag-bg:rgba(88,166,255,.15);--badge-rag-text:#58a6ff;--badge-agent-bg:rgba(247,129,102,.15);--badge-agent-text:#f78166;--badge-live-bg:rgba(63,185,80,.15);--badge-live-text:#3fb950}
+[data-theme="light"]{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--neon:#16a34a;--orange:#f59e0b;--shadow:0 2px 12px rgba(77,101,255,.08);--hero-border:#4d65ff;--banner-bg:linear-gradient(135deg,#eef1ff,#f0fdf4);--resp-bg:#e8ebff;--resp-border:#d0d8ff;--badge-primary-bg:#dcfce7;--badge-primary-text:#166534;--badge-docs-bg:#fef3c7;--badge-docs-text:#92400e;--badge-rag-bg:#e0e7ff;--badge-rag-text:#3730a3;--badge-agent-bg:#fce7f3;--badge-agent-text:#9d174d;--badge-live-bg:#dcfce7;--badge-live-text:#166534}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;transition:background .3s,color .3s}
 
 /* Hero */
-.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--accent);max-width:900px;margin:0 auto}
+.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--hero-border);max-width:900px;margin:0 auto;position:relative}
 .hero h1{font-size:42px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
 .hero .subtitle{font-size:18px;color:var(--accent);font-weight:600;margin-bottom:12px}
 .hero p{font-size:15px;color:var(--text-secondary);max-width:700px;margin:0 auto 16px;line-height:1.7}
 .hero-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
 .hero-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}
 .hero-links .primary{background:var(--accent);color:#fff}
-.hero-links .secondary{border:1px solid var(--border);color:var(--text)}
+.hero-links .secondary{border:1px solid var(--border);color:var(--text-secondary)}
 
 /* Layout */
 .container{max-width:900px;margin:0 auto;padding:0 20px}
@@ -45,7 +47,7 @@
 .section-header p{font-size:15px;color:var(--text-secondary)}
 
 /* Alignment Banner */
-.alignment-banner{background:linear-gradient(135deg,#eef1ff,#f0fdf4);border:1px solid var(--tag-border);border-radius:10px;padding:24px;margin-bottom:30px}
+.alignment-banner{background:var(--banner-bg);border:1px solid var(--tag-border);border-radius:10px;padding:24px;margin-bottom:30px}
 .alignment-banner h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px}
 .alignment-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .alignment-item{font-size:14px;line-height:1.5;padding:4px 0}
@@ -62,18 +64,17 @@
 .card-top h3 a{color:var(--text);text-decoration:none}
 .card-top h3 a:hover{color:var(--accent)}
 .card-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.badge-primary{background:#dcfce7;color:#166534}
-.badge-docs{background:#fef3c7;color:#92400e}
-.badge-automation{background:#ede9fe;color:#5b21b6}
-.badge-rag{background:#e0e7ff;color:#3730a3}
-.badge-agent{background:#fce7f3;color:#9d174d}
-.badge-devtool{background:#dbeafe;color:#1e40af}
-.badge-community{background:#fff7ed;color:#9a3412}
-.badge-live{background:#dcfce7;color:#166534}
-.badge-agent{background:#fce7f3;color:#9d174d}
+.badge-primary{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-docs{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-automation{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-rag{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-agent{background:var(--badge-agent-bg);color:var(--badge-agent-text)}
+.badge-devtool{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-community{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-live{background:var(--badge-live-bg);color:var(--badge-live-text)}
 
 /* Responsibility mapping */
-.resp-map{background:var(--accent-light);border:1px solid var(--tag-border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--accent)}
+.resp-map{background:var(--resp-bg);border:1px solid var(--resp-border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--accent)}
 .resp-map .resp-label{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px;margin-right:6px}
 
 .card-desc{font-size:15px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6}
@@ -85,6 +86,12 @@
 .card-links{display:flex;gap:12px;flex-wrap:wrap}
 .card-links a{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
 .card-links a:hover{text-decoration:underline}
+.card-links a.live-link{color:var(--neon);font-weight:700}
+.card-links a.live-link:hover{text-shadow:0 0 8px var(--neon)}
+
+/* Theme toggle */
+.theme-toggle{position:absolute;top:20px;right:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--text);font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px}
+.theme-toggle:hover{border-color:var(--accent)}
 
 /* Footer */
 .footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);font-size:14px;color:var(--text-secondary)}
@@ -126,6 +133,7 @@
 <!-- HERO                                                              -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="hero">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
   <h1>Harold Moses II</h1>
   <div class="subtitle">Documentation Engineer · AI Developer Tools · Open Source</div>
   <p>I build documentation systems, automated quality pipelines, RAG-optimized content, and developer tutorials that help engineers understand, evaluate, and ship AI applications. 10+ years of developer docs at NVIDIA, Block, OpenVPN, F5, Airbnb, and PlayStation.</p>
@@ -227,7 +235,7 @@
     <span class="tag">Anthropic</span>
   </div>
   <div class="card-links">
-    <a href="https://hmoses.github.io/poly-glot-markdown/">Live App →</a>
+    <a href="https://hmoses.github.io/poly-glot-markdown/" class="live-link">Live App →</a>
     <a href="https://github.com/hmoses/poly-glot-markdown">Source Code →</a>
   </div>
 </div>
@@ -268,7 +276,7 @@
     <span class="tag">Python</span>
   </div>
   <div class="card-links">
-    <a href="phoenix-search.html" target="_blank">Open Full Search Demo →</a>
+    <a href="phoenix-search.html" target="_blank" class="live-link">Open Full Search Demo →</a>
     <a href="https://github.com/hmoses/phoenix-agent-native-docs" target="_blank">Source Code →</a>
   </div>
 </div>
@@ -301,7 +309,7 @@
     <span class="tag">15 Tools</span>
   </div>
   <div class="card-links">
-    <a href="https://hmoses.github.io/dev-guide.html">Live Guide →</a>
+    <a href="https://hmoses.github.io/dev-guide.html" class="live-link">Live Guide →</a>
     <a href="https://hmoses.github.io/poly-glot-site/">Poly-Glot Website →</a>
     <a href="https://github.com/hmoses/poly-glot-ai-workspace">MCP Source →</a>
   </div>
@@ -335,7 +343,7 @@
     <span class="tag">Documentation Engineering</span>
   </div>
   <div class="card-links">
-    <a href="https://hmoses.github.io/python-for-doc-engineers.html">Live Guide →</a>
+    <a href="https://hmoses.github.io/python-for-doc-engineers.html" class="live-link">Live Guide →</a>
   </div>
 </div>
 
@@ -366,7 +374,7 @@
     <span class="tag">Playwright</span>
     <span class="tag">Case Study</span>
   </div>
-  <div class="card-links"><a href="https://hmoses.github.io/phoenix-report.html">Live Report →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">Source Code →</a></div>
+  <div class="card-links"><a href="https://hmoses.github.io/phoenix-report.html" class="live-link">Live Report →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">Source Code →</a></div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -397,7 +405,7 @@
     <span class="tag">Agent-Readability</span>
   </div>
   <div class="card-links">
-    <a href="https://hmoses.github.io/arize-docs-audit.html">Full Audit Report →</a>
+    <a href="https://hmoses.github.io/arize-docs-audit.html" class="live-link">Full Audit Report →</a>
     <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Case Study →</a>
   </div>
 </div>
@@ -464,5 +472,24 @@
   <p style="margin-top:6px;font-size:12px;color:#999">Bay Area, CA · Additional writing samples, references, available upon request</p>
 </div>
 
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var current=html.getAttribute('data-theme')||'dark';
+  var next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+  updateToggle(next);
+}
+function updateToggle(t){
+  document.getElementById('themeIcon').textContent=t==='dark'?'☀️':'🌙';
+  document.getElementById('themeLabel').textContent=t==='dark'?'Light':'Dark';
+}
+(function(){
+  var saved=localStorage.getItem('theme')||'dark';
+  document.documentElement.setAttribute('data-theme',saved);
+  updateToggle(saved);
+})();
+</script>
 </body>
 </html>
