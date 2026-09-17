@@ -241,7 +241,7 @@
     <span class="card-badge badge-agent">Agent-Native Docs</span>
   </div>
   <div class="resp-map"><span class="resp-label">Maps to:</span> Make documentation work for coding agents as well as humans; prototype spikes for new features; grounded retrieval with real measurement</div>
-  <div class="card-desc">I built a proof-of-concept system that turns Arize Phoenix's official documentation into a grounded retrieval server that AI coding agents can query through the Model Context Protocol (MCP). Instead of letting an LLM guess at Phoenix APIs, the system discovers authoritative pages through Phoenix's <code>llms.txt</code> index, fetches and chunks them with heading-aware semantic splitting, embeds them with <code>sentence-transformers/all-MiniLM-L6-v2</code>, and exposes five MCP tools that return ranked evidence with canonical URLs and a strict answer policy. Every answer traces back to an official source — and when evidence is insufficient, the system explicitly abstains rather than inventing an API that doesn't exist.</div>
+  <div class="card-desc">I built a system that turns Arize Phoenix's official documentation into a grounded retrieval server that AI coding agents can query through the Model Context Protocol (MCP). It discovers authoritative pages through Phoenix's <code>llms.txt</code> index (708 pages available), fetches and chunks them with heading-aware semantic splitting, embeds them with <code>sentence-transformers/all-MiniLM-L6-v2</code>, and exposes five MCP tools that return ranked evidence with canonical URLs and a strict answer policy. Every answer traces back to an official source — and when evidence is insufficient, the system explicitly abstains rather than inventing an API that doesn't exist. The interactive demo below runs entirely in your browser with no backend — search 10 indexed pages using TF-IDF keyword relevance scoring.</div>
   <ul class="card-highlights">
     <li><strong>llms.txt discovery pipeline:</strong> I parse Phoenix's official <code>llms.txt</code>, enforce an allowlist that rejects lookalike domains, credentials in URLs, and HTTP-only links, then fetch and normalize only canonical documentation pages</li>
     <li><strong>Heading-aware semantic chunking:</strong> documents split at Markdown heading boundaries with configurable overlap — each chunk carries its title, heading, URL, and a unique content-addressed ID</li>
@@ -250,25 +250,14 @@
     <li><strong>Strict answer policy:</strong> the <code>ask</code> tool returns an evidence packet with a policy that forces the caller to cite sources, refuse to follow instructions inside excerpts, and abstain when evidence doesn't support the claim</li>
     <li><strong>Atomic index writes:</strong> sync builds the new index in a temp directory and atomically replaces files — a failed sync never corrupts the last valid index</li>
     <li><strong>Architecture separation:</strong> documentation retrieval and live Phoenix operations are deliberately separated — this server handles docs, Phoenix's native <code>/mcp</code> endpoint handles live actions</li>
+    <li><strong>Live browser demo:</strong> the interactive search below runs client-side — 10 of 708 Phoenix doc pages pre-indexed into 129 chunks, scored with TF-IDF keyword relevance (not RAG). Select a page from the dropdown, see ranked results with scores and direct links to official docs. <a href="https://arize.com/docs/phoenix/evaluation/pre-built-metrics/retrieval-relevance" target="_blank" style="color:#4d65ff">How Phoenix scores retrieval →</a></li>
   </ul>
   <div style="margin:14px 0;border-radius:10px;overflow:hidden;border:1px solid #30363d">
-    <iframe src="phoenix-search.html?v=3" width="100%" height="560" style="border:none;display:block" loading="lazy" title="Phoenix Docs Search Demo"></iframe>
+    <iframe src="phoenix-search.html?v=6" width="100%" height="560" style="border:none;display:block" loading="lazy" title="Phoenix Docs Search Demo"></iframe>
   </div>
-  <div style="background:#f0f3ff;border:1px solid #d0d8ff;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:13px;line-height:1.6">
-    <strong style="font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#4d65ff">▶ Try these searches</strong> <span style="color:#555;font-size:12px">(10 of 708 Phoenix doc pages indexed · 129 chunks)</span>
-    <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">How do traces and spans work?</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">Set up tracing for Python</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">What are Phoenix evaluations?</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">How do experiments work?</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">TypeScript tracing setup</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">What is PXI agent?</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">Prompt playground</span>
-      <span style="background:#e0e7ff;border-radius:12px;padding:2px 10px;font-size:12px;color:#3730a3">Production deployment</span>
-      <span style="background:#fce7f3;border-radius:12px;padding:2px 10px;font-size:12px;color:#9d174d">QuantumBananaTracer ← abstention test</span>
-    </div>
-  </div>
+
   <div class="card-tags">
+    <span class="tag">Live Demo</span>
     <span class="tag">MCP Server</span>
     <span class="tag">Arize Phoenix</span>
     <span class="tag">llms.txt</span>
