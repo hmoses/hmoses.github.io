@@ -215,7 +215,8 @@ function doSearch() {
   var sufficient = bestScore >= 0.05;
 
   metaEl.style.display = 'flex';
-  metaEl.innerHTML = '<span>' + hits.length + ' results in ' + elapsed + 'ms<span class="pill">' + INDEX.chunks.length + ' chunks</span></span><span>Top score: <strong style="color:' + (sufficient ? 'var(--green)' : 'var(--accent)') + '">' + bestScore.toFixed(3) + '</strong></span>';
+  var scoreLabel = bestScore >= 0.3 ? 'strong match' : bestScore >= 0.05 ? 'relevant' : 'weak';
+  metaEl.innerHTML = '<span>' + hits.length + ' results in ' + elapsed + 'ms<span class="pill">' + INDEX.chunks.length + ' chunks</span></span><span>Top score: <strong style="color:' + (sufficient ? 'var(--green)' : 'var(--accent)') + '">' + bestScore.toFixed(3) + '</strong> <span style="font-size:10px;color:var(--text2)">(' + scoreLabel + ' · TF-IDF cosine similarity · 0.000–1.000)</span></span>';
   clearWrap.style.display = 'block';
 
   if (!sufficient && hits.length) {
