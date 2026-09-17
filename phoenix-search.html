@@ -17,6 +17,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .how-to summary{font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;user-select:none}
 .how-to summary:hover{color:var(--text)}
 .how-to .steps{margin-top:8px;padding-left:16px;font-size:12px;color:var(--text2);line-height:1.8}
+.how-to .steps strong{color:var(--link)}
 .how-to .steps code{background:var(--surface2);padding:1px 5px;border-radius:3px;color:var(--accent2);font-size:11px}
 .how-to .try-these{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
 .how-to .try-btn{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:3px 10px;font-size:11px;color:var(--link);cursor:pointer;transition:all .15s;font-family:inherit}
@@ -75,10 +76,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   <details open>
     <summary>How to use</summary>
     <ol class="steps">
-      <li>Click the dropdown and <strong>select one of the 10 indexed pages</strong> — results appear automatically</li>
-      <li>Results show <strong>ranked excerpts</strong> with relevance scores and direct links to official docs</li>
-      <li><strong>Scores (0.000–1.000):</strong> each result shows a <strong>keyword relevance score</strong> — not a RAG or LLM score. It uses TF-IDF cosine similarity: how well the words in your selection match the words in each chunk, weighted by rarity. Common terms like "tracing" appear across many chunks so they score lower; specific terms like "playground" or "PXI" score higher because they're concentrated in fewer pages. Above <code>0.05</code> = relevant. Below = flagged <strong>insufficient</strong>. The full MCP server uses <code>sentence-transformers</code> for real semantic retrieval — this browser demo uses TF-IDF as a lightweight client-side alternative. See Arize's <a href="https://arize.com/docs/phoenix/evaluation/server-evals/code-evaluators/scikit-learn" target="_blank" rel="noopener" style="color:var(--link)">scikit-learn cosine similarity evaluator</a> and <a href="https://arize.com/docs/phoenix/evaluation/pre-built-metrics/retrieval-relevance" target="_blank" rel="noopener" style="color:var(--link)">retrieval relevance docs</a> for how Phoenix scores retrieval quality in production.</li>
-      <li>Try a fake feature (e.g. <code>QuantumBananaTracer</code>) to see abstention — it won't invent answers</li>
+      <li><strong>Select a page:</strong> click the dropdown and pick one of the <strong>10 indexed pages</strong> — results appear automatically</li>
+      <li><strong>Ranked results:</strong> each result shows the <strong>source title</strong>, <strong>section heading</strong>, <strong>text excerpt</strong>, <strong>relevance score</strong>, and a <strong>direct link</strong> to the official Phoenix doc page</li>
+      <li><strong>Scores (0.000–1.000):</strong> a <strong>keyword relevance score</strong> — not a RAG or LLM score. Uses <strong>TF-IDF cosine similarity</strong>: how well your selection matches each chunk, weighted by term rarity. <strong>Common terms</strong> like "tracing" score lower (appear in many chunks); <strong>specific terms</strong> like "playground" or "PXI" score higher (fewer pages). Above <code>0.05</code> = <strong>relevant</strong>. Below = <strong>insufficient evidence</strong>. The full MCP server uses <code>sentence-transformers</code> for <strong>real semantic retrieval</strong> — this browser demo uses TF-IDF as a lightweight client-side alternative. See Arize's <a href="https://arize.com/docs/phoenix/evaluation/server-evals/code-evaluators/scikit-learn" target="_blank" rel="noopener" style="color:var(--link)">scikit-learn cosine similarity evaluator</a> and <a href="https://arize.com/docs/phoenix/evaluation/pre-built-metrics/retrieval-relevance" target="_blank" rel="noopener" style="color:var(--link)">retrieval relevance docs</a> for how Phoenix scores retrieval in production.</li>
+      <li><strong>Abstention test:</strong> try a fake feature (e.g. <code>QuantumBananaTracer</code>) — the system returns <strong>no results</strong> rather than inventing an answer</li>
     </ol>
     <div class="try-these">
       <button class="try-btn" onclick="tryQuery(this)">How do traces and spans work?</button>
