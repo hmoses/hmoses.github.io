@@ -358,9 +358,42 @@
   .footer a:hover { text-decoration: underline; }
 
   @media (max-width: 600px) {
-    .cover h1 { font-size: 26px; }
+    .cover { padding: 36px 16px 32px; }
+    .cover h1 { font-size: 24px; }
+    .cover .subtitle { font-size: 14px; }
+    .cover .author { font-size: 13px; }
+    .container { padding: 24px 16px 40px; }
+    .intro { padding: 20px 16px; }
+    .intro h2 { font-size: 16px; }
+    .intro p { font-size: 14px; }
+    .step-card { padding: 20px 16px; margin-bottom: 20px; }
+    .step-header { gap: 10px; }
     .step-title { font-size: 18px; }
-    .code-body { font-size: 12px; }
+    .step-number { width: 34px; height: 34px; min-width: 34px; font-size: 16px; }
+    .step-desc { font-size: 14px; }
+    .code-block { margin-bottom: 14px; }
+    .code-header { padding: 6px 12px; font-size: 11px; }
+    .code-body { font-size: 11px; padding: 12px 14px; line-height: 1.7; -webkit-overflow-scrolling: touch; }
+    .copy-btn { padding: 6px 10px; min-height: 36px; font-size: 11px; }
+    .breakdown { padding: 16px 14px; }
+    .breakdown-title { font-size: 11px; }
+    .breakdown-item { font-size: 12px; }
+    .breakdown-item code { font-size: 12px; }
+    .architecture { padding: 14px 16px; font-size: 11px; line-height: 1.7; -webkit-overflow-scrolling: touch; }
+    .concept { padding: 14px 16px; }
+    .concept-title { font-size: 11px; }
+    .concept p { font-size: 13px; }
+    .usecase { padding: 14px 16px; }
+    .usecase-title { font-size: 11px; }
+    .usecase p { font-size: 13px; }
+    .footer { padding: 24px 16px; font-size: 12px; }
+  }
+
+  @media (max-width: 400px) {
+    .cover h1 { font-size: 20px; }
+    .step-title { font-size: 16px; }
+    .code-body { font-size: 10px; padding: 10px 12px; }
+    .architecture { font-size: 10px; padding: 12px; }
   }
 
   @media print {

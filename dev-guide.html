@@ -35,7 +35,53 @@ pre{overflow:auto;background:var(--code);color:#f8fafc;border-radius:9px;padding
 .entitlement-card h4{margin:0 0 8px;font-size:15px}.entitlement-card .tier{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px}
 .entitlement-card ul{text-align:left;padding-left:18px;margin:0;font-size:13px;color:var(--muted)}.entitlement-card li{margin:4px 0}
 .check{color:var(--green);font-weight:700}.lock{color:#dc2626;font-weight:700}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.toc{position:relative;top:auto}.hero h1{font-size:31px}.grid{grid-template-columns:1fr}.entitlement-grid{grid-template-columns:1fr}.tab-btn{padding:12px 16px;font-size:13px}}
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr;padding:20px 16px 40px;gap:20px}
+  .toc{position:relative;top:auto;padding:14px;margin-bottom:0}
+  .toc a{font-size:12px;padding:6px 0;min-height:36px;display:flex;align-items:center}
+  .hero{padding:36px 16px 24px}
+  .hero h1{font-size:28px}
+  .hero p{font-size:14px}
+  .eyebrow{font-size:11px;letter-spacing:2px}
+  .hero-links{gap:8px}
+  .btn{padding:10px 14px;min-height:44px;font-size:13px}
+  .tab-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 16px}
+  .tab-btn{padding:12px 14px;font-size:12px;white-space:nowrap;min-height:44px}
+  .content h2{font-size:20px;margin:28px 0 10px}
+  .content h3{font-size:16px;margin:20px 0 6px}
+  .content p{font-size:14px}
+  .content li{font-size:13px}
+  .grid{grid-template-columns:1fr}
+  .entitlement-grid{grid-template-columns:1fr}
+  .tool-card{padding:14px;margin:10px 0}
+  .tool-card h3{font-size:15px}
+  .note{padding:12px 14px;font-size:14px}
+  pre{font-size:12px;padding:12px;-webkit-overflow-scrolling:touch}
+  code{font-size:12px}
+  .step-card{padding:16px;gap:12px}
+  .step-num{width:32px;height:32px;min-width:32px;font-size:14px}
+  .step-body h3{font-size:15px}
+  .step-body p{font-size:13px}
+  .endpoint-box{padding:10px 14px;font-size:12px;flex-direction:column;align-items:flex-start;gap:8px}
+  .copy-btn{min-height:36px;padding:6px 12px;font-size:11px;align-self:flex-end}
+  .tools-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tools-table th,.tools-table td{padding:8px 10px;font-size:12px;white-space:nowrap}
+  .chat-bubble{padding:12px 14px;font-size:13px}
+  .pill{font-size:11px;padding:3px 7px}
+  .entitlement-card{padding:14px}
+  .entitlement-card h4{font-size:14px}
+  .entitlement-card ul{font-size:12px}
+  .footer{padding:24px 16px;font-size:12px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:22px}
+  .hero-links{flex-direction:column;align-items:stretch}
+  .btn{justify-content:center;text-align:center}
+  .tab-btn{padding:10px 10px;font-size:11px}
+  pre{font-size:11px;padding:10px}
+  .content h2{font-size:18px}
+  .endpoint-box{font-size:11px}
+}
 </style>
 </head>
 <body>

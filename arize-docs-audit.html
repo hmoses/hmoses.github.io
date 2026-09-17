@@ -293,8 +293,33 @@
   }
 
   @media (max-width: 600px) {
-    .summary-bar { grid-template-columns: 1fr; }
-    .cover h1 { font-size: 26px; }
+    .cover { padding: 36px 16px 32px; }
+    .cover h1 { font-size: 24px; }
+    .cover .subtitle { font-size: 14px; }
+    .cover .author { font-size: 13px; }
+    .container { padding: 20px 16px 40px; }
+    .summary-bar { grid-template-columns: 1fr; padding: 18px; gap: 14px; }
+    .summary-stat .num { font-size: 28px; }
+    .summary-stat .label { font-size: 11px; }
+    .gap-card { padding: 18px 14px; }
+    .gap-header { gap: 10px; }
+    .gap-title { font-size: 17px; }
+    .gap-meta { gap: 6px; }
+    .meta-tag { font-size: 10px; padding: 3px 8px; }
+    .gap-section p { font-size: 13px; }
+    .gap-section-title { font-size: 10px; }
+    .talking-point { padding: 12px 14px; font-size: 13px; }
+    .doc-links { gap: 4px; }
+    .doc-link { font-size: 11px; padding: 6px 10px; min-height: 44px; display: inline-flex; align-items: center; }
+    code { font-size: 12px; }
+    .footer { font-size: 12px; padding: 24px 16px; }
+  }
+
+  @media (max-width: 400px) {
+    .cover h1 { font-size: 20px; }
+    .gap-title { font-size: 15px; }
+    .gap-number { width: 30px; height: 30px; font-size: 14px; }
+    .doc-links { flex-direction: column; }
   }
 </style>
 </head>
