@@ -184,7 +184,7 @@ function clearAll() {
   metaEl.innerHTML = '';
   abstainEl.innerHTML = '';
   clearWrap.style.display = 'none';
-  resultsEl.innerHTML = '<div class="empty"><span class="icon">🔍</span>Type a question above to search Phoenix documentation</div>';
+  resultsEl.innerHTML = '<div class="empty"><span class="icon">🔍</span>Select a page from the dropdown — e.g. <strong>Tracing Quickstart</strong> — to see ranked chunks with TF-IDF scores and direct doc links</div>';
   qInput.focus();
 }
 
@@ -257,7 +257,7 @@ function escHtml(s) {
 var indexURL = 'assets/data/phoenix_tfidf_index.json?v=9';
 fetch(indexURL).then(function(r) { return r.json(); }).then(function(data) {
   INDEX = data;
-  loader.innerHTML = '<div class="empty"><span class="icon">🔍</span>Type a question above to search Phoenix documentation</div>';
+  loader.innerHTML = '<div class="empty"><span class="icon">🔍</span>Select a page from the dropdown — e.g. <strong>Tracing Quickstart</strong> — to see ranked chunks with TF-IDF scores and direct doc links</div>';
 }).catch(function(err) {
   loader.innerHTML = '<div class="empty"><span class="icon">⚠️</span>Failed to load search index: ' + err.message + '</div>';
 });
