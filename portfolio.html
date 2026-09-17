@@ -152,7 +152,7 @@
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Doc ownership &amp; rewrites:</span> <span class="map">Proto API Monitor, Dev Integration Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials &amp; progressive guides:</span> <span class="map">Python for Doc Engineers, Dev Integration Guide</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents:</span> <span class="map">Poly-Glot Markdown, Dev Guide, MCP tools</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents:</span> <span class="map">Phoenix Agent-Native Docs MCP, Poly-Glot Markdown, Dev Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials &amp; cookbooks:</span> <span class="map">Dev Integration Guide, Phoenix Observability Report</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis:</span> <span class="map">Arize Docs Audit (7 gaps, proposed fixes)</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Developer onboarding:</span> <span class="map">Dev Guide onboarding flow, product walkthrough</span></div>
@@ -181,6 +181,10 @@
     <li><strong>AI observability bridge:</strong> the agent's classification, doc output, and action path can be traced and evaluated — connects directly to tracing/eval platforms</li>
     <li><strong>Event-driven pipeline:</strong> GitHub Actions executes repeatable automation triggered by API change events</li>
   </ul>
+  <div class="card-video" style="margin-bottom:14px">
+    <video src="assets/video/hack_week_doc_change_automation.mp4" width="100%" style="border-radius:8px;border:1px solid var(--border)" controls muted playsinline preload="metadata"></video>
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:6px;font-style:italic">▶ Demo: end-to-end documentation drift detection — API change → agentic classification → doc update → Slack notification</p>
+  </div>
   <div class="card-tags">
     <span class="tag">Doc Drift Detection</span>
     <span class="tag">OpenAPI/Swagger</span>
@@ -356,7 +360,39 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 8: NPM PACKAGES — SHIPPED PRODUCTION SOFTWARE             -->
+<!-- PROJECT 8: PHOENIX AGENT-NATIVE DOCS — GROUNDED MCP RETRIEVAL     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🤖 Phoenix Agent-Native Documentation — Grounded MCP Retrieval Server</h3>
+    <span class="card-badge badge-agent">Agent-Native Docs</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Make documentation work for coding agents as well as humans; prototype spikes for new features; grounded retrieval with real measurement</div>
+  <div class="card-desc">I built a proof-of-concept system that turns Arize Phoenix's official documentation into a grounded retrieval server that AI coding agents can query through the Model Context Protocol (MCP). Instead of letting an LLM guess at Phoenix APIs, the system discovers authoritative pages through Phoenix's <code>llms.txt</code> index, fetches and chunks them with heading-aware semantic splitting, embeds them with <code>sentence-transformers/all-MiniLM-L6-v2</code>, and exposes five MCP tools that return ranked evidence with canonical URLs and a strict answer policy. Every answer traces back to an official source — and when evidence is insufficient, the system explicitly abstains rather than inventing an API that doesn't exist.</div>
+  <ul class="card-highlights">
+    <li><strong>llms.txt discovery pipeline:</strong> I parse Phoenix's official <code>llms.txt</code>, enforce an allowlist that rejects lookalike domains, credentials in URLs, and HTTP-only links, then fetch and normalize only canonical documentation pages</li>
+    <li><strong>Heading-aware semantic chunking:</strong> documents split at Markdown heading boundaries with configurable overlap — each chunk carries its title, heading, URL, and a unique content-addressed ID</li>
+    <li><strong>Dual embedding strategy:</strong> production uses <code>all-MiniLM-L6-v2</code> for real semantic retrieval; a deterministic hashing embedder supports offline tests and CI without downloading model weights</li>
+    <li><strong>5 MCP tools:</strong> <code>sync_phoenix_docs</code>, <code>search_phoenix_docs</code>, <code>ask_phoenix_docs</code>, <code>get_phoenix_doc</code>, and <code>check_phoenix_readiness</code> — each with grounding guarantees and safety boundaries</li>
+    <li><strong>Strict answer policy:</strong> the <code>ask</code> tool returns an evidence packet with a policy that forces the caller to cite sources, refuse to follow instructions inside excerpts, and abstain when evidence doesn't support the claim</li>
+    <li><strong>Atomic index writes:</strong> sync builds the new index in a temp directory and atomically replaces files — a failed sync never corrupts the last valid index</li>
+    <li><strong>Architecture separation:</strong> documentation retrieval and live Phoenix operations are deliberately separated — this server handles docs, Phoenix's native <code>/mcp</code> endpoint handles live actions</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">MCP Server</span>
+    <span class="tag">Arize Phoenix</span>
+    <span class="tag">llms.txt</span>
+    <span class="tag">Semantic Retrieval</span>
+    <span class="tag">Sentence Transformers</span>
+    <span class="tag">Agent-Native Docs</span>
+    <span class="tag">Grounded Answers</span>
+    <span class="tag">Python</span>
+    <span class="tag">Goose Extension</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 9: NPM PACKAGES — SHIPPED PRODUCTION SOFTWARE             -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
@@ -398,14 +434,14 @@
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health / rewrite stale docs</span><br><span class="map">→ Proto API Monitor, Dev Integration Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Progressive tutorials &amp; learning guides</span><br><span class="map">→ Python for Doc Engineers: 6-step path from lookup to traced agent</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + measurement</span><br><span class="map">→ Poly-Glot Markdown (RAG scorer), structured MCP docs</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + measurement</span><br><span class="map">→ Phoenix Agent-Native Docs MCP, Poly-Glot Markdown (RAG scorer)</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials, cookbooks, demo repos</span><br><span class="map">→ Dev Integration Guide, Phoenix Observability Report, Goose Docs Extension</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis</span><br><span class="map">→ Arize Docs Audit: 7 gaps with severity ratings and proposed fixes</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Onboarding to first working result</span><br><span class="map">→ Dev Guide progressive flow, Phoenix Report troubleshooting flow</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Community feedback → product insights</span><br><span class="map">→ Proto API Monitor stakeholder comms</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">SEO / answer-engine content</span><br><span class="map">→ Poly-Glot Markdown GEO optimizer, keyword emphasis, frontmatter</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Developer community engagement</span><br><span class="map">→ Open-source repos, MCP ecosystem participation, Hugging Face</span></div>
-    <div class="alignment-item"><span class="check">✓</span><span class="label">Prototype spikes for new features</span><br><span class="map">→ Goose Docs Extension, Proto API Monitor agent</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Prototype spikes for new features</span><br><span class="map">→ Phoenix Agent-Native Docs, Goose Docs Extension, Proto API Monitor agent</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Ship open-source packages continuously</span><br><span class="map">→ 83 npm releases across poly-glot-ai-cli &amp; poly-glot-mcp</span></div>
   </div>
 </div>
