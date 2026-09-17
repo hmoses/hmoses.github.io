@@ -254,7 +254,7 @@ function escHtml(s) {
 }
 
 // Load index
-var indexURL = 'assets/data/phoenix_tfidf_index.json?v=3';
+var indexURL = 'assets/data/phoenix_tfidf_index.json?v=9';
 fetch(indexURL).then(function(r) { return r.json(); }).then(function(data) {
   INDEX = data;
   loader.innerHTML = '<div class="empty"><span class="icon">🔍</span>Type a question above to search Phoenix documentation</div>';
