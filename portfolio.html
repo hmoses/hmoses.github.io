@@ -233,7 +233,45 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 3: POLY-GLOT DEV INTEGRATION GUIDE                        -->
+<!-- PROJECT 3: PHOENIX AGENT-NATIVE DOCS — GROUNDED MCP RETRIEVAL     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🤖 Phoenix Agent-Native Documentation — Grounded MCP Retrieval Server</h3>
+    <span class="card-badge badge-agent">Agent-Native Docs</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Make documentation work for coding agents as well as humans; prototype spikes for new features; grounded retrieval with real measurement</div>
+  <div class="card-desc">I built a proof-of-concept system that turns Arize Phoenix's official documentation into a grounded retrieval server that AI coding agents can query through the Model Context Protocol (MCP). Instead of letting an LLM guess at Phoenix APIs, the system discovers authoritative pages through Phoenix's <code>llms.txt</code> index, fetches and chunks them with heading-aware semantic splitting, embeds them with <code>sentence-transformers/all-MiniLM-L6-v2</code>, and exposes five MCP tools that return ranked evidence with canonical URLs and a strict answer policy. Every answer traces back to an official source — and when evidence is insufficient, the system explicitly abstains rather than inventing an API that doesn't exist.</div>
+  <ul class="card-highlights">
+    <li><strong>llms.txt discovery pipeline:</strong> I parse Phoenix's official <code>llms.txt</code>, enforce an allowlist that rejects lookalike domains, credentials in URLs, and HTTP-only links, then fetch and normalize only canonical documentation pages</li>
+    <li><strong>Heading-aware semantic chunking:</strong> documents split at Markdown heading boundaries with configurable overlap — each chunk carries its title, heading, URL, and a unique content-addressed ID</li>
+    <li><strong>Dual embedding strategy:</strong> production uses <code>all-MiniLM-L6-v2</code> for real semantic retrieval; a deterministic hashing embedder supports offline tests and CI without downloading model weights</li>
+    <li><strong>5 MCP tools:</strong> <code>sync_phoenix_docs</code>, <code>search_phoenix_docs</code>, <code>ask_phoenix_docs</code>, <code>get_phoenix_doc</code>, and <code>check_phoenix_readiness</code> — each with grounding guarantees and safety boundaries</li>
+    <li><strong>Strict answer policy:</strong> the <code>ask</code> tool returns an evidence packet with a policy that forces the caller to cite sources, refuse to follow instructions inside excerpts, and abstain when evidence doesn't support the claim</li>
+    <li><strong>Atomic index writes:</strong> sync builds the new index in a temp directory and atomically replaces files — a failed sync never corrupts the last valid index</li>
+    <li><strong>Architecture separation:</strong> documentation retrieval and live Phoenix operations are deliberately separated — this server handles docs, Phoenix's native <code>/mcp</code> endpoint handles live actions</li>
+  </ul>
+  <div style="margin:14px 0;border-radius:10px;overflow:hidden;border:1px solid #30363d">
+    <iframe src="phoenix-search.html" width="100%" height="520" style="border:none;display:block" loading="lazy" title="Phoenix Docs Search Demo"></iframe>
+  </div>
+  <div class="card-tags">
+    <span class="tag">MCP Server</span>
+    <span class="tag">Arize Phoenix</span>
+    <span class="tag">llms.txt</span>
+    <span class="tag">Semantic Retrieval</span>
+    <span class="tag">Sentence Transformers</span>
+    <span class="tag">Agent-Native Docs</span>
+    <span class="tag">Grounded Answers</span>
+    <span class="tag">Python</span>
+    <span class="tag">Goose Extension</span>
+  </div>
+  <div class="card-links">
+    <a href="phoenix-search.html" target="_blank">Open Full Search Demo →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 4: POLY-GLOT DEV INTEGRATION GUIDE                        -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
@@ -362,39 +400,7 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 8: PHOENIX AGENT-NATIVE DOCS — GROUNDED MCP RETRIEVAL     -->
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<div class="project-card">
-  <div class="card-top">
-    <h3>🤖 Phoenix Agent-Native Documentation — Grounded MCP Retrieval Server</h3>
-    <span class="card-badge badge-agent">Agent-Native Docs</span>
-  </div>
-  <div class="resp-map"><span class="resp-label">Maps to:</span> Make documentation work for coding agents as well as humans; prototype spikes for new features; grounded retrieval with real measurement</div>
-  <div class="card-desc">I built a proof-of-concept system that turns Arize Phoenix's official documentation into a grounded retrieval server that AI coding agents can query through the Model Context Protocol (MCP). Instead of letting an LLM guess at Phoenix APIs, the system discovers authoritative pages through Phoenix's <code>llms.txt</code> index, fetches and chunks them with heading-aware semantic splitting, embeds them with <code>sentence-transformers/all-MiniLM-L6-v2</code>, and exposes five MCP tools that return ranked evidence with canonical URLs and a strict answer policy. Every answer traces back to an official source — and when evidence is insufficient, the system explicitly abstains rather than inventing an API that doesn't exist.</div>
-  <ul class="card-highlights">
-    <li><strong>llms.txt discovery pipeline:</strong> I parse Phoenix's official <code>llms.txt</code>, enforce an allowlist that rejects lookalike domains, credentials in URLs, and HTTP-only links, then fetch and normalize only canonical documentation pages</li>
-    <li><strong>Heading-aware semantic chunking:</strong> documents split at Markdown heading boundaries with configurable overlap — each chunk carries its title, heading, URL, and a unique content-addressed ID</li>
-    <li><strong>Dual embedding strategy:</strong> production uses <code>all-MiniLM-L6-v2</code> for real semantic retrieval; a deterministic hashing embedder supports offline tests and CI without downloading model weights</li>
-    <li><strong>5 MCP tools:</strong> <code>sync_phoenix_docs</code>, <code>search_phoenix_docs</code>, <code>ask_phoenix_docs</code>, <code>get_phoenix_doc</code>, and <code>check_phoenix_readiness</code> — each with grounding guarantees and safety boundaries</li>
-    <li><strong>Strict answer policy:</strong> the <code>ask</code> tool returns an evidence packet with a policy that forces the caller to cite sources, refuse to follow instructions inside excerpts, and abstain when evidence doesn't support the claim</li>
-    <li><strong>Atomic index writes:</strong> sync builds the new index in a temp directory and atomically replaces files — a failed sync never corrupts the last valid index</li>
-    <li><strong>Architecture separation:</strong> documentation retrieval and live Phoenix operations are deliberately separated — this server handles docs, Phoenix's native <code>/mcp</code> endpoint handles live actions</li>
-  </ul>
-  <div class="card-tags">
-    <span class="tag">MCP Server</span>
-    <span class="tag">Arize Phoenix</span>
-    <span class="tag">llms.txt</span>
-    <span class="tag">Semantic Retrieval</span>
-    <span class="tag">Sentence Transformers</span>
-    <span class="tag">Agent-Native Docs</span>
-    <span class="tag">Grounded Answers</span>
-    <span class="tag">Python</span>
-    <span class="tag">Goose Extension</span>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 9: NPM PACKAGES — SHIPPED PRODUCTION SOFTWARE             -->
+<!-- PROJECT 8: NPM PACKAGES — SHIPPED PRODUCTION SOFTWARE             -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
