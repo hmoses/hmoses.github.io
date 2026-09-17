@@ -159,7 +159,7 @@
 <!-- ALIGNMENT BANNER                                                  -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="alignment-banner">
-  <h3>🎯 How These Projects Map to Arize Documentation Engineer Responsibilities</h3>
+  <h3>🎯 How These Projects Map to <a href="https://arize.com/careers/" target="_blank" rel="noopener" style="color:var(--neon);text-decoration:underline">Arize Documentation Engineer</a> Responsibilities</h3>
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health, rewrite stale content:</span> <span class="map">Proto API Monitor (automated drift detection), Dev Integration Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality systems:</span> <span class="map">Proto API Monitor (detect drift, test samples, draft updates for review)</span></div>
@@ -326,7 +326,36 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 4: PYTHON FOR DOC ENGINEERS                               -->
+<!-- PROJECT 5: PHOENIX OBSERVABILITY REPORT                           -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3><a href="https://hmoses.github.io/phoenix-report.html">🔭 Poly-Glot × Arize Phoenix: Observability Report</a></h3>
+    <span class="card-badge badge-docs">Integration Case Study</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Write tutorials and cookbooks; make docs work for coding agents; prototype spikes for new features</div>
+  <div class="card-desc">I instrumented my production multi-provider AI app with Arize Phoenix and OpenTelemetry, producing a 9-page case study covering architecture, span hierarchies, test results, a Node.js setup guide with critical protobuf/ESM findings, production error remediation, and Phoenix documentation recommendations. 50 spans captured across 6 providers with 100% evaluation pass rate.</div>
+  <ul class="card-highlights">
+    <li><strong>Non-LLM-call tracing:</strong> Traced template selection → prompt assembly → provider dispatch without wrapping an LLM SDK</li>
+    <li><strong>6 providers × 6 templates:</strong> ChatGPT, Claude, Gemini, Perplexity, Grok, DuckDuckGo — all traced with structured evaluations</li>
+    <li><strong>Node.js setup guide:</strong> Documented the protobuf OTLP requirement (HTTP 415 gotcha) and ESM compatibility pin that most tutorials miss</li>
+    <li><strong>Production remediation:</strong> Observability surfaced 6 error classes (22 events) → all fixed and deployed as v1.9.2</li>
+    <li><strong>Phoenix docs recommendations:</strong> Specific suggestions for improving quickstart, Node.js guide, and ESM documentation</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Arize Phoenix</span>
+    <span class="tag">OpenTelemetry</span>
+    <span class="tag">Tracing</span>
+    <span class="tag">Evaluations</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">Playwright</span>
+    <span class="tag">Case Study</span>
+  </div>
+  <div class="card-links"><a href="https://hmoses.github.io/phoenix-report.html" class="live-link">Live Report →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">Source Code →</a></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 6: PYTHON FOR DOC ENGINEERS                               -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="project-card">
   <div class="card-top">
@@ -355,36 +384,6 @@
   <div class="card-links">
     <a href="https://hmoses.github.io/python-for-doc-engineers.html" class="live-link">Live Guide →</a>
   </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<!-- PROJECT 6B: PHOENIX OBSERVABILITY REPORT                          -->
-<!-- ══════════════════════════════════════════════════════════════════ -->
-<div class="project-card">
-  <div class="card-top">
-    <h3><a href="https://hmoses.github.io/phoenix-report.html">🔭 Poly-Glot × Arize Phoenix: Observability Report</a></h3>
-    <span class="card-badge badge-docs">Integration Case Study</span>
-  </div>
-  <div class="resp-map"><span class="resp-label">Maps to:</span> Write tutorials and cookbooks; make docs work for coding agents; prototype spikes for new features</div>
-  <div class="card-desc">I instrumented my production multi-provider AI app with Arize Phoenix and OpenTelemetry, producing a 9-page case study covering architecture, span hierarchies, test results, a Node.js setup guide with critical protobuf/ESM findings, production error remediation, and Phoenix documentation recommendations. 50 spans captured across 6 providers with 100% evaluation pass rate.</div>
-  <ul class="card-highlights">
-    <li><strong>Non-LLM-call tracing:</strong> Traced template selection → prompt assembly → provider dispatch without wrapping an LLM SDK</li>
-    <li><strong>6 providers × 6 templates:</strong> ChatGPT, Claude, Gemini, Perplexity, Grok, DuckDuckGo — all traced with structured evaluations</li>
-    <li><strong>Node.js setup guide:</strong> Documented the protobuf OTLP requirement (HTTP 415 gotcha) and ESM compatibility pin that most tutorials miss</li>
-    <li><strong>Production remediation:</strong> Observability surfaced 6 error classes (22 events) → all fixed and deployed as v1.9.2</li>
-    <li><strong>Phoenix docs recommendations:</strong> Specific suggestions for improving quickstart, Node.js guide, and ESM documentation</li>
-  </ul>
-  <div class="card-tags">
-    <span class="tag">Arize Phoenix</span>
-    <span class="tag">OpenTelemetry</span>
-    <span class="tag">Tracing</span>
-    <span class="tag">Evaluations</span>
-    <span class="tag">Node.js</span>
-    <span class="tag">Playwright</span>
-    <span class="tag">Case Study</span>
-  </div>
-  <div class="card-links"><a href="https://hmoses.github.io/phoenix-report.html" class="live-link">Live Report →</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">Source Code →</a></div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -459,7 +458,7 @@
 <!-- RESPONSIBILITY MATRIX                                             -->
 <!-- ══════════════════════════════════════════════════════════════════ -->
 <div class="alignment-banner" style="margin-bottom:40px">
-  <h3>📋 Arize Documentation Engineer — Full Coverage Matrix</h3>
+  <h3>📋 <a href="https://arize.com/careers/" target="_blank" rel="noopener" style="color:var(--neon);text-decoration:underline">Arize Documentation Engineer</a> — Full Coverage Matrix</h3>
   <div class="alignment-grid">
     <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health, rewrite stale content</span><br><span class="map">→ Proto API Monitor (automated drift detection), Dev Integration Guide</span></div>
     <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality systems</span><br><span class="map">→ Proto API Monitor: detect drift, test samples, draft updates for review</span></div>
