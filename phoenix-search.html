@@ -216,7 +216,7 @@ function doSearch() {
 
   metaEl.style.display = 'flex';
   var scoreLabel = bestScore >= 0.3 ? 'strong match' : bestScore >= 0.05 ? 'relevant' : 'weak';
-  metaEl.innerHTML = '<span>' + hits.length + ' results in ' + elapsed + 'ms<span class="pill">' + INDEX.chunks.length + ' chunks</span></span><span>Top score: <strong style="color:' + (sufficient ? 'var(--green)' : 'var(--accent)') + '">' + bestScore.toFixed(3) + '</strong> <span style="font-size:10px;color:var(--text2)">(' + scoreLabel + ' · TF-IDF cosine similarity · 0.000–1.000)</span></span>';
+  metaEl.innerHTML = '<span>' + hits.length + ' results in ' + elapsed + 'ms<span class="pill">' + INDEX.chunks.length + ' chunks</span></span><span>Top score: <strong style="color:' + (sufficient ? 'var(--green)' : 'var(--accent)') + '">' + bestScore.toFixed(3) + '</strong> <span style="font-size:10px;color:var(--text2)">(' + scoreLabel + ' · keyword relevance · <a href="https://arize.com/docs/phoenix/evaluation/pre-built-metrics/retrieval-relevance" target="_blank" rel="noopener" style="color:var(--link)">how scoring works</a>)</span></span>';
   clearWrap.style.display = 'block';
 
   if (!sufficient && hits.length) {
