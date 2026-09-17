@@ -26,9 +26,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 .search-box input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 14px;padding-right:32px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .15s;appearance:none;-webkit-appearance:none}
 .search-box input:focus{border-color:var(--accent)}
 .search-box input::placeholder{color:var(--text2)}
-.input-wrap{position:relative;flex:1;display:flex}
-.input-wrap input{width:100%}
-.input-wrap .arrow{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:12px;pointer-events:none}
+
 .search-box button{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:opacity .15s}
 .search-box button:hover{opacity:.85}
 .search-box button:disabled{opacity:.5;cursor:default}
@@ -77,7 +75,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
   <details open>
     <summary>How to use</summary>
     <ol class="steps">
-      <li>Click the search field and use the <strong>▼ dropdown</strong> to pick an indexed page, or type your own question about tracing, spans, evaluations, experiments, etc.</li>
+      <li>Click the search field and <strong>select a page</strong> from the dropdown list, or type keywords like tracing, spans, evaluations, experiments to filter the suggestions</li>
       <li>Results show <strong>ranked excerpts</strong> with relevance scores and direct links to official docs</li>
       <li>Scores above <code>0.05</code> = relevant evidence — below that, the system flags <strong>insufficient evidence</strong></li>
       <li><strong>Scoring:</strong> results are ranked by TF-IDF cosine similarity — common Phoenix terms (e.g. "tracing") appear in many chunks so they score lower, while specific terms (e.g. "playground", "PXI") score higher because they're concentrated in fewer pages. This is expected TF-IDF behavior, not a bug.</li>
@@ -95,7 +93,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 
 <div class="search-wrap">
   <div class="search-box">
-    <div class="input-wrap"><input id="q" type="text" list="suggestions" placeholder="Pick a doc or type your own query…" autocomplete="off" autofocus><span class="arrow">▼</span></div>
+    <input id="q" type="text" list="suggestions" placeholder="Pick a doc or type your own query…" autofocus>
     <datalist id="suggestions">
       <option value="Main page">
       <option value="User Guide">
