@@ -77,8 +77,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
     <ol class="steps">
       <li>Click the search field and <strong>select a page</strong> from the dropdown list, or type keywords like tracing, spans, evaluations, experiments to filter the suggestions</li>
       <li>Results show <strong>ranked excerpts</strong> with relevance scores and direct links to official docs</li>
-      <li>Scores above <code>0.05</code> = relevant evidence — below that, the system flags <strong>insufficient evidence</strong></li>
-      <li><strong>Scoring:</strong> results are ranked by TF-IDF cosine similarity — common Phoenix terms (e.g. "tracing") appear in many chunks so they score lower, while specific terms (e.g. "playground", "PXI") score higher because they're concentrated in fewer pages. This is expected TF-IDF behavior, not a bug.</li>
+      <li><strong>Scores (0.000–1.000):</strong> each result shows a TF-IDF cosine similarity score. Higher = stronger keyword match. Above <code>0.05</code> = relevant evidence. Below = flagged <strong>insufficient</strong>. Common terms like "tracing" score lower because they appear across many chunks; specific terms like "playground" or "PXI" score higher because they're concentrated in fewer pages.</li>
       <li>Try a fake feature (e.g. <code>QuantumBananaTracer</code>) to see abstention — it won't invent answers</li>
     </ol>
     <div class="try-these">
@@ -93,19 +92,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 
 <div class="search-wrap">
   <div class="search-box">
-    <input id="q" type="text" list="suggestions" placeholder="Pick a doc or type your own query…" autofocus>
-    <datalist id="suggestions">
-      <option value="Main page">
-      <option value="User Guide">
-      <option value="Production Guide">
-      <option value="Environments">
-      <option value="PXI Agent">
-      <option value="Tracing Quickstart">
-      <option value="Evaluations Quickstart">
-      <option value="Playground Quickstart">
-      <option value="Experiments Quickstart">
-      <option value="TypeScript Tracing Quickstart">
-    </datalist>
+    <select id="q" style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--text);font-size:14px;font-family:inherit;outline:none;cursor:pointer;appearance:auto">
+      <option value="" disabled selected>▾ Select a Phoenix doc to search…</option>
+      <option value="Main page">Main page</option>
+      <option value="User Guide">User Guide</option>
+      <option value="Production Guide">Production Guide</option>
+      <option value="Environments">Environments</option>
+      <option value="PXI Agent">PXI Agent</option>
+      <option value="Tracing Quickstart">Tracing Quickstart</option>
+      <option value="Evaluations Quickstart">Evaluations Quickstart</option>
+      <option value="Playground Quickstart">Playground Quickstart</option>
+      <option value="Experiments Quickstart">Experiments Quickstart</option>
+      <option value="TypeScript Tracing Quickstart">TypeScript Tracing Quickstart</option>
+    </select>
     <button id="btn" onclick="doSearch()">Search</button>
   </div>
 </div>
@@ -179,7 +178,7 @@ var loader = document.getElementById('loader');
 var clearWrap = document.getElementById('clear-wrap');
 
 function clearAll() {
-  qInput.value = '';
+  qInput.selectedIndex = 0;
   metaEl.style.display = 'none';
   metaEl.innerHTML = '';
   abstainEl.innerHTML = '';
@@ -188,10 +187,18 @@ function clearAll() {
   qInput.focus();
 }
 
-qInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
+qInput.addEventListener('change', function() { doSearch(); });
 
 function tryQuery(el) {
-  qInput.value = el.textContent;
+  var text = el.textContent;
+  for (var i = 0; i < qInput.options.length; i++) {
+    if (qInput.options[i].value === text) { qInput.selectedIndex = i; doSearch(); return; }
+  }
+  // Not in select — temporarily add it
+  var opt = document.createElement('option');
+  opt.value = text; opt.textContent = text;
+  qInput.appendChild(opt);
+  qInput.value = text;
   doSearch();
 }
 
