@@ -76,7 +76,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
     <ol class="steps">
       <li>Type a question about Arize Phoenix — tracing, spans, evaluations, sessions, datasets, experiments</li>
       <li>Results show <strong>ranked excerpts</strong> with relevance scores and direct links to official docs</li>
-      <li>Scores above <code>0.15</code> = relevant evidence — below that, the system flags <strong>insufficient evidence</strong></li>
+      <li>Scores above <code>0.05</code> = relevant evidence — below that, the system flags <strong>insufficient evidence</strong></li>
+      <li><strong>Scoring:</strong> results are ranked by TF-IDF cosine similarity — common Phoenix terms (e.g. "tracing") appear in many chunks so they score lower, while specific terms (e.g. "playground", "PXI") score higher because they're concentrated in fewer pages. This is expected TF-IDF behavior, not a bug.</li>
       <li>Try a fake feature (e.g. <code>QuantumBananaTracer</code>) to see abstention — it won't invent answers</li>
     </ol>
     <div class="try-these">
@@ -198,7 +199,7 @@ function doSearch() {
   var hits = search(query);
   var elapsed = (performance.now() - t0).toFixed(1);
   var bestScore = hits.length ? hits[0].score : 0;
-  var sufficient = bestScore >= 0.15;
+  var sufficient = bestScore >= 0.05;
 
   metaEl.style.display = 'flex';
   metaEl.innerHTML = '<span>' + hits.length + ' results in ' + elapsed + 'ms<span class="pill">' + INDEX.chunks.length + ' chunks</span></span><span>Top score: <strong style="color:' + (sufficient ? 'var(--green)' : 'var(--accent)') + '">' + bestScore.toFixed(3) + '</strong></span>';
@@ -226,7 +227,7 @@ function doSearch() {
       var re = new RegExp('\\b(' + t + '[a-z0-9]*)', 'gi');
       text = text.replace(re, '<mark>$1</mark>');
     }
-    var scoreClass = h.score >= 0.15 ? '' : ' weak';
+    var scoreClass = h.score >= 0.05 ? '' : ' weak';
     return '<div class="result-card"><div class="result-head"><span class="result-title">' + escHtml(h.title) + '</span><span class="result-score' + scoreClass + '">' + h.score.toFixed(3) + '</span></div><div class="result-heading">§ ' + escHtml(h.heading) + '</div><div class="result-text">' + text + (h.text.length >= 298 ? '…' : '') + '</div><div class="result-url"><a href="' + escHtml(h.url) + '" target="_blank" rel="noopener">' + escHtml(h.url) + '</a></div></div>';
   }).join('');
 }
