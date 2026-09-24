@@ -1,1 +1,476 @@
-$(cat /tmp/portfolio-fix/portfolio_new.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harold Moses II | Portfolio | Documentation Engineer & Applied AI Engineer & AI Developer Tools</title>
+<meta name="description" content="Portfolio of Harold Moses II — Documentation Engineer building AI-powered documentation systems, automated doc-quality monitoring, RAG-optimized content, developer tutorials, and developer tooling.">
+<meta name="keywords" content="Harold Moses II, documentation engineer, technical writer, portfolio, AI observability, documentation automation, RAG, developer documentation, API documentation, docs-as-code, CI/CD, LLM, code samples, tutorials, onboarding, developer experience, Arize">
+<meta name="author" content="Harold Moses II">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ProfilePage",
+  "mainEntity":{
+    "@type":"Person",
+    "name":"Harold Moses II",
+    "jobTitle":"Documentation Engineer & Applied AI Engineer",
+    "url":"https://hmoses.github.io/portfolio.html",
+    "sameAs":["https://linkedin.com/in/harold-moses-ii-78aa3a3b","https://github.com/hmoses"],
+    "knowsAbout":["Documentation Engineering","Developer Documentation","API Documentation","AI Observability","Documentation Automation","Docs-as-Code","RAG Optimization","Developer Onboarding","Tutorials","Code Samples","LLM Evaluation","Tracing","GitHub Actions","CI/CD"]
+  }
+}
+</script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Dark theme (default) */
+:root,[data-theme="dark"]{--bg:#0d1117;--text:#e6edf3;--text-secondary:#8b949e;--accent:#58a6ff;--accent-light:#1c2128;--border:#30363d;--card-bg:#161b22;--tag-bg:#1f2937;--tag-border:#374151;--green:#3fb950;--neon:#39ff14;--orange:#f59e0b;--shadow:0 2px 12px rgba(0,0,0,.3);--hero-border:#58a6ff;--banner-bg:linear-gradient(135deg,#161b22,#1c2128);--resp-bg:#1c2128;--resp-border:#374151;--badge-primary-bg:rgba(63,185,80,.15);--badge-primary-text:#3fb950;--badge-docs-bg:rgba(245,158,11,.15);--badge-docs-text:#f59e0b;--badge-rag-bg:rgba(88,166,255,.15);--badge-rag-text:#58a6ff;--badge-agent-bg:rgba(247,129,102,.15);--badge-agent-text:#f78166;--badge-live-bg:rgba(63,185,80,.15);--badge-live-text:#3fb950}
+[data-theme="light"]{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--neon:#16a34a;--orange:#f59e0b;--shadow:0 2px 12px rgba(77,101,255,.08);--hero-border:#4d65ff;--banner-bg:linear-gradient(135deg,#eef1ff,#f0fdf4);--resp-bg:#e8ebff;--resp-border:#d0d8ff;--badge-primary-bg:#dcfce7;--badge-primary-text:#166534;--badge-docs-bg:#fef3c7;--badge-docs-text:#92400e;--badge-rag-bg:#e0e7ff;--badge-rag-text:#3730a3;--badge-agent-bg:#fce7f3;--badge-agent-text:#9d174d;--badge-live-bg:#dcfce7;--badge-live-text:#166534}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;transition:background .3s,color .3s}
+
+/* Hero */
+.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--hero-border);max-width:900px;margin:0 auto;position:relative}
+.hero h1{font-size:42px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.hero .subtitle{font-size:18px;color:var(--accent);font-weight:600;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--text-secondary);max-width:700px;margin:0 auto 16px;line-height:1.7}
+.hero-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.hero-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}
+.hero-links .primary{background:var(--accent);color:#fff}
+.hero-links .secondary{border:1px solid var(--border);color:var(--text-secondary)}
+
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+.section-header{text-align:center;padding:50px 0 30px}
+.section-header h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
+.section-header p{font-size:15px;color:var(--text-secondary)}
+
+/* Alignment Banner */
+.alignment-banner{background:var(--banner-bg);border:1px solid var(--tag-border);border-radius:10px;padding:24px;margin-bottom:30px}
+.alignment-banner h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px}
+.alignment-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.alignment-item{font-size:14px;line-height:1.5;padding:4px 0}
+.alignment-item .check{color:var(--green);font-weight:700;margin-right:6px}
+.alignment-item .label{font-weight:600;color:var(--text)}
+.alignment-item .map{color:var(--text-secondary);font-size:13px}
+
+/* Project Cards */
+.projects{display:flex;flex-direction:column;gap:24px;padding-bottom:40px}
+.project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:28px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}
+.project-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(77,101,255,.12)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px}
+.card-top h3{font-size:20px;font-weight:700}
+.card-top h3 a{color:var(--text);text-decoration:none}
+.card-top h3 a:hover{color:var(--accent)}
+.card-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-primary{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-docs{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-automation{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-rag{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-agent{background:var(--badge-agent-bg);color:var(--badge-agent-text)}
+.badge-devtool{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-community{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-live{background:var(--badge-live-bg);color:var(--badge-live-text)}
+
+/* Responsibility mapping */
+.resp-map{background:var(--resp-bg);border:1px solid var(--resp-border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--accent)}
+.resp-map .resp-label{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px;margin-right:6px}
+
+.card-desc{font-size:15px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6}
+.card-highlights{list-style:none;margin-bottom:14px}
+.card-highlights li{font-size:14px;color:var(--text);padding-left:20px;position:relative;margin-bottom:4px;line-height:1.5}
+.card-highlights li strong{color:var(--accent)}
+.card-highlights li::before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:700}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{background:var(--tag-bg);border:1px solid var(--tag-border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--accent);font-weight:500}
+.card-links{display:flex;gap:12px;flex-wrap:wrap}
+.card-links a{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.card-links a:hover{text-decoration:underline}
+.card-links a.live-link{color:var(--neon);font-weight:700}
+.card-links a.live-link:hover{text-shadow:0 0 8px var(--neon)}
+
+/* Theme toggle */
+.theme-toggle{position:absolute;top:20px;right:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--text);font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px}
+.theme-toggle:hover{border-color:var(--accent)}
+
+/* Footer */
+.footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);font-size:14px;color:var(--text-secondary)}
+.footer a{color:var(--accent);text-decoration:none}
+
+@media(max-width:600px){
+  .hero{padding:36px 16px 28px}
+  .hero h1{font-size:26px}
+  .hero p{font-size:14px}
+  .hero-links a{padding:10px 16px;min-height:44px;font-size:13px}
+  .container{padding:0 16px}
+  .section-header{padding:30px 0 20px}
+  .section-header h2{font-size:12px;letter-spacing:2px}
+  .section-header p{font-size:14px}
+  .alignment-banner{padding:18px 14px}
+  .alignment-grid{grid-template-columns:1fr}
+  .alignment-item{font-size:13px}
+  .project-card{padding:20px 16px}
+  .card-top{flex-direction:column;gap:8px}
+  .card-top h3{font-size:17px}
+  .card-desc{font-size:14px}
+  .card-highlights li{font-size:13px}
+  .resp-map{font-size:12px;padding:8px 12px}
+  .card-tags{gap:4px}
+  .tag{font-size:11px;padding:3px 8px}
+  .card-links{flex-direction:column;gap:8px}
+  .card-links a{min-height:44px;display:flex;align-items:center;font-size:14px}
+}
+@media(max-width:400px){
+  .hero h1{font-size:22px}
+  .hero-links{flex-direction:column;align-items:stretch}
+  .hero-links a{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- HERO                                                              -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
+  <h1>Harold Moses II</h1>
+  <div class="subtitle">Documentation Engineer · Applied AI Engineer · AI Developer Tools</div>
+  <p>I build documentation systems, automated quality pipelines, RAG-optimized content, and developer tutorials that help engineers understand, evaluate, and ship AI applications. 10+ years of developer docs at NVIDIA, Block, OpenVPN, F5, Airbnb, and PlayStation.</p>
+  <div class="hero-links">
+    <a href="https://github.com/hmoses" class="primary">GitHub</a>
+    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a>
+    <a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION HEADER                                                    -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <h2>Portfolio: Applied AI Engineering Samples</h2>
+  <p>Projects demonstrating documentation ownership, automated quality systems, RAG-ready content, developer tutorials, and community-facing work</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- ALIGNMENT BANNER                                                  -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="alignment-banner">
+  <h3>📋 How This Portfolio Maps to the <a href="https://arize.com/careers/" target="_blank" rel="noopener" style="color:var(--neon);text-decoration:underline">Arize Applied AI Engineer Role</a></h3>
+  <div class="alignment-grid">
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health, rewrite stale content:</span> <span class="map">Proto API Monitor (automated drift detection), Dev Integration Guide</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality systems:</span> <span class="map">Proto API Monitor: detect drift, test samples, draft updates for review</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + humans:</span> <span class="map">Phoenix Agent-Native Docs MCP, Poly-Glot Markdown, llms.txt discovery</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials, cookbooks &amp; demo repos:</span> <span class="map">Python for Doc Engineers, Dev Integration Guide, Phoenix Report</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Onboarding to first working eval:</span> <span class="map">Dev Integration Guide progressive flow, Python for Doc Engineers (traces → evals)</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis:</span> <span class="map">Arize Docs Audit: 7 gaps, severity ratings, proposed fixes</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Community feedback → product insights:</span> <span class="map">Proto API Monitor stakeholder comms, Docs Audit recommendations</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">SEO &amp; answer-engine content:</span> <span class="map">Poly-Glot Markdown GEO optimizer, keyword emphasis, frontmatter</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Prototype spikes for new features:</span> <span class="map">Phoenix Agent-Native Docs MCP server, Proto API Monitor agent</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Shipped packages:</span> <span class="map">83 npm releases (poly-glot-ai-cli, poly-glot-mcp), MCP Registry</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECTS                                                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="projects">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 1: PROTO API MONITOR                                      -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🔬 <a href="https://hmoses.github.io/proto-api-monitor.html">Proto API Monitor — Automated Doc-Quality Agent</a></h3>
+    <span class="card-badge badge-automation">Automation</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Own documentation health across all products; Automate doc-quality checks; Bridge engineering ↔ docs</div>
+  <div class="card-desc">An automated documentation health agent that detects API drift, validates code samples, and drafts update PRs — demonstrating how to keep docs accurate at scale without manual audits.</div>
+  <ul class="card-highlights">
+    <li><strong>Automated drift detection:</strong> compares live API responses against documented schemas, flags mismatches</li>
+    <li><strong>Code sample validation:</strong> executes documented snippets against real endpoints, catches broken examples</li>
+    <li><strong>Draft PR generation:</strong> produces ready-to-review doc updates when drift is detected</li>
+    <li><strong>Stakeholder reporting:</strong> generates weekly quality reports for engineering + docs team alignment</li>
+    <li><strong>CI/CD integration:</strong> runs as GitHub Action on schedule or triggered by API changes</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Documentation Automation</span>
+    <span class="tag">API Monitoring</span>
+    <span class="tag">GitHub Actions</span>
+    <span class="tag">Python</span>
+    <span class="tag">CI/CD</span>
+    <span class="tag">Doc Quality</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/proto-api-monitor.html" class="live-link">Case Study →</a>
+    <a href="https://github.com/hmoses/proto-api-monitor">Source Code →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 2: DEV INTEGRATION GUIDE                                  -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>📘 <a href="https://hmoses.github.io/dev-integration-guide.html">Developer Integration Guide — Onboarding to First Eval</a></h3>
+    <span class="card-badge badge-docs">Documentation</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Own doc health, write tutorials that take developers from introduction to first working eval quickly</div>
+  <div class="card-desc">A progressive onboarding guide that walks developers from zero to a working LLM evaluation pipeline — demonstrating how to structure docs that reduce time-to-value and support both human readers and AI agents.</div>
+  <ul class="card-highlights">
+    <li><strong>Progressive disclosure:</strong> Install → Trace → Evaluate → Monitor flow with clear milestones</li>
+    <li><strong>Working code at every step:</strong> copy-paste snippets that actually run against real APIs</li>
+    <li><strong>Agent-readable structure:</strong> semantic headings, code fences, and frontmatter for LLM consumption</li>
+    <li><strong>Troubleshooting section:</strong> common errors with exact fixes, reducing support tickets</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Developer Onboarding</span>
+    <span class="tag">Tutorial</span>
+    <span class="tag">Python</span>
+    <span class="tag">OpenTelemetry</span>
+    <span class="tag">LLM Evaluation</span>
+    <span class="tag">Progressive Disclosure</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/dev-integration-guide.html" class="live-link">Full Guide →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 3: PHOENIX AGENT-NATIVE DOCS MCP                         -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🤖 <a href="https://hmoses.github.io/phoenix-mcp-docs.html">Phoenix Agent-Native Docs — MCP Server for AI-Readable Documentation</a></h3>
+    <span class="card-badge badge-agent">Agent Tool</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Write documentation that works for coding agents AND human engineers; llms.txt and machine-readable docs</div>
+  <div class="card-desc">An MCP server that makes Phoenix documentation natively accessible to AI coding agents — demonstrating how to build doc infrastructure that serves both human readers and LLM-powered tools through semantic indexing and retrieval.</div>
+  <ul class="card-highlights">
+    <li><strong>llms.txt discovery:</strong> standardized entry point for AI agents to find and navigate documentation</li>
+    <li><strong>Semantic chunking:</strong> docs split into retrieval-optimized segments with metadata preservation</li>
+    <li><strong>MCP tool interface:</strong> search_docs, get_doc, list_topics tools for structured agent access</li>
+    <li><strong>Dual-audience design:</strong> same content serves human browsers and AI agents without duplication</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">MCP</span>
+    <span class="tag">Agent-Native Docs</span>
+    <span class="tag">llms.txt</span>
+    <span class="tag">RAG</span>
+    <span class="tag">Semantic Search</span>
+    <span class="tag">Python</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/phoenix-mcp-docs.html" class="live-link">Case Study →</a>
+    <a href="https://github.com/hmoses/phoenix-agent-native-docs">Source Code →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 4: POLY-GLOT MARKDOWN                                     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🌐 <a href="https://hmoses.github.io/polyglot-markdown.html">Poly-Glot Markdown — GEO-Optimized Content Pipeline</a></h3>
+    <span class="card-badge badge-rag">RAG / SEO</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> SEO and answer-engine optimized content; RAG-ready documentation; content that surfaces in AI search results</div>
+  <div class="card-desc">A content optimization pipeline that transforms documentation into formats optimized for both traditional search engines and AI answer engines (GEO) — demonstrating how to make docs discoverable in the age of LLM-powered search.</div>
+  <ul class="card-highlights">
+    <li><strong>GEO optimization:</strong> structured content that surfaces in AI-generated answers (Perplexity, ChatGPT search)</li>
+    <li><strong>Frontmatter enrichment:</strong> semantic metadata, keywords, and descriptions for machine consumption</li>
+    <li><strong>Multi-format output:</strong> same source generates web docs, PDF, and RAG-optimized chunks</li>
+    <li><strong>Keyword emphasis:</strong> strategic placement for both traditional SEO and LLM retrieval ranking</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">GEO</span>
+    <span class="tag">SEO</span>
+    <span class="tag">RAG</span>
+    <span class="tag">Markdown</span>
+    <span class="tag">Content Pipeline</span>
+    <span class="tag">AI Search</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/polyglot-markdown.html" class="live-link">Case Study →</a>
+    <a href="https://github.com/hmoses/polyglot-markdown">Source Code →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 5: PYTHON FOR DOC ENGINEERS                               -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🐍 <a href="https://hmoses.github.io/python-for-doc-engineers.html">Python for Documentation Engineers — From Scripts to Traces &amp; Evals</a></h3>
+    <span class="card-badge badge-docs">Tutorial</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Write and refresh tutorials, cookbooks, and demonstration repositories that take a developer from introduction to value quickly</div>
+  <div class="card-desc">A hands-on tutorial series that teaches documentation engineers enough Python to build doc automation tools, instrument LLM traces, and run evaluations — bridging the gap between docs and engineering.</div>
+  <ul class="card-highlights">
+    <li><strong>Progressive curriculum:</strong> Python basics → API calls → OpenTelemetry traces → LLM evals</li>
+    <li><strong>Doc-engineer focused:</strong> examples use documentation scenarios (broken links, stale content, API drift)</li>
+    <li><strong>Working notebooks:</strong> every lesson runs in Jupyter with real outputs shown</li>
+    <li><strong>Evaluation pipeline:</strong> final project builds a complete trace → eval → report workflow</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Python</span>
+    <span class="tag">Tutorial</span>
+    <span class="tag">OpenTelemetry</span>
+    <span class="tag">LLM Evaluation</span>
+    <span class="tag">Jupyter</span>
+    <span class="tag">Documentation</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/python-for-doc-engineers.html" class="live-link">Full Tutorial →</a>
+    <a href="https://github.com/hmoses/python-for-doc-engineers">Source Code →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 6: POLY-GLOT AI WORKSPACE                                 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🚀 <a href="https://apps.apple.com/app/poly-glot-ai-workspace/id6740643689">Poly-Glot AI Workspace — Shipped iOS &amp; macOS App</a></h3>
+    <span class="card-badge badge-live">Live on App Store</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Write and refresh tutorials, cookbooks, and demonstration repositories that take a developer from introduction to value quickly</div>
+  <div class="card-desc">A production iOS &amp; macOS application I built and shipped to the App Store — a multi-provider AI workspace with 1,000+ prompt templates, Compare Mode, and StoreKit 2 subscriptions. Demonstrates full-stack product development from concept to App Store approval.</div>
+  <ul class="card-highlights">
+    <li><strong>Shipped product:</strong> live on iOS &amp; macOS App Store with real users and StoreKit 2 IAP</li>
+    <li><strong>Multi-provider AI:</strong> supports ChatGPT, Claude, Gemini, Copilot, Grok, Perplexity, DeepSeek and more</li>
+    <li><strong>1,000+ templates:</strong> curated prompt library across 20+ categories with Compare Mode</li>
+    <li><strong>Full product lifecycle:</strong> design, development, App Store review, marketing, and analytics</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">iOS</span>
+    <span class="tag">macOS</span>
+    <span class="tag">Swift</span>
+    <span class="tag">Capacitor</span>
+    <span class="tag">StoreKit 2</span>
+    <span class="tag">App Store</span>
+    <span class="tag">Shipped Product</span>
+  </div>
+  <div class="card-links">
+    <a href="https://apps.apple.com/app/poly-glot-ai-workspace/id6740643689" class="live-link">App Store →</a>
+    <a href="https://polyglot-ai.com">Website →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 7: ARIZE DOCS AUDIT                                       -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🔍 <a href="https://hmoses.github.io/arize-docs-audit.html">Arize Documentation Audit — Gap Analysis &amp; Recommendations</a></h3>
+    <span class="card-badge badge-docs">Audit</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Own documentation health across all products; documentation audit and gap analysis; community feedback → product insights</div>
+  <div class="card-desc">A comprehensive audit of Arize's public documentation identifying 7 critical gaps with severity ratings, specific page references, and actionable fix proposals — demonstrating how I approach doc health ownership systematically.</div>
+  <ul class="card-highlights">
+    <li><strong>7 gaps identified:</strong> from missing quickstarts to inconsistent API references, each with severity rating</li>
+    <li><strong>Specific page citations:</strong> exact URLs and sections where issues exist, not vague observations</li>
+    <li><strong>Fix proposals:</strong> concrete recommendations with estimated effort and priority ranking</li>
+    <li><strong>Phoenix deep-dive:</strong> separate case study analyzing Phoenix OSS docs architecture and agent-readiness</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Documentation Audit</span>
+    <span class="tag">Arize Phoenix</span>
+    <span class="tag">Arize AX</span>
+    <span class="tag">TypeScript</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">OpenTelemetry</span>
+    <span class="tag">Agent-Readability</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/arize-docs-audit.html" class="live-link">Full Audit Report →</a>
+    <a href="https://hmoses.github.io/phoenix-report.html">Phoenix Case Study →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 8: NPM PACKAGES — SHIPPED PRODUCTION SOFTWARE             -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>📦 Published npm Packages — 83 Production Releases</h3>
+    <span class="card-badge badge-live">Live on npm</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Build software that gets developers 50% of the way there; ship continuously; maintain production packages</div>
+  <div class="card-desc">I maintain two npm packages with 83 total published versions, demonstrating continuous shipping, semantic versioning, automated CI/CD publishing with granular access tokens, and ongoing maintenance of production developer tools.</div>
+  <ul class="card-highlights">
+    <li><strong>poly-glot-ai-cli (71 versions):</strong> AI-powered code comments, bug finding, refactoring &amp; test generation CLI — supports OpenAI, Anthropic, and more</li>
+    <li><strong>poly-glot-mcp (12 versions):</strong> MCP server for Poly-Glot AI — generate professional code comments &amp; documentation in 12 languages directly from Claude, Goose, Cursor, or any MCP-compatible AI client</li>
+    <li><strong>Automated publishing:</strong> granular npm access tokens with CI/CD pipeline integration for continuous delivery</li>
+    <li><strong>Production maintenance:</strong> semantic versioning, changelogs, dependency updates, and security patches across 83 releases</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">npm</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">CLI</span>
+    <span class="tag">MCP</span>
+    <span class="tag">CI/CD</span>
+    <span class="tag">Semantic Versioning</span>
+    <span class="tag">83 Releases</span>
+  </div>
+  <div class="card-links">
+    <a href="https://www.npmjs.com/package/poly-glot-ai-cli" class="live-link">poly-glot-ai-cli on npm →</a>
+    <a href="https://www.npmjs.com/package/poly-glot-mcp" class="live-link">poly-glot-mcp on npm →</a>
+  </div>
+</div>
+
+
+</div><!-- /projects -->
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- RESPONSIBILITY MATRIX                                             -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="alignment-banner" style="margin-bottom:40px">
+  <h3>📋 <a href="https://arize.com/careers/" target="_blank" rel="noopener" style="color:var(--neon);text-decoration:underline">Arize Applied AI Engineer</a> — Full Coverage Matrix</h3>
+  <div class="alignment-grid">
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Own doc health, rewrite stale content</span><br><span class="map">→ Proto API Monitor (automated drift detection), Dev Integration Guide</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Automated doc-quality systems</span><br><span class="map">→ Proto API Monitor: detect drift, test samples, draft updates for review</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Docs for coding agents + humans</span><br><span class="map">→ Phoenix Agent-Native Docs MCP, Poly-Glot Markdown, llms.txt discovery</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Tutorials, cookbooks &amp; demo repos</span><br><span class="map">→ Python for Doc Engineers, Dev Integration Guide, Phoenix Report</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Onboarding to first working eval</span><br><span class="map">→ Dev Integration Guide progressive flow, Python for Doc Engineers (traces → evals)</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation audit &amp; gap analysis</span><br><span class="map">→ Arize Docs Audit: 7 gaps, severity ratings, proposed fixes</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Community feedback → product insights</span><br><span class="map">→ Proto API Monitor stakeholder comms, Docs Audit recommendations</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">SEO &amp; answer-engine content</span><br><span class="map">→ Poly-Glot Markdown GEO optimizer, keyword emphasis, frontmatter</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Prototype spikes for new features</span><br><span class="map">→ Phoenix Agent-Native Docs MCP server, Proto API Monitor agent</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Shipped packages</span><br><span class="map">→ 83 npm releases (poly-glot-ai-cli, poly-glot-mcp), MCP Registry</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">llms.txt &amp; machine-readable docs</span><br><span class="map">→ Phoenix Agent-Native Docs (llms.txt → semantic index → MCP retrieval)</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">LLM app development (agents, RAG)</span><br><span class="map">→ Phoenix Observability Report, Poly-Glot AI Workspace (multi-provider), MCP tools</span></div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://github.com/hmoses">github.com/hmoses</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></p>
+  <p style="margin-top:6px;font-size:12px;color:#999">Bay Area, CA · Additional writing samples, references, available upon request</p>
+</div>
+
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var current=html.getAttribute('data-theme')||'dark';
+  var next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+  updateToggle(next);
+}
+function updateToggle(t){
+  document.getElementById('themeIcon').textContent=t==='dark'?'☀️':'🌙';
+  document.getElementById('themeLabel').textContent=t==='dark'?'Light':'Dark';
+}
+(function(){
+  var saved=localStorage.getItem('theme')||'dark';
+  document.documentElement.setAttribute('data-theme',saved);
+  updateToggle(saved);
+})();
+</script>
+</body>
+</html>
