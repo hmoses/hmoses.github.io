@@ -1,43 +1,416 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harold Moses II | LG&P Instruction Sheet Portfolio</title>
 <meta name="description" content="Role-focused portfolio for LG&P: assembly instructions, BOM verification, revision control, hardware documentation, visual technical communication, and engineering collaboration.">
+<meta name="keywords" content="Harold Moses II, technical writer, instruction sheets, assembly guide, BOM verification, revision control, hardware documentation, LG&P, installation instructions">
+<meta name="author" content="Harold Moses II">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ProfilePage",
+  "mainEntity":{
+    "@type":"Person",
+    "name":"Harold Moses II",
+    "jobTitle":"Technical Writer — Instruction Sheets & Hardware Documentation",
+    "url":"https://hmoses.github.io/lgp-instruction-sheet-portfolio.html",
+    "sameAs":["https://linkedin.com/in/harold-moses-ii-78aa3a3b","https://github.com/hmoses"],
+    "knowsAbout":["Technical Writing","Instruction Sheets","Assembly Guides","BOM Verification","Revision Control","Hardware Documentation","Visual Communication","Engineering Collaboration"]
+  }
+}
+</script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d1117;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--border:#30363d;--card:#161b22;--green:#3fb950;--tag:#1f2937}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}.hero,.container{max-width:900px;margin:auto}.hero{text-align:center;padding:58px 20px 38px;border-bottom:2px solid var(--accent)}h1{font-size:40px;margin:0}.subtitle{color:var(--accent);font-weight:700;font-size:18px;margin:6px 0}.hero p{color:var(--muted);max-width:720px;margin:12px auto}.links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.links a,.card a{color:var(--accent);text-decoration:none;font-weight:700}.links a{border:1px solid var(--border);padding:8px 16px;border-radius:6px}.links .primary{background:var(--accent);color:#fff}.container{padding:0 20px}.section{text-align:center;padding:42px 0 24px}.section h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}.banner,.card{border:1px solid var(--border);background:var(--card);border-radius:10px;padding:24px;margin-bottom:22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}.check{color:var(--green);font-weight:800}.muted{color:var(--muted)}.card h3{font-size:20px;margin:0 0 8px}.map{background:#1c2128;border:1px solid var(--border);padding:9px 12px;border-radius:7px;color:var(--accent);font-size:13px;font-weight:700}.card ul{padding-left:20px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.tag{border:1px solid #374151;background:var(--tag);border-radius:20px;padding:3px 9px;font-size:12px;color:var(--accent)}.note{border-left:3px solid var(--accent);padding-left:12px;color:var(--muted)}footer{text-align:center;border-top:1px solid var(--border);padding:26px;color:var(--muted);font-size:13px}@media(max-width:650px){.grid{grid-template-columns:1fr}h1{font-size:28px}}
-</style></head><body>
-<header class="hero"><h1>Harold Moses II</h1><div class="subtitle">Technical Writer · Instruction Sheets · Hardware & Visual Documentation</div>
-<p>A role-focused portfolio for LG&P demonstrating how I turn technical inputs into clear installer-facing procedures, accuracy checks, controlled revisions, and visual technical guidance.</p>
-<div class="links"><a class="primary" href="https://hmoses.github.io/portfolio.html">Full Portfolio</a><a href="https://github.com/hmoses">GitHub</a><a href="https://www.linkedin.com/in/harold-moses-ii-78aa3a3b/">LinkedIn</a></div></header>
-<main class="container"><section class="section"><h2>LG&P Role Alignment</h2><p class="muted">The strongest evidence for this job is hardware + procedural writing, visual communication, QA/revision control, and engineering collaboration.</p></section>
-<section class="banner"><div class="grid">
-<div><span class="check">✓</span> <b>Step-by-step instructions</b><br><span class="muted">Block/Proto installation & troubleshooting; NVIDIA procedures</span></div>
-<div><span class="check">✓</span> <b>Hardware documentation</b><br><span class="muted">Proto mining hardware, semiconductors, specs, app notes, guides</span></div>
-<div><span class="check">✓</span> <b>Visual communication</b><br><span class="muted">Illustrator, Photoshop, Acrobat, Snagit, Camtasia</span></div>
-<div><span class="check">✓</span> <b>Revision control / QA</b><br><span class="muted">Cruise QA/QC, lifecycle control, traceability</span></div>
-<div><span class="check">✓</span> <b>Engineering collaboration</b><br><span class="muted">Block, NVIDIA, Cruise, PlayStation</span></div>
-<div><span class="check">✓</span> <b>Templates & standards</b><br><span class="muted">Style guides, structured content, content governance</span></div>
-</div><p class="note"><b>Accuracy note:</b> I do not represent SolidWorks, InDesign, or formal production BOM auditing as existing experience. The samples below demonstrate the workflow I would apply.</p></section>
+/* Dark theme (default) */
+:root,[data-theme="dark"]{--bg:#0d1117;--text:#e6edf3;--text-secondary:#8b949e;--accent:#58a6ff;--accent-light:#1c2128;--border:#30363d;--card-bg:#161b22;--tag-bg:#1f2937;--tag-border:#374151;--green:#3fb950;--neon:#39ff14;--orange:#f59e0b;--shadow:0 2px 12px rgba(0,0,0,.3);--hero-border:#58a6ff;--banner-bg:linear-gradient(135deg,#161b22,#1c2128);--resp-bg:#1c2128;--resp-border:#374151;--badge-primary-bg:rgba(63,185,80,.15);--badge-primary-text:#3fb950;--badge-docs-bg:rgba(245,158,11,.15);--badge-docs-text:#f59e0b;--badge-rag-bg:rgba(88,166,255,.15);--badge-rag-text:#58a6ff;--badge-agent-bg:rgba(247,129,102,.15);--badge-agent-text:#f78166;--badge-live-bg:rgba(63,185,80,.15);--badge-live-text:#3fb950;--badge-sample-bg:rgba(139,148,158,.15);--badge-sample-text:#8b949e;--badge-hw-bg:rgba(88,166,255,.15);--badge-hw-text:#58a6ff;--badge-qa-bg:rgba(245,158,11,.15);--badge-qa-text:#f59e0b}
+[data-theme="light"]{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--neon:#16a34a;--orange:#f59e0b;--shadow:0 2px 12px rgba(77,101,255,.08);--hero-border:#4d65ff;--banner-bg:linear-gradient(135deg,#eef1ff,#f0fdf4);--resp-bg:#e8ebff;--resp-border:#d0d8ff;--badge-primary-bg:#dcfce7;--badge-primary-text:#166534;--badge-docs-bg:#fef3c7;--badge-docs-text:#92400e;--badge-rag-bg:#e0e7ff;--badge-rag-text:#3730a3;--badge-agent-bg:#fce7f3;--badge-agent-text:#9d174d;--badge-live-bg:#dcfce7;--badge-live-text:#166534;--badge-sample-bg:#f3f4f6;--badge-sample-text:#6b7280;--badge-hw-bg:#e0e7ff;--badge-hw-text:#3730a3;--badge-qa-bg:#fef3c7;--badge-qa-text:#92400e}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;transition:background .3s,color .3s}
 
-<section class="card"><h3>1. Retail Display Fixture - Assembly & Installation Guide</h3><div class="map">Maps to: step-by-step guide writing · parts identification · safety/tool callouts · installation validation · layout</div>
-<p class="muted">A fictional retail-fixture instruction sheet created specifically to demonstrate the type of deliverable LG&P describes. It includes a parts checklist, tools, six-step assembly sequence, installer verification, and revision metadata.</p>
-<div class="tags"><span class="tag">Assembly Guide</span><span class="tag">Installation</span><span class="tag">Parts List</span><span class="tag">Safety</span><span class="tag">Layout</span></div>
-<a href="01_Retail_Fixture_Assembly_Guide_SAMPLE.pdf">Open sample →</a></section>
+/* Hero */
+.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--hero-border);max-width:900px;margin:0 auto;position:relative}
+.hero h1{font-size:42px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.hero .subtitle{font-size:18px;color:var(--accent);font-weight:600;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--text-secondary);max-width:700px;margin:0 auto 16px;line-height:1.7}
+.hero-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.hero-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}
+.hero-links .primary{background:var(--accent);color:#fff}
+.hero-links .secondary{border:1px solid var(--border);color:var(--text-secondary)}
 
-<section class="card"><h3>2. BOM-to-Instruction Verification Matrix</h3><div class="map">Maps to: BOM accuracy auditing · quantities · part numbers · descriptions · revision reconciliation</div>
-<p class="muted">A fictional audit matrix showing how I would reconcile engineering BOM lines against the instruction sheet before release, including quantity checks, part IDs, step references, revision alignment, and release gating.</p>
-<div class="tags"><span class="tag">BOM Verification</span><span class="tag">QA/QC</span><span class="tag">Part Numbers</span><span class="tag">Accuracy Audit</span></div>
-<a href="02_BOM_Verification_Matrix_SAMPLE.pdf">Open sample →</a></section>
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+.section-header{text-align:center;padding:50px 0 30px}
+.section-header h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
+.section-header p{font-size:15px;color:var(--text-secondary)}
 
-<section class="card"><h3>3. Revision & Prototype Validation Workflow</h3><div class="map">Maps to: engineering revisions · prototype builds · installer feedback · document control · QA release</div>
-<p class="muted">A sample workflow showing how drawing/BOM changes flow through impact analysis, content updates, prototype validation, installer feedback, and final controlled release.</p>
-<div class="tags"><span class="tag">Revision Control</span><span class="tag">Prototype Validation</span><span class="tag">Installer Feedback</span><span class="tag">Document Control</span></div>
-<a href="03_Revision_Prototype_Validation_Workflow_SAMPLE.pdf">Open sample →</a></section>
+/* Alignment Banner */
+.alignment-banner{background:var(--banner-bg);border:1px solid var(--tag-border);border-radius:10px;padding:24px;margin-bottom:30px}
+.alignment-banner h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px}
+.alignment-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.alignment-item{font-size:14px;line-height:1.5;padding:4px 0}
+.alignment-item .check{color:var(--green);font-weight:700;margin-right:6px}
+.alignment-item .label{font-weight:600;color:var(--text)}
+.alignment-item .map{color:var(--text-secondary);font-size:13px}
 
-<section class="card"><h3>4. Relevant Real-World Experience - Block / Proto</h3><div class="map">Maps to: hardware documentation · installation/troubleshooting · technical specifications · engineering collaboration</div>
-<p class="muted">My strongest direct experience for this role is Senior Technical Writer work supporting Proto hardware/software/APIs/semiconductors, including installation and troubleshooting documentation, technical specifications, datasheets/application notes, user guides, and engineering collaboration.</p>
-<a href="https://hmoses.github.io/portfolio.html">View full professional portfolio →</a></section>
+/* Project Cards */
+.projects{display:flex;flex-direction:column;gap:24px;padding-bottom:40px}
+.project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:28px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}
+.project-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(77,101,255,.12)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px}
+.card-top h3{font-size:20px;font-weight:700}
+.card-top h3 a{color:var(--text);text-decoration:none}
+.card-top h3 a:hover{color:var(--accent)}
+.card-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-sample{background:var(--badge-sample-bg);color:var(--badge-sample-text)}
+.badge-hw{background:var(--badge-hw-bg);color:var(--badge-hw-text)}
+.badge-qa{background:var(--badge-qa-bg);color:var(--badge-qa-text)}
+.badge-live{background:var(--badge-live-bg);color:var(--badge-live-text)}
 
-<section class="card"><h3>5. Relevant Real-World Experience - Cruise QA/QC</h3><div class="map">Maps to: revision control · lifecycle accuracy · traceability · quality review</div>
-<p class="muted">Safety-critical document-control experience provides the strongest evidence for disciplined revision tracking, QA/QC, traceability, and controlled technical content across product changes.</p>
-<a href="https://hmoses.github.io/portfolio.html">View full professional portfolio →</a></section>
-</main><footer>Harold Moses II · Bay Area, CA · Role-focused companion portfolio - original portfolio remains unchanged.</footer></body></html>
+/* Responsibility mapping */
+.resp-map{background:var(--resp-bg);border:1px solid var(--resp-border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--accent)}
+.resp-map .resp-label{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px;margin-right:6px}
+
+.card-desc{font-size:15px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6}
+.card-highlights{list-style:none;margin-bottom:14px}
+.card-highlights li{font-size:14px;color:var(--text);padding-left:20px;position:relative;margin-bottom:4px;line-height:1.5}
+.card-highlights li strong{color:var(--accent)}
+.card-highlights li::before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:700}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{background:var(--tag-bg);border:1px solid var(--tag-border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--accent);font-weight:500}
+.card-links{display:flex;gap:12px;flex-wrap:wrap}
+.card-links a{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.card-links a:hover{text-decoration:underline}
+.card-links a.live-link{color:var(--neon);font-weight:700}
+.card-links a.live-link:hover{text-shadow:0 0 8px var(--neon)}
+
+/* Accuracy note */
+.accuracy-note{border-left:3px solid var(--accent);padding:12px 16px;margin-bottom:24px;background:var(--card-bg);border-radius:0 8px 8px 0;font-size:14px;color:var(--text-secondary)}
+.accuracy-note strong{color:var(--accent)}
+
+/* Theme toggle */
+.theme-toggle{position:absolute;top:20px;right:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--text);font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px}
+.theme-toggle:hover{border-color:var(--accent)}
+
+/* Footer */
+.footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);font-size:14px;color:var(--text-secondary)}
+.footer a{color:var(--accent);text-decoration:none}
+
+/* Responsive */
+@media(max-width:600px){
+  .hero{padding:36px 16px 28px}
+  .hero h1{font-size:26px}
+  .hero p{font-size:14px}
+  .hero-links a{padding:10px 16px;min-height:44px;font-size:13px}
+  .container{padding:0 16px}
+  .section-header{padding:30px 0 20px}
+  .section-header h2{font-size:12px;letter-spacing:2px}
+  .section-header p{font-size:14px}
+  .alignment-banner{padding:18px 14px}
+  .alignment-grid{grid-template-columns:1fr}
+  .alignment-item{font-size:13px}
+  .project-card{padding:20px 16px}
+  .card-top{flex-direction:column;gap:8px}
+  .card-top h3{font-size:17px}
+  .card-desc{font-size:14px}
+  .card-highlights li{font-size:13px}
+  .resp-map{font-size:12px;padding:8px 12px}
+  .card-tags{gap:4px}
+  .tag{font-size:11px;padding:3px 8px}
+  .card-links{flex-direction:column;gap:8px}
+  .card-links a{min-height:44px;display:flex;align-items:center;font-size:14px}
+}
+@media(max-width:400px){
+  .hero h1{font-size:22px}
+  .hero-links{flex-direction:column;align-items:stretch}
+  .hero-links a{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- HERO                                                              -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
+  <h1>Harold Moses II</h1>
+  <div class="subtitle">Technical Writer · Instruction Sheets · Hardware &amp; Visual Documentation</div>
+  <p>A role-focused portfolio for LG&amp;P demonstrating how I turn engineering inputs — BOMs, drawings, specifications — into clear installer-facing procedures, accuracy checks, controlled revisions, and visual technical guidance. 10+ years at NVIDIA, Block, Cruise, OpenVPN, F5, Airbnb, and PlayStation.</p>
+  <div class="hero-links">
+    <a href="https://hmoses.github.io/portfolio.html" class="primary">Full Portfolio</a>
+    <a href="https://github.com/hmoses" class="secondary">GitHub</a>
+    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a>
+    <a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- SECTION HEADER                                                    -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section-header">
+  <h2>LG&amp;P Role-Focused Samples</h2>
+  <p>Projects demonstrating step-by-step instruction writing, BOM accuracy auditing, revision &amp; prototype workflows, hardware documentation, and QA/QC document control</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- ALIGNMENT BANNER                                                  -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="alignment-banner">
+  <h3>📋 How This Portfolio Maps to the LG&amp;P Technical Writer Role</h3>
+  <div class="alignment-grid">
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Step-by-step instructions:</span> <span class="map">Assembly guide sample, Block/Proto install &amp; troubleshooting docs</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Hardware documentation:</span> <span class="map">Proto mining hardware, semiconductors, specs, app notes, user guides</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">BOM accuracy / parts lists:</span> <span class="map">BOM verification matrix sample, part-number reconciliation</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Visual communication:</span> <span class="map">Illustrator, Photoshop, Acrobat, Snagit, Camtasia, diagram creation</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Revision control / QA:</span> <span class="map">Cruise QA/QC, lifecycle control, traceability, revision workflow sample</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Engineering collaboration:</span> <span class="map">Block, NVIDIA, Cruise, PlayStation — embedded with engineering teams</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Prototype &amp; installer feedback:</span> <span class="map">Revision/prototype validation workflow sample, field feedback loops</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Templates &amp; standards:</span> <span class="map">Style guides, structured content, content governance, docs-as-code</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Proofreading &amp; accuracy:</span> <span class="map">BOM audit matrix, QA/QC review gates, safety-critical traceability</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Cross-functional communication:</span> <span class="map">Engineering, product, QA, field teams across 7 companies</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- ACCURACY NOTE                                                     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="accuracy-note">
+  <strong>Accuracy note:</strong> I do not represent SolidWorks, InDesign, or formal production BOM auditing as existing experience. The three sample documents below are clearly labeled fictional samples created to demonstrate the workflow and deliverable types I would apply at LG&amp;P. All other items reference real professional experience.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECTS                                                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="projects">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 1: RETAIL FIXTURE ASSEMBLY GUIDE                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🔧 <a href="01_Retail_Fixture_Assembly_Guide_SAMPLE.pdf">Retail Display Fixture — Assembly &amp; Installation Guide</a></h3>
+    <span class="card-badge badge-sample">Fictional Sample</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Step-by-step guide writing · parts identification · safety/tool callouts · installation validation · layout</div>
+  <div class="card-desc">A fictional retail-fixture instruction sheet created specifically to demonstrate the type of deliverable LG&amp;P describes. It includes a parts checklist, required tools, a six-step illustrated assembly sequence, installer verification checklist, and revision metadata.</div>
+  <ul class="card-highlights">
+    <li><strong>Parts checklist:</strong> itemized BOM with part numbers, quantities, and visual identification</li>
+    <li><strong>Safety &amp; tool callouts:</strong> PPE requirements, required tools, and hazard warnings at point of use</li>
+    <li><strong>Six-step assembly sequence:</strong> numbered procedural steps with orientation cues and torque specs</li>
+    <li><strong>Installer verification:</strong> post-assembly validation checklist before sign-off</li>
+    <li><strong>Revision metadata:</strong> document number, revision level, effective date, and change summary</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Assembly Guide</span>
+    <span class="tag">Installation</span>
+    <span class="tag">Parts List</span>
+    <span class="tag">Safety Callouts</span>
+    <span class="tag">Visual Layout</span>
+    <span class="tag">Verification</span>
+  </div>
+  <div class="card-links">
+    <a href="01_Retail_Fixture_Assembly_Guide_SAMPLE.pdf" class="live-link">Open Sample PDF →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 2: BOM VERIFICATION MATRIX                                -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>📊 <a href="02_BOM_Verification_Matrix_SAMPLE.pdf">BOM-to-Instruction Verification Matrix</a></h3>
+    <span class="card-badge badge-sample">Fictional Sample</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> BOM accuracy auditing · quantities · part numbers · descriptions · revision reconciliation · release gating</div>
+  <div class="card-desc">A fictional audit matrix showing how I would reconcile engineering BOM line items against the instruction sheet before release — including quantity checks, part IDs, assembly step references, revision alignment, discrepancy flags, and release gating criteria.</div>
+  <ul class="card-highlights">
+    <li><strong>Line-by-line reconciliation:</strong> every BOM part verified against instruction sheet references</li>
+    <li><strong>Quantity &amp; part-number audit:</strong> cross-checks engineering quantities against documented counts</li>
+    <li><strong>Step references:</strong> maps each part to the assembly step(s) where it appears</li>
+    <li><strong>Revision alignment:</strong> confirms BOM revision matches instruction sheet revision</li>
+    <li><strong>Release gate:</strong> pass/fail criteria — document cannot ship until all discrepancies resolved</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">BOM Verification</span>
+    <span class="tag">QA/QC</span>
+    <span class="tag">Part Numbers</span>
+    <span class="tag">Accuracy Audit</span>
+    <span class="tag">Release Gate</span>
+  </div>
+  <div class="card-links">
+    <a href="02_BOM_Verification_Matrix_SAMPLE.pdf" class="live-link">Open Sample PDF →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 3: REVISION & PROTOTYPE VALIDATION                        -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🔄 <a href="03_Revision_Prototype_Validation_Workflow_SAMPLE.pdf">Revision &amp; Prototype Validation Workflow</a></h3>
+    <span class="card-badge badge-sample">Fictional Sample</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Engineering revisions · prototype builds · installer feedback · document control · QA release</div>
+  <div class="card-desc">A sample workflow showing how drawing/BOM changes flow through impact analysis, content updates, prototype validation, installer feedback incorporation, and final controlled release — the complete lifecycle from engineering change to field-ready documentation.</div>
+  <ul class="card-highlights">
+    <li><strong>Change initiation:</strong> engineering ECO/ECN triggers documentation impact analysis</li>
+    <li><strong>Content update:</strong> affected instruction sheets identified, revised, redlined</li>
+    <li><strong>Prototype validation:</strong> updated docs tested against prototype build for accuracy</li>
+    <li><strong>Installer feedback:</strong> field team reviews updated procedures, reports gaps</li>
+    <li><strong>Controlled release:</strong> QA sign-off, revision metadata updated, superseded docs archived</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Revision Control</span>
+    <span class="tag">Prototype Validation</span>
+    <span class="tag">Installer Feedback</span>
+    <span class="tag">Document Control</span>
+    <span class="tag">ECO/ECN</span>
+  </div>
+  <div class="card-links">
+    <a href="03_Revision_Prototype_Validation_Workflow_SAMPLE.pdf" class="live-link">Open Sample PDF →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 4: BLOCK / PROTO (REAL)                                   -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>⚡ Block / Proto — Hardware &amp; Installation Documentation</h3>
+    <span class="card-badge badge-hw">Real Experience</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Hardware documentation · installation/troubleshooting · technical specifications · engineering collaboration</div>
+  <div class="card-desc">Senior Technical Writer supporting Proto hardware, software, APIs, and semiconductors. My strongest direct experience for the LG&amp;P role — writing step-by-step installation and troubleshooting procedures, technical specifications, datasheets, application notes, and user guides while embedded with engineering teams.</div>
+  <ul class="card-highlights">
+    <li><strong>Installation &amp; troubleshooting guides:</strong> step-by-step procedures for Proto mining hardware setup, configuration, and field troubleshooting</li>
+    <li><strong>Technical specifications:</strong> datasheets, application notes, and performance specifications for semiconductor and hardware products</li>
+    <li><strong>Engineering collaboration:</strong> embedded with hardware/firmware engineers to translate designs into user-facing documentation</li>
+    <li><strong>Visual documentation:</strong> annotated diagrams, callout illustrations, and procedural screenshots using Adobe Creative Suite and Snagit</li>
+    <li><strong>Docs-as-code pipeline:</strong> Git-based workflow, Markdown/structured content, CI/CD publishing</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Hardware Docs</span>
+    <span class="tag">Installation Guides</span>
+    <span class="tag">Troubleshooting</span>
+    <span class="tag">Datasheets</span>
+    <span class="tag">App Notes</span>
+    <span class="tag">Semiconductors</span>
+    <span class="tag">Engineering Collab</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/portfolio.html" class="live-link">View Full Professional Portfolio →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 5: CRUISE QA/QC (REAL)                                    -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🛡️ Cruise — QA/QC &amp; Revision Control</h3>
+    <span class="card-badge badge-qa">Real Experience</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Revision control · lifecycle accuracy · traceability · quality review · document control</div>
+  <div class="card-desc">Senior Document Controller II at Cruise (autonomous vehicles). Safety-critical document control experience providing the strongest evidence for disciplined revision tracking, QA/QC review gates, traceability, and controlled technical content across product changes — exactly the rigor LG&amp;P requires for instruction sheet accuracy.</div>
+  <ul class="card-highlights">
+    <li><strong>Revision control:</strong> managed document lifecycle from draft through review, approval, release, and supersession with full audit trail</li>
+    <li><strong>QA/QC review gates:</strong> enforced multi-stage review workflows ensuring accuracy before release to production</li>
+    <li><strong>Traceability:</strong> linked design changes to affected documents, ensuring no instruction sheet falls out of sync with engineering changes</li>
+    <li><strong>Safety-critical standards:</strong> automotive-grade document control processes for autonomous vehicle systems</li>
+    <li><strong>Cross-functional coordination:</strong> engineering, quality, manufacturing, and compliance stakeholders aligned on document accuracy</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Document Control</span>
+    <span class="tag">Revision Tracking</span>
+    <span class="tag">QA/QC</span>
+    <span class="tag">Traceability</span>
+    <span class="tag">Safety-Critical</span>
+    <span class="tag">Audit Trail</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/portfolio.html" class="live-link">View Full Professional Portfolio →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- PROJECT 6: NVIDIA (REAL)                                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="project-card">
+  <div class="card-top">
+    <h3>🖥️ NVIDIA — Incident &amp; Procedural Documentation</h3>
+    <span class="card-badge badge-hw">Real Experience</span>
+  </div>
+  <div class="resp-map"><span class="resp-label">Maps to:</span> Procedural writing · engineering collaboration · standards compliance · proofreading &amp; accuracy</div>
+  <div class="card-desc">Technical Writer for DGXC Incident Management at NVIDIA. Wrote and maintained operational procedures, runbooks, and incident response documentation for GPU data center infrastructure — demonstrating procedural writing discipline, engineering collaboration, and accuracy standards applicable to instruction sheet work.</div>
+  <ul class="card-highlights">
+    <li><strong>Operational procedures:</strong> step-by-step runbooks for incident detection, triage, escalation, and resolution</li>
+    <li><strong>Engineering collaboration:</strong> worked with GPU infrastructure engineers to document complex hardware/software procedures</li>
+    <li><strong>Standards compliance:</strong> aligned documentation with NVIDIA's internal quality and formatting standards</li>
+    <li><strong>Proofreading &amp; accuracy:</strong> multi-reviewer QA process ensuring zero-error procedural documentation</li>
+  </ul>
+  <div class="card-tags">
+    <span class="tag">Procedural Writing</span>
+    <span class="tag">Runbooks</span>
+    <span class="tag">GPU Infrastructure</span>
+    <span class="tag">Incident Management</span>
+    <span class="tag">Engineering Collab</span>
+  </div>
+  <div class="card-links">
+    <a href="https://hmoses.github.io/portfolio.html" class="live-link">View Full Professional Portfolio →</a>
+  </div>
+</div>
+
+</div><!-- /projects -->
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- COVERAGE MATRIX                                                   -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="alignment-banner" style="margin-bottom:40px">
+  <h3>📋 LG&amp;P Technical Writer — Full Coverage Matrix</h3>
+  <div class="alignment-grid">
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Write instruction sheets from BOMs/drawings</span><br><span class="map">→ Assembly Guide sample, Block/Proto install docs</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Verify BOM accuracy in documentation</span><br><span class="map">→ BOM Verification Matrix sample, QA/QC review gates</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Manage revisions from engineering changes</span><br><span class="map">→ Revision Workflow sample, Cruise document control</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Validate against prototypes/builds</span><br><span class="map">→ Revision/Prototype Validation Workflow sample</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Incorporate installer/field feedback</span><br><span class="map">→ Revision Workflow feedback loop, Proto field troubleshooting</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Proofread for accuracy &amp; standards</span><br><span class="map">→ BOM audit matrix, Cruise QA/QC, NVIDIA proofreading</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Collaborate with engineering teams</span><br><span class="map">→ 10+ years embedded with engineering at 7 companies</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Visual/illustrated procedures</span><br><span class="map">→ Illustrator, Photoshop, Acrobat, Snagit, Camtasia</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Templates &amp; content standards</span><br><span class="map">→ Style guides, structured content, docs-as-code, governance</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Safety-critical doc control</span><br><span class="map">→ Cruise autonomous vehicle document control (IATF-adjacent)</span></div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>Harold Moses II · <a href="mailto:hwmoses2@icloud.com">hwmoses2@icloud.com</a> · <a href="https://github.com/hmoses">github.com/hmoses</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></p>
+  <p style="margin-top:6px;font-size:12px;color:#999">Bay Area, CA · This is a companion portfolio — <a href="https://hmoses.github.io/portfolio.html" style="color:#58a6ff">full portfolio here</a> · Additional writing samples &amp; references available upon request</p>
+</div>
+
+<script>
+function toggleTheme(){
+  var html=document.documentElement;
+  var current=html.getAttribute('data-theme')||'dark';
+  var next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+  updateToggle(next);
+}
+function updateToggle(t){
+  document.getElementById('themeIcon').textContent=t==='dark'?'☀️':'🌙';
+  document.getElementById('themeLabel').textContent=t==='dark'?'Light':'Dark';
+}
+(function(){
+  var saved=localStorage.getItem('theme')||'dark';
+  document.documentElement.setAttribute('data-theme',saved);
+  updateToggle(saved);
+})();
+</script>
+</body>
+</html>
