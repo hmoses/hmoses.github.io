@@ -4,136 +4,234 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harold Moses II | General Technical Portfolio</title>
-<meta name="description" content="General technical portfolio of Harold Moses II — product and technical communications, developer documentation, APIs, AI/LLM workflows, cloud infrastructure, security, hardware/software, and autonomous systems.">
+<meta name="description" content="General technical portfolio of Harold Moses II — product and technical communications, developer documentation, APIs, AI/LLM workflows, infrastructure, security, hardware/software, and autonomous systems.">
+<meta name="keywords" content="Harold Moses II, general technical portfolio, technical writer, product communications, developer documentation, API documentation, documentation engineering, AI, LLM, MCP, docs-as-code, infrastructure, autonomous systems">
 <meta name="author" content="Harold Moses II">
 <meta name="robots" content="index, follow">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0d1117;--card:#161b22;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--border:#30363d;--green:#3fb950;--tag:#1f2937}
-[data-theme="light"]{--bg:#fff;--card:#f7f9fc;--text:#172033;--muted:#5b6577;--accent:#3859d9;--border:#dce2ea;--green:#17863b;--tag:#eef2ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65;transition:.2s}
-a{color:var(--accent)}.wrap{max-width:1000px;margin:auto;padding:0 24px}
-.hero{padding:72px 0 50px;border-bottom:1px solid var(--border);position:relative}
-.kicker{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:12px}
-h1{font-size:48px;line-height:1.05;margin:12px 0 10px;letter-spacing:-1.8px}.subtitle{font-size:21px;font-weight:700;color:var(--accent)}
-.hero p{max-width:800px;color:var(--muted);font-size:17px}.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-.btn{padding:10px 16px;border:1px solid var(--border);border-radius:7px;text-decoration:none;font-weight:700;font-size:14px}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.toggle{position:absolute;right:0;top:20px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:20px;padding:7px 12px;cursor:pointer}
-section{padding:52px 0}.section-head{margin-bottom:24px}.section-head h2{font-size:28px;margin:0 0 6px}.section-head p{margin:0;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
-.card h3{margin:0 0 8px;font-size:19px}.card p{color:var(--muted);margin:8px 0 14px}.card ul{padding-left:18px;margin:10px 0}.card li{margin:6px 0}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.tag{background:var(--tag);border:1px solid var(--border);padding:4px 9px;border-radius:20px;font-size:11px;font-weight:700;color:var(--accent)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stat{border:1px solid var(--border);border-radius:10px;padding:20px;background:var(--card)}.stat strong{display:block;font-size:26px;color:var(--green)}.stat span{color:var(--muted);font-size:13px}
-.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.role{padding:14px;border-left:3px solid var(--accent);background:var(--card);border-radius:5px}.role b{display:block}.role span{font-size:12px;color:var(--muted)}
-.callout{border:1px solid var(--border);background:var(--card);padding:24px;border-radius:12px}.callout strong{color:var(--accent)}
-footer{border-top:1px solid var(--border);padding:30px 0 50px;color:var(--muted);font-size:13px}
-@media(max-width:700px){h1{font-size:34px}.grid,.stats,.timeline{grid-template-columns:1fr}.hero{padding-top:58px}.toggle{right:0}.wrap{padding:0 18px}}
-</style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Harold Moses II","jobTitle":"Senior Technical Writer and Documentation Engineer","url":"https://hmoses.github.io/general-portfolio.html","sameAs":["https://github.com/hmoses","https://www.linkedin.com/in/harold-moses-ii-78aa3a3b/"],"knowsAbout":["Technical Writing","Developer Documentation","API Documentation","Product Communications","Documentation Engineering","Generative AI","MCP","Docs-as-Code","Cloud Infrastructure","Autonomous Systems"]}}
+{
+  "@context":"https://schema.org",
+  "@type":"ProfilePage",
+  "mainEntity":{
+    "@type":"Person",
+    "name":"Harold Moses II",
+    "jobTitle":"Senior Technical Writer & Documentation Engineer",
+    "url":"https://hmoses.github.io/general-portfolio.html",
+    "sameAs":["https://linkedin.com/in/harold-moses-ii-78aa3a3b","https://github.com/hmoses"],
+    "knowsAbout":["Product Communications","Technical Communications","Developer Documentation","API Documentation","Documentation Engineering","Generative AI","MCP","Docs-as-Code","AI Infrastructure","Autonomous Systems"]
+  }
+}
 </script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Dark theme (default) */
+:root,[data-theme="dark"]{--bg:#0d1117;--text:#e6edf3;--text-secondary:#8b949e;--accent:#58a6ff;--accent-light:#1c2128;--border:#30363d;--card-bg:#161b22;--tag-bg:#1f2937;--tag-border:#374151;--green:#3fb950;--neon:#39ff14;--orange:#f59e0b;--shadow:0 2px 12px rgba(0,0,0,.3);--hero-border:#58a6ff;--banner-bg:linear-gradient(135deg,#161b22,#1c2128);--resp-bg:#1c2128;--resp-border:#374151;--badge-primary-bg:rgba(63,185,80,.15);--badge-primary-text:#3fb950;--badge-docs-bg:rgba(245,158,11,.15);--badge-docs-text:#f59e0b;--badge-rag-bg:rgba(88,166,255,.15);--badge-rag-text:#58a6ff;--badge-agent-bg:rgba(247,129,102,.15);--badge-agent-text:#f78166;--badge-live-bg:rgba(63,185,80,.15);--badge-live-text:#3fb950}
+[data-theme="light"]{--bg:#fff;--text:#1a1a1a;--text-secondary:#555;--accent:#4d65ff;--accent-light:#e8ebff;--border:#e0e0e0;--card-bg:#fafbff;--tag-bg:#f0f3ff;--tag-border:#d0d8ff;--green:#22c55e;--neon:#16a34a;--orange:#f59e0b;--shadow:0 2px 12px rgba(77,101,255,.08);--hero-border:#4d65ff;--banner-bg:linear-gradient(135deg,#eef1ff,#f0fdf4);--resp-bg:#e8ebff;--resp-border:#d0d8ff;--badge-primary-bg:#dcfce7;--badge-primary-text:#166534;--badge-docs-bg:#fef3c7;--badge-docs-text:#92400e;--badge-rag-bg:#e0e7ff;--badge-rag-text:#3730a3;--badge-agent-bg:#fce7f3;--badge-agent-text:#9d174d;--badge-live-bg:#dcfce7;--badge-live-text:#166534}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;transition:background .3s,color .3s}
+
+/* Hero */
+.hero{text-align:center;padding:60px 20px 40px;border-bottom:2px solid var(--hero-border);max-width:900px;margin:0 auto;position:relative}
+.hero h1{font-size:42px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.hero .subtitle{font-size:18px;color:var(--accent);font-weight:600;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--text-secondary);max-width:700px;margin:0 auto 16px;line-height:1.7}
+.hero-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.hero-links a{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s}
+.hero-links .primary{background:var(--accent);color:#fff}
+.hero-links .secondary{border:1px solid var(--border);color:var(--text-secondary)}
+
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+.section-header{text-align:center;padding:50px 0 30px}
+.section-header h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:8px}
+.section-header p{font-size:15px;color:var(--text-secondary)}
+
+/* Alignment Banner */
+.alignment-banner{background:var(--banner-bg);border:1px solid var(--tag-border);border-radius:10px;padding:24px;margin-bottom:30px}
+.alignment-banner h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px}
+.alignment-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.alignment-item{font-size:14px;line-height:1.5;padding:4px 0}
+.alignment-item .check{color:var(--green);font-weight:700;margin-right:6px}
+.alignment-item .label{font-weight:600;color:var(--text)}
+.alignment-item .map{color:var(--text-secondary);font-size:13px}
+
+/* Project Cards */
+.projects{display:flex;flex-direction:column;gap:24px;padding-bottom:40px}
+.project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:28px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}
+.project-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(77,101,255,.12)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px}
+.card-top h3{font-size:20px;font-weight:700}
+.card-top h3 a{color:var(--text);text-decoration:none}
+.card-top h3 a:hover{color:var(--accent)}
+.card-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-primary{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-docs{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-automation{background:var(--badge-primary-bg);color:var(--badge-primary-text)}
+.badge-rag{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-agent{background:var(--badge-agent-bg);color:var(--badge-agent-text)}
+.badge-devtool{background:var(--badge-rag-bg);color:var(--badge-rag-text)}
+.badge-community{background:var(--badge-docs-bg);color:var(--badge-docs-text)}
+.badge-live{background:var(--badge-live-bg);color:var(--badge-live-text)}
+
+/* Responsibility mapping */
+.resp-map{background:var(--resp-bg);border:1px solid var(--resp-border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--accent)}
+.resp-map .resp-label{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:11px;margin-right:6px}
+
+.card-desc{font-size:15px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6}
+.card-highlights{list-style:none;margin-bottom:14px}
+.card-highlights li{font-size:14px;color:var(--text);padding-left:20px;position:relative;margin-bottom:4px;line-height:1.5}
+.card-highlights li strong{color:var(--accent)}
+.card-highlights li::before{content:"▸";position:absolute;left:0;color:var(--accent);font-weight:700}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{background:var(--tag-bg);border:1px solid var(--tag-border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--accent);font-weight:500}
+.card-links{display:flex;gap:12px;flex-wrap:wrap}
+.card-links a{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none}
+.card-links a:hover{text-decoration:underline}
+.card-links a.live-link{color:var(--neon);font-weight:700}
+.card-links a.live-link:hover{text-shadow:0 0 8px var(--neon)}
+
+/* Theme toggle */
+.theme-toggle{position:absolute;top:20px;right:20px;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--text);font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:6px}
+.theme-toggle:hover{border-color:var(--accent)}
+
+/* Footer */
+.footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);font-size:14px;color:var(--text-secondary)}
+.footer a{color:var(--accent);text-decoration:none}
+
+@media(max-width:600px){
+  .hero{padding:36px 16px 28px}
+  .hero h1{font-size:26px}
+  .hero p{font-size:14px}
+  .hero-links a{padding:10px 16px;min-height:44px;font-size:13px}
+  .container{padding:0 16px}
+  .section-header{padding:30px 0 20px}
+  .section-header h2{font-size:12px;letter-spacing:2px}
+  .section-header p{font-size:14px}
+  .alignment-banner{padding:18px 14px}
+  .alignment-grid{grid-template-columns:1fr}
+  .alignment-item{font-size:13px}
+  .project-card{padding:20px 16px}
+  .card-top{flex-direction:column;gap:8px}
+  .card-top h3{font-size:17px}
+  .card-desc{font-size:14px}
+  .card-highlights li{font-size:13px}
+  .resp-map{font-size:12px;padding:8px 12px}
+  .card-tags{gap:4px}
+  .tag{font-size:11px;padding:3px 8px}
+  .card-links{flex-direction:column;gap:8px}
+  .card-links a{min-height:44px;display:flex;align-items:center;font-size:14px}
+}
+@media(max-width:400px){
+  .hero h1{font-size:22px}
+  .hero-links{flex-direction:column;align-items:stretch}
+  .hero-links a{justify-content:center}
+}
+</style>
 </head>
 <body>
-<div class="wrap">
-<header class="hero">
-<button class="toggle" onclick="toggleTheme()">Light / Dark</button>
-<div class="kicker">General Technical Portfolio</div>
-<h1>Harold Moses II</h1>
-<div class="subtitle">Product & Technical Communications · Developer Documentation · AI · APIs · Infrastructure</div>
-<p>I translate complex engineering systems into clear product narratives, developer guidance, customer documentation, and scalable documentation systems. My work spans AI infrastructure, APIs, cloud and security software, hardware/software products, autonomous systems, and developer platforms.</p>
-<div class="links">
-<a class="btn primary" href="https://github.com/hmoses">GitHub</a>
-<a class="btn" href="https://www.linkedin.com/in/harold-moses-ii-78aa3a3b/">LinkedIn</a>
-<a class="btn" href="https://hmoses.github.io/poly-glot-site/">Poly-Glot AI Workspace</a>
-<a class="btn" href="mailto:hwmoses2@icloud.com">Contact</a>
+<div class="hero">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
+  <h1>Harold Moses II</h1>
+  <div class="subtitle">Product &amp; Technical Communications · Developer Documentation · AI · APIs · Infrastructure</div>
+  <p>I translate complex engineering systems into clear product narratives, developer guidance, customer documentation, and scalable documentation systems across AI, APIs, cloud and security software, hardware/software products, and autonomous systems.</p>
+  <div class="hero-links">
+    <a href="https://github.com/hmoses" class="primary">GitHub</a>
+    <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b" class="secondary">LinkedIn</a>
+    <a href="https://hmoses.github.io/poly-glot-site/" class="secondary">Poly-Glot AI Workspace</a>
+    <a href="mailto:hwmoses2@icloud.com" class="secondary">✉ Contact</a>
+  </div>
 </div>
-</header>
 
-<section>
-<div class="section-head"><h2>What I Do</h2><p>A role-neutral view of my strongest technical communication and documentation capabilities.</p></div>
-<div class="grid">
-<div class="card"><h3>Product & Technical Communications</h3><p>Translate technical work into external and customer-facing narratives that explain what a product does, why it matters, and how to use it.</p><div class="tags"><span class="tag">Product narratives</span><span class="tag">Release communications</span><span class="tag">FAQs</span><span class="tag">Technical storytelling</span></div></div>
-<div class="card"><h3>Developer Documentation</h3><p>Create implementation-focused content for developers and technical users, from API references and integration guides to tutorials, troubleshooting, and release notes.</p><div class="tags"><span class="tag">APIs</span><span class="tag">OpenAPI / Swagger</span><span class="tag">Quickstarts</span><span class="tag">Docs-as-code</span></div></div>
-<div class="card"><h3>Documentation Systems</h3><p>Build documentation workflows that stay accurate as products evolve through source control, automation, validation, content governance, and engineering collaboration.</p><div class="tags"><span class="tag">Git / GitHub</span><span class="tag">GitHub Actions</span><span class="tag">CI/CD</span><span class="tag">Content governance</span></div></div>
-<div class="card"><h3>AI & Emerging Technology</h3><p>Hands-on work with generative AI, MCP, structured AI tools, prompt-driven workflows, AI-assisted documentation, and agentic documentation automation.</p><div class="tags"><span class="tag">LLMs</span><span class="tag">MCP</span><span class="tag">AI workflows</span><span class="tag">Automation</span></div></div>
+<div class="container">
+<div class="section-header">
+  <h2>General Technical Portfolio</h2>
+  <p>Selected work across product communications, developer documentation, APIs, AI/LLM systems, infrastructure, security, hardware/software, and autonomous systems.</p>
 </div>
-</section>
 
-<section>
-<div class="section-head"><h2>Selected Work</h2><p>Representative projects and experience across product, developer, AI, infrastructure, and physical systems.</p></div>
-<div class="grid">
-<div class="card">
-<h3>Poly-Glot AI Workspace</h3>
-<p>An independently built multilingual AI workspace spanning user-facing AI experiences and developer-facing MCP integration.</p>
-<ul><li>Designed product workflows for prompt-driven AI interaction and multi-model comparison.</li><li>Built structured MCP tool interfaces and developer-facing integration resources.</li><li>Worked across product UX, documentation, analytics, release workflows, and AI-agent use cases.</li></ul>
-<div class="links"><a href="https://hmoses.github.io/poly-glot-site/">Product Site</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">GitHub</a><a href="https://hmoses.github.io/dev-guide.html">Developer Guide</a></div>
+<div class="alignment-banner">
+  <h3>Core Capabilities</h3>
+  <div class="alignment-grid">
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Product &amp; technical communications:</span> <span class="map">technical narratives, release communications, FAQs, tutorials, customer-facing content</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Developer documentation:</span> <span class="map">API references, OpenAPI/Swagger, integration guides, quickstarts, troubleshooting</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Documentation engineering:</span> <span class="map">Git/GitHub, docs-as-code, GitHub Actions, CI/CD, automated quality workflows</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">AI &amp; emerging technology:</span> <span class="map">LLM workflows, MCP, structured AI tools, AI-assisted documentation, agentic automation</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Engineering collaboration:</span> <span class="map">SME interviews, technical investigation, validation, cross-functional content development</span></div>
+    <div class="alignment-item"><span class="check">✓</span><span class="label">Technical domains:</span> <span class="map">AI infrastructure, cloud/security, autonomous systems, hardware/software, networking</span></div>
+  </div>
 </div>
-<div class="card">
-<h3>Block — Proto Bitcoin Mining</h3>
-<p>Senior technical writing across hardware, software, APIs, semiconductor technologies, installation, troubleshooting, and developer documentation.</p>
-<ul><li>Created OpenAPI/Swagger API references and integration guidance.</li><li>Built autonomous API-monitoring and documentation workflows.</li><li>Reduced documentation update cycles by <strong>70%</strong> through automation.</li></ul>
-<div class="tags"><span class="tag">Hardware</span><span class="tag">Software</span><span class="tag">APIs</span><span class="tag">Automation</span></div>
-</div>
-<div class="card">
-<h3>NVIDIA — AI Infrastructure</h3>
-<p>Technical documentation for DGXC incident-management and AI-infrastructure workflows.</p>
-<ul><li>Created tutorials, onboarding, troubleshooting, operational references, and concept content.</li><li>Worked directly with engineering SMEs to investigate systems and validate technical accuracy.</li><li>Documented PagerDuty signal-quality/noise-reduction and operational workflows.</li></ul>
-<div class="tags"><span class="tag">AI infrastructure</span><span class="tag">Incident management</span><span class="tag">Troubleshooting</span></div>
-</div>
-<div class="card">
-<h3>Cruise — Autonomous Vehicles</h3>
-<p>Documentation lifecycle, QA/QC, traceability, and compliance work in a safety-critical autonomous-vehicle environment.</p>
-<ul><li>Managed controlled technical content and revision workflows.</li><li>Supported engineering and operational stakeholders.</li><li>Applied rigorous quality and traceability practices to safety-critical documentation.</li></ul>
-<div class="tags"><span class="tag">Autonomous systems</span><span class="tag">QA/QC</span><span class="tag">Compliance</span><span class="tag">Physical AI adjacency</span></div>
-</div>
-<div class="card">
-<h3>OpenVPN — Developer & Customer Documentation</h3>
-<p>Principal technical writing for cloud and network-security products.</p>
-<ul><li>Created API references, user/developer guides, tutorials, FAQs, release notes, knowledge-base content, and troubleshooting guidance.</li><li>Worked with Engineering and Product to turn complex product behavior into self-service documentation.</li><li>Supported structured content and publishing through Paligo.</li></ul>
-<div class="tags"><span class="tag">Security</span><span class="tag">APIs</span><span class="tag">Tutorials</span><span class="tag">Knowledge base</span></div>
-</div>
-<div class="card">
-<h3>PlayStation — Systems Engineering + Technical Writing</h3>
-<p>Hands-on production systems experience that strengthens my ability to interview engineers, investigate technical behavior, and document real systems.</p>
-<ul><li>Worked with AWS EC2, Cassandra/database clusters, APIs, Linux/server workflows, LDAP, networking, and distributed systems.</li><li>Created RCA, security, network-access, change-management, and operational documentation.</li><li>Bridges technical communication with direct infrastructure experience.</li></ul>
-<div class="tags"><span class="tag">AWS</span><span class="tag">Distributed systems</span><span class="tag">Linux</span><span class="tag">RCA</span></div>
-</div>
-</div>
-</section>
 
-<section>
-<div class="section-head"><h2>Selected Outcomes</h2><p>Examples of measurable documentation-system impact.</p></div>
-<div class="stats">
-<div class="stat"><strong>70%</strong><span>reduction in documentation update cycles through AI-driven API monitoring and automation at Block</span></div>
-<div class="stat"><strong>85%</strong><span>reduction in manual intervention through GitHub Actions / CI/CD documentation workflows at Block</span></div>
-<div class="stat"><strong>99.8%</strong><span>documentation-system reliability supported by AI-powered validation workflows at Block</span></div>
+<div class="projects">
+<div class="project-card">
+ <div class="card-top"><h3><a href="https://hmoses.github.io/poly-glot-site/">Poly-Glot AI Workspace</a></h3><span class="card-badge badge-primary">AI Product</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> AI product · developer tooling · product communication · MCP</div>
+ <p class="card-desc">An independently built multilingual AI workspace spanning user-facing AI experiences and developer-facing MCP integration.</p>
+ <ul class="card-highlights"><li>Designed prompt-driven AI workflows and multi-model comparison experiences.</li><li>Built structured MCP tool interfaces and developer-facing integration resources.</li><li>Worked across product UX, documentation, analytics, release workflows, and AI-agent use cases.</li></ul>
+ <div class="card-tags"><span class="tag">LLMs</span><span class="tag">MCP</span><span class="tag">Developer Tools</span><span class="tag">Product UX</span></div>
+ <div class="card-links"><a class="live-link" href="https://hmoses.github.io/poly-glot-site/">↗ Product Site</a><a href="https://github.com/hmoses/poly-glot-ai-workspace">↗ GitHub</a><a href="https://hmoses.github.io/dev-guide.html">↗ Developer Guide</a></div>
 </div>
-</section>
 
-<section>
-<div class="section-head"><h2>Career Range</h2><p>Technical writing, documentation engineering, systems engineering, AI infrastructure, security, and autonomous systems.</p></div>
-<div class="timeline">
-<div class="role"><b>PlayStation</b><span>Technical Writing + Software Systems Engineering</span></div>
-<div class="role"><b>Airbnb</b><span>Developer Self-Service Documentation</span></div>
-<div class="role"><b>Shape / F5</b><span>Cloud & Application Security</span></div>
-<div class="role"><b>OpenVPN</b><span>Principal Technical Writer</span></div>
-<div class="role"><b>Cruise</b><span>Autonomous Vehicle Documentation QA/QC</span></div>
-<div class="role"><b>Block / Proto</b><span>Hardware, Software, APIs & Automation</span></div>
-<div class="role"><b>NVIDIA</b><span>AI Infrastructure & Incident Management</span></div>
-<div class="role"><b>Poly-Glot</b><span>Independent AI Product + MCP</span></div>
+<div class="project-card">
+ <div class="card-top"><h3>Block — Proto Bitcoin Mining</h3><span class="card-badge badge-automation">API + Automation</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> hardware/software · APIs · developer documentation · automation</div>
+ <p class="card-desc">Senior technical writing across hardware, software, APIs, semiconductor technologies, installation, troubleshooting, and developer documentation.</p>
+ <ul class="card-highlights"><li>Created API references, OpenAPI/Swagger content, integration guidance, installation, and troubleshooting documentation.</li><li>Built autonomous API-monitoring workflows that detected changes, generated documentation updates, published through source control, and notified stakeholders.</li><li><strong>70% reduction</strong> in documentation update time; AI-powered validation supported <strong>99.8% reliability</strong>; GitHub Actions workflows reduced manual intervention by <strong>85%</strong>.</li></ul>
+ <div class="card-tags"><span class="tag">OpenAPI</span><span class="tag">Hardware</span><span class="tag">Software</span><span class="tag">GitHub Actions</span></div>
 </div>
-</section>
 
-<section>
-<div class="callout"><strong>Looking for role-specific evidence?</strong> This page is intentionally general. It is designed as a reusable portfolio for senior technical writing, documentation engineering, developer documentation, product communications, AI content, and technical content strategy roles. Individual project links above provide deeper technical examples.</div>
-</section>
-
-<footer>Harold Moses II · General Technical Portfolio · <a href="https://github.com/hmoses">GitHub</a> · <a href="https://www.linkedin.com/in/harold-moses-ii-78aa3a3b/">LinkedIn</a></footer>
+<div class="project-card">
+ <div class="card-top"><h3>NVIDIA — AI Infrastructure</h3><span class="card-badge badge-rag">AI Infrastructure</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> incident management · troubleshooting · operational documentation</div>
+ <p class="card-desc">Technical documentation for DGXC incident-management and AI-infrastructure workflows.</p>
+ <ul class="card-highlights"><li>Created tutorials, onboarding, troubleshooting, operational references, dashboard/workflow documentation, and concept content.</li><li>Worked directly with engineering SMEs to investigate systems and validate technical accuracy.</li><li>Documented PagerDuty signal-quality/noise-reduction and related operational workflows.</li></ul>
+ <div class="card-tags"><span class="tag">AI Infrastructure</span><span class="tag">Incident Management</span><span class="tag">SME Interviews</span></div>
 </div>
+
+<div class="project-card">
+ <div class="card-top"><h3>Cruise — Autonomous Vehicles</h3><span class="card-badge badge-agent">Autonomous Systems</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> safety-critical documentation · QA/QC · traceability · compliance</div>
+ <p class="card-desc">Documentation lifecycle and quality work in a safety-critical autonomous-vehicle environment, providing direct adjacency to robotics and physical AI.</p>
+ <ul class="card-highlights"><li>Managed controlled technical content and revision workflows.</li><li>Supported engineering and operational stakeholders with traceable documentation.</li><li>Applied rigorous QA/QC and lifecycle practices to safety-critical content.</li></ul>
+ <div class="card-tags"><span class="tag">Autonomous Vehicles</span><span class="tag">QA/QC</span><span class="tag">Compliance</span><span class="tag">Physical AI</span></div>
+</div>
+
+<div class="project-card">
+ <div class="card-top"><h3>OpenVPN — Developer &amp; Customer Documentation</h3><span class="card-badge badge-docs">Developer Docs</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> APIs · cloud/network security · self-service documentation</div>
+ <p class="card-desc">Principal technical writing for cloud and network-security products.</p>
+ <ul class="card-highlights"><li>Created API references, user/developer guides, tutorials, FAQs, release notes, knowledge-base content, and troubleshooting guidance.</li><li>Partnered with Engineering and Product to turn complex product behavior into usable self-service content.</li><li>Supported structured authoring and publishing workflows in Paligo.</li></ul>
+ <div class="card-tags"><span class="tag">APIs</span><span class="tag">Security</span><span class="tag">Tutorials</span><span class="tag">Knowledge Base</span></div>
+</div>
+
+<div class="project-card">
+ <div class="card-top"><h3>PlayStation — Systems Engineering + Technical Writing</h3><span class="card-badge badge-devtool">Infrastructure</span></div>
+ <div class="resp-map"><span class="resp-label">Focus:</span> cloud infrastructure · distributed systems · RCA · operational content</div>
+ <p class="card-desc">Hands-on production systems experience that strengthens technical interviewing, system investigation, and infrastructure documentation.</p>
+ <ul class="card-highlights"><li>Worked with AWS EC2, Cassandra/database clusters, APIs, Linux/server workflows, LDAP, networking, and distributed systems.</li><li>Created RCA, security, network-access, change-management, and operational documentation.</li><li>Bridged technical communication with direct infrastructure experience.</li></ul>
+ <div class="card-tags"><span class="tag">AWS</span><span class="tag">Distributed Systems</span><span class="tag">Linux</span><span class="tag">RCA</span></div>
+</div>
+</div>
+</div>
+
+<div class="footer">Harold Moses II · General Technical Portfolio · <a href="https://github.com/hmoses">GitHub</a> · <a href="https://linkedin.com/in/harold-moses-ii-78aa3a3b">LinkedIn</a></div>
+
 <script>
-function toggleTheme(){const root=document.documentElement;const next=root.getAttribute('data-theme')==='light'?'dark':'light';root.setAttribute('data-theme',next);localStorage.setItem('portfolio-theme',next)}
-const saved=localStorage.getItem('portfolio-theme');if(saved)document.documentElement.setAttribute('data-theme',saved);
+function toggleTheme(){
+  var html=document.documentElement;
+  var current=html.getAttribute('data-theme')||'dark';
+  var next=current==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  localStorage.setItem('theme',next);
+  updateToggle(next);
+}
+function updateToggle(t){
+  document.getElementById('themeIcon').textContent=t==='dark'?'☀️':'🌙';
+  document.getElementById('themeLabel').textContent=t==='dark'?'Light':'Dark';
+}
+(function(){
+  var saved=localStorage.getItem('theme')||'dark';
+  document.documentElement.setAttribute('data-theme',saved);
+  updateToggle(saved);
+})();
 </script>
 </body>
 </html>
