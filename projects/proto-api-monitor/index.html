@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proto API Monitor | Technical Documentation</title><style>body{font-family:Inter,-apple-system,sans-serif;max-width:900px;margin:auto;padding:44px 24px;background:#0d1117;color:#e6edf3;line-height:1.65}h1{font-size:38px}a{color:#58a6ff}section{border-bottom:1px solid #30363d;padding:14px 0 24px}code,pre{background:#161b22}pre{padding:18px;border-radius:8px;overflow:auto;color:#79c0ff}</style></head><body><h1>Proto API Monitor — Technical Documentation</h1><p><a href="https://hmoses.github.io/proto-api-monitor.html">← Case Study</a></p><section><h2>Purpose</h2><p>Automate detection of API/source changes that may create documentation drift, validate affected content, prepare source-controlled updates, and notify stakeholders.</p></section><section><h2>Pipeline</h2><pre>Repository / API change
+        ↓
+Automated change detection
+        ↓
+Documentation + example validation
+        ↓
+Documentation impact assessment
+        ↓
+Review-ready update preparation
+        ↓
+Slack webhook stakeholder notification
+        ↓
+Human technical review
+        ↓
+Source-controlled publication workflow</pre></section><section><h2>GitHub Actions</h2><p>GitHub Actions acts as the CI/CD orchestration layer. Checks can run from repository events or scheduled workflows so documentation validation becomes part of the engineering lifecycle instead of a separate manual audit.</p></section><section><h2>Change detection</h2><p>The monitoring stage identifies relevant changes and compares them with documented expectations. Potential drift is promoted into an actionable documentation-review event.</p></section><section><h2>Validation and impact</h2><p>Documentation and examples are checked for affected structures or assumptions. The workflow determines which content requires review before preparing a proposed update.</p></section><section><h2>Slack webhooks</h2><p>Stakeholder notifications are delivered through Slack webhooks. Notifications communicate the detected change and point reviewers toward the documentation requiring attention.</p></section><section><h2>Human-in-the-loop control</h2><p>The system prepares rather than silently publishes. Technical validation and final publication remain human-controlled and source-tracked.</p></section></body></html>
