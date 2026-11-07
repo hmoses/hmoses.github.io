@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100f16">
+<meta name="description" content="Developer documentation for an independent LanceDB Embedded lab: install, ingest, vector query, metadata filter, test and troubleshoot.">
+<link rel="canonical" href="https://hmoses.github.io/lancedb-lab/docs/">
+<link rel="stylesheet" href="../assets/theme.css">
+<title>Developer documentation | LanceDB Lab</title></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="sitehead"><div class="shell nav"><a class="brand" href="../"><span class="symbol" aria-hidden="true">✦</span><span>LanceDB <span style="color:var(--pink)">/ Developer Lab</span></span></a><nav class="navlinks" aria-label="Primary"><a href="../">Interactive lab</a><a aria-current="page" href="./">Docs</a><a href="architecture.html">Architecture</a><a href="agent-readiness.html">AI agents</a><a class="nav-cta" href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">Source ↗</a></nav></div></header>
+<main class="shell doc-layout" id="main">
+<aside class="docnav" aria-label="Documentation navigation"><h2>Developer documentation</h2>
+<a href="#overview">Overview</a><a href="#requirements">Prerequisites</a><a href="#quickstart">Quickstart</a><a href="#queries">Vector + filtered queries</a><a href="#validation">Automated validation</a><a href="#troubleshooting">Troubleshooting</a><a href="#next">Next steps</a><hr style="border:0;border-top:1px solid var(--stroke);margin:15px 0"><a href="architecture.html">Architecture reference →</a><a href="agent-readiness.html">Agent playbook →</a><a href="../">Interactive explorer →</a></aside>
+<article class="doc">
+<span class="eyebrow">Developer documentation / v1.0 / independent portfolio</span>
+<h1 id="overview">Your first <span class="gradient">LanceDB query.</span></h1>
+<p class="lead">Install LanceDB Embedded, create a local table from known vectors, search by similarity, filter on metadata, and verify the behavior with automated tests.</p>
+<div class="callout"><strong>Scope:</strong> This is a standalone educational lab. It uses synthetic, four-dimensional numeric embeddings—no external model, API key, cloud account, or real user data. The browser explorer is a simulation; the Python source executes actual LanceDB APIs.</div>
+<div class="buttonrow"><a class="btn" href="../example.py">View Python example →</a><a class="btn alt" href="../">Open interactive lab</a><a class="btn alt" href="https://docs.lancedb.com/quickstart" target="_blank" rel="noopener noreferrer">Official quickstart ↗</a></div>
+
+<h2 id="requirements">1. Requirements</h2>
+<ul><li>Python 3.11 or newer and pip.</li><li>A local working directory with the <a href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">lab source files</a>.</li><li>Network access for initial Python package installation; subsequent local queries need no external service.</li></ul>
+<p>From the <code>lancedb-lab</code> folder, create an isolated environment and install dependencies:</p>
+<div class="codewrap"><div class="codehead">Terminal / setup</div><pre><code>python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt</code></pre></div>
+<p>Windows PowerShell users can replace the activation command with <code>.venv\Scripts\Activate.ps1</code>. If a Python wheel is unavailable for your platform, use a supported CPython version and architecture.</p>
+
+<h2 id="quickstart">2. Quickstart</h2>
+<h3>Run your first query</h3>
+<div class="codewrap"><div class="codehead">Terminal / real LanceDB</div><pre><code>python example.py --intent vector --limit 3</code></pre></div>
+<p>Expected behavior: the command creates a temporary local database, inserts eight predefined records, runs cosine vector search, prints up to three records ordered by ascending cosine distance, and automatically deletes the temporary directory afterward. The precise distance values are determined by the embedded SDK.</p>
+<h3>Inspect the core pattern</h3>
+<div class="codewrap"><div class="codehead">Python / connect → create → query</div><pre><code>import lancedb
+from example import RECORDS
+
+db = lancedb.connect("./sample.lance")
+table = db.create_table(
+    "doc_chunks",
+    data=RECORDS,
+    mode="overwrite",
+)
+matches = (
+    table.search([0.10, 0.99, 0.11, 0.15])
+    .distance_type("cosine")
+    .limit(3)
+    .to_list()
+)
+for item in matches:
+    print(item["title"], item["_distance"])</code></pre></div>
+<p>The <code>RECORDS</code> fixture provides a <code>vector</code> column containing exactly four floating-point values per row. LanceDB can infer that this is the vector column. The <code>_distance</code> value is smaller for closer matches.</p>
+<div class="callout"><strong>Important:</strong> <code>mode="overwrite"</code> replaces a table with the same name. It is appropriate here only because this project uses disposable example data. In a production workflow, use an intentional table-creation or migration strategy.</div>
+
+<h2 id="queries">3. Query with filters</h2>
+<p>Metadata filters restrict which rows are eligible before the similarity search. You can experiment with the same behavior in the <a href="../#explorer">interactive result explorer</a>.</p>
+<div class="codewrap"><div class="codehead">Python / vector + metadata predicate</div><pre><code>results = (
+    table.search([0.16, 0.90, 0.19, 0.55])
+    .distance_type("cosine")
+    .where("category = 'search'")
+    .limit(3)
+    .to_list()
+)
+assert all(row["category"] == "search" for row in results)</code></pre></div>
+<p>The example's <a href="../example.py">search_docs()</a> function validates category names against a fixed allowlist. Do not concatenate arbitrary user input into filter expressions. For real applications, validate user-supplied fields and values and use parameterized predicates where supported by your SDK.</p>
+<p>Try these commands and compare their returned categories:</p>
+<div class="codewrap"><div class="codehead">Terminal / experiments</div><pre><code>python example.py --intent filter --category search
+python example.py --intent agent --category agents
+python example.py --intent ingest --category python --limit 2</code></pre></div>
+<table><thead><tr><th>Concept</th><th>What this lab demonstrates</th></tr></thead><tbody>
+<tr><td>Embedding</td><td>A fixed 4D numeric vector; not generated from text</td></tr><tr><td>Distance</td><td>Cosine distance; a smaller <code>_distance</code> indicates a closer neighbor</td></tr><tr><td>Filter</td><td>SQL-like <code>where</code> predicate on category metadata</td></tr><tr><td>Index</td><td>No ANN index is needed for this tiny fixture; exhaustive search keeps results easy to inspect</td></tr><tr><td>Production path</td><td>Replace synthetic vectors with a real embedding pipeline; consider index strategy only after measuring workload</td></tr></tbody></table>
+
+<h2 id="validation">4. Automated validation</h2>
+<p>The test suite checks table construction, row count, deterministic search, category filtering, and invalid input. Tests run against a local temporary LanceDB database.</p>
+<div class="codewrap"><div class="codehead">Terminal / pytest</div><pre><code>python -m pytest -q tests</code></pre></div>
+<p>Review the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/lancedb-lab/tests/test_example.py">test source</a> and the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/.github/workflows/lancedb-lab-ci.yml">GitHub Actions workflow</a>. Workflow results should be checked in the repository's Actions tab; the mere presence of a workflow file does not prove it has passed.</p>
+<h3>Documentation quality contract</h3>
+<ul><li><strong>Runnable:</strong> every code path has an explicitly declared dependency and no hidden API key.</li><li><strong>Repeatable:</strong> sample inputs and expected output properties are stable.</li><li><strong>Clear boundaries:</strong> browser simulation and real LanceDB executions are distinguished.</li><li><strong>Change detection:</strong> tests should fail when an SDK change breaks documented behavior.</li><li><strong>Agent-readable:</strong> prerequisites, commands, inputs, outputs, and verification steps are explicit.</li></ul>
+
+<h2 id="troubleshooting">5. Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Likely cause and action</th></tr></thead><tbody>
+<tr><td><code>ModuleNotFoundError: lancedb</code></td><td>Activate the virtual environment and install requirements.</td></tr>
+<tr><td>Dimension mismatch</td><td>Use a query vector with exactly four elements to match this fixture.</td></tr>
+<tr><td>No filtered matches</td><td>Check that the metadata category exists; this lab's choices are python, search, agents, operations.</td></tr>
+<tr><td>Unexpected result ordering</td><td>Confirm the same query vector and <code>cosine</code> metric; lower distance means closer.</td></tr>
+<tr><td>Permissions on local data path</td><td>Use a writable directory; the example's default temporary directory avoids most path errors.</td></tr>
+<tr><td>Browser simulation differs from Python</td><td>Compare the fixed input vectors and metric; the browser is a teaching visualization, not the DB engine.</td></tr></tbody></table>
+
+<h2 id="next">6. Next steps</h2>
+<p>Explore the <a href="architecture.html">architecture diagram and test boundaries</a>, use the <a href="agent-readiness.html">AI-agent playbook</a> to evaluate task completion, or continue with the <a href="https://docs.lancedb.com/search/vector-search">official vector-search reference</a> and <a href="https://docs.lancedb.com/search/filtering">official filtering guide</a>.</p>
+<div class="buttonrow"><a class="btn" href="architecture.html">Architecture guide →</a><a class="btn alt" href="agent-readiness.html">Agent-ready instructions →</a></div>
+<p class="disclaimer" style="margin-top:37px">Prepared by Harold Moses II as an independent candidate portfolio. Not official LanceDB documentation or a company-endorsed project. API behavior should be rechecked against the installed SDK version.</p>
+</article></main>
+<footer class="footer"><div class="shell footer-inner"><span>© 2026 Harold Moses II · Independent documentation lab.</span><span><a href="../">Lab</a> · <a href="architecture.html">Architecture</a> · <a href="agent-readiness.html">AI agents</a></span></div></footer></body></html>
