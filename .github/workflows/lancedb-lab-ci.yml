@@ -1,0 +1,38 @@
+name: LanceDB Documentation Lab CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lancedb-lab/**"
+      - ".github/workflows/lancedb-lab-ci.yml"
+  pull_request:
+    paths:
+      - "lancedb-lab/**"
+      - ".github/workflows/lancedb-lab-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-python-examples:
+    name: Verify runnable LanceDB examples
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: lancedb-lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: lancedb-lab/requirements.txt
+      - name: Install example dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+      - name: Run documentation example
+        run: python example.py --intent agent --category agents --limit 2
+      - name: Run behavior tests
+        run: python -m pytest -q tests
