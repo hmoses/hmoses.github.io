@@ -30,13 +30,61 @@
     @media(max-width:690px){.wrap{padding:0 18px}.top-inner{min-height:64px}.brand span:last-child{font-size:12px}.links{gap:14px}.links a{font-size:11px}.links a:nth-child(2){display:none}.hero{padding:52px 0 35px}h1{font-size:43px}.intro{font-size:16px}.proofbar{margin-bottom:62px}.proof{padding:18px 14px}.proof strong{font-size:22px}.section{margin-bottom:61px}.section-head{display:block}.section-aside{display:none}.projects,.comparison,.history{grid-template-columns:1fr}.project.feature{grid-column:span 1}.project{min-height:auto;padding:24px}.practice{grid-template-columns:1fr}.practice article{border-right:0;border-bottom:1px solid var(--line)}.practice article:last-child{border:0}.contact{display:block;padding:30px 25px}.contact .contact-links{margin-top:24px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
     @media print{body{color:#121a2a;background:white}.topbar,.actions{display:none}.hero,.section{break-inside:avoid}.project,.fit,.practice article,.proof,.history article{color:#111;background:white;border-color:#ddd}.project p,.fit p,.section-sub,.history p{color:#333}.project h3,.fit h3,.proof strong,.history h3{color:#000}a{color:#16567a;text-decoration:underline}}
-  </style>
+  
+    /* Accessibility and phone-size refinements for the LanceDB portfolio */
+    html{scroll-padding-top:86px}
+    body{min-width:0}
+    .portfolio-mobile-nav{display:none}
+    .hero>*,.projects>*,.project.feature>*,.proofbar>*,.comparison>*,.history>*{min-width:0}
+    .project a,.contact-links a{overflow-wrap:anywhere}
+    .project h3,.project p{overflow-wrap:break-word}
+    .proofpanel{max-width:100%;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .proofpanel code{overflow-wrap:anywhere}
+    a,button{touch-action:manipulation}
+    @media(max-width:690px){
+      .topbar{position:sticky;top:0}
+      .top-inner{position:relative;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:10px;padding-bottom:10px}
+      .top-inner .brand{min-width:0;max-width:calc(100% - 82px);font-size:14px}
+      .brand .mark{flex:0 0 auto}
+      .links{display:none}
+      .portfolio-mobile-nav{display:block;flex:0 0 auto;position:relative}
+      .portfolio-mobile-nav summary{display:flex;align-items:center;gap:9px;justify-content:center;min-height:44px;list-style:none;border:1px solid #657389;background:#1d2b41;border-radius:10px;padding:9px 12px;cursor:pointer;color:#fff;font-size:13px;font-weight:750}
+      .portfolio-mobile-nav summary::-webkit-details-marker{display:none}
+      .portfolio-mobile-nav summary::marker{content:""}
+      .portfolio-mobile-nav[open] summary{border-color:var(--teal)}
+      .portfolio-mobile-menu{position:absolute;z-index:30;top:calc(100% + 10px);right:0;width:min(315px,calc(100vw - 36px));padding:9px;background:#142239;border:1px solid #546985;border-radius:13px;box-shadow:0 18px 45px rgba(0,0,0,.45)}
+      .portfolio-mobile-menu a{display:flex;align-items:center;min-height:46px;padding:10px 13px;border-radius:8px;color:#e7f1f8;font-size:14px;font-weight:650}
+      .portfolio-mobile-menu a:hover,.portfolio-mobile-menu a:focus-visible{background:#273c55;text-decoration:none}
+      .hero{padding-top:44px;gap:24px}
+      h1{font-size:clamp(34px,10vw,43px);line-height:1.12;overflow-wrap:break-word}
+      .intro{font-size:16px;line-height:1.7}
+      .actions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+      .actions a.button{display:flex;justify-content:center;align-items:center;min-height:48px;min-width:0;max-width:100%;text-align:center;padding:12px 15px;white-space:normal}
+      .project-links{gap:8px}
+      .project-links a,.contact-links a{display:inline-flex;align-items:center;min-height:44px;font-size:13px}
+      .contact-links a{max-width:100%}
+      .project{padding:20px}
+      .pipeline{padding:18px}
+      .pipeline-step{align-items:flex-start}
+      .section-head .section-sub{font-size:14px}
+      .footer-inner{display:flex;flex-direction:column;gap:7px;line-height:1.6}
+    }
+    @media(max-width:380px){
+      .wrap{padding-left:14px;padding-right:14px}
+      .portfolio-mobile-menu{width:min(300px,calc(100vw - 28px))}
+      .top-inner .brand span:last-child{font-size:11px}
+      .project{padding:17px}
+      .proof{padding:14px 11px}
+      .proof strong{font-size:19px}
+      .hero{padding-top:36px}
+    }
+</style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to portfolio</a>
   <nav class="topbar" aria-label="Primary navigation"><div class="wrap top-inner">
     <a class="brand" href="https://hmoses.github.io/" aria-label="Harold Moses portfolio home"><span class="mark">HM</span><span>HAROLD MOSES II</span></a>
-    <div class="links"><a href="#projects">Selected work</a><a href="#role-fit">Role fit</a><a href="#approach">Approach</a><a href="#contact">Contact</a></div>
+    <div class="links"><a href="#projects">Selected work</a><a href="#role-fit">Role fit</a><a href="#approach">Approach</a><a href="#contact">Contact</a></div><details class="portfolio-mobile-nav"><summary>Menu <span aria-hidden="true">☰</span></summary><div class="portfolio-mobile-menu"><a href="../lancedb-lab/">Interactive LanceDB lab</a><a href="../lancedb-lab/docs/">Developer documentation</a><a href="#projects">Selected work</a><a href="#role-fit">Role fit</a><a href="#approach">Approach</a><a href="#contact">Contact</a></div></details>
   </div></nav>
   <main class="wrap" id="main">
     <section class="hero" aria-labelledby="hero-title">
