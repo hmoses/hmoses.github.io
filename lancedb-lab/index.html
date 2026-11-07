@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100f16">
+<meta name="description" content="Hands-on LanceDB documentation engineering lab: explore vector retrieval, filters, runnable Python examples, testing, and AI-agent-ready developer docs.">
+<meta property="og:title" content="LanceDB Developer Lab — Harold Moses II">
+<meta property="og:description" content="Interactive retrieval explorer plus executable, testable Python documentation examples.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://hmoses.github.io/lancedb-lab/">
+<link rel="stylesheet" href="./assets/theme.css">
+<title>LanceDB Developer Lab | Documentation Engineering</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="sitehead"><div class="shell nav">
+<a class="brand" href="./"><span class="symbol" aria-hidden="true">✦</span><span>LanceDB <span style="color:var(--pink)">/ Developer Lab</span></span></a>
+<nav class="navlinks" aria-label="Primary navigation"><a href="#explorer">Explore</a><a href="#learn">Learning paths</a><a href="./docs/">Documentation</a><a href="../lancedb-documentation-engineering/">Portfolio</a><a class="nav-cta" href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">View source ↗</a></nav>
+</div></header>
+<main id="main">
+<section class="shell hero">
+<div class="hero-grid">
+<div><span class="pretitle">Documentation engineering / working portfolio / 2026</span><h1>Build it. Query it.<br><span class="gradient">Explain it clearly.</span></h1>
+<p class="lead">A practical developer lab for LanceDB Embedded—bringing together vector search, metadata filters, runnable Python, automated checks, and documentation designed for developers <em>and</em> AI agents.</p>
+<div class="buttonrow"><a class="btn" href="#explorer">Open interactive lab →</a><a class="btn alt" href="./docs/">Read developer docs ↗</a></div>
+<p class="hero-note">Independent educational portfolio by Harold Moses II · LanceDB-inspired visual design · Not affiliated with LanceDB.</p></div>
+<div class="terminal" aria-label="Example Python source"><div class="termtop"><span>examples/quickstart.py</span><span class="leds" aria-hidden="true"><i class="led"></i><i class="led"></i><i class="led"></i></span></div>
+<div class="termcode"><span class="comment"># Local, no API key required</span>
+<span class="key">import</span> lancedb
+
+db = lancedb.connect(<span class="str">"./sample.lance"</span>)
+table = db.create_table(
+    <span class="str">"doc_chunks"</span>, data=records,
+    mode=<span class="str">"overwrite"</span>
+)
+results = (
+    table.search(query_vector)
+    .where(<span class="str">"category = 'python'"</span>)
+    .limit(3)
+    .to_list()
+)
+<span class="comment"># Every example can be tested in CI</span></div></div>
+</div>
+</section>
+<div class="shell"><div class="metrics" aria-label="Lab highlights">
+<div><strong>Local</strong><span>Embedded database, no account</span></div><div><strong>4D</strong><span>Transparent sample embeddings</span></div><div><strong>Python</strong><span>Runnable examples + pytest</span></div><div><strong>Agent-ready</strong><span>Task-oriented, linked docs</span></div>
+</div></div>
+<section class="shell section" id="explorer">
+<div class="sectionhead"><div><span class="eyebrow">01 / Interactive sandbox</span><h2>Understand retrieval <span class="gradient">by doing.</span></h2><p class="sectionnote">Run a lightweight browser-side similarity simulation. Change the query and metadata filter to see how ranked results change—and inspect the equivalent LanceDB Python.</p></div></div>
+<div class="labgrid">
+<form class="panel" id="lab-form">
+<div class="smalllabel" style="margin-bottom:19px">Query configuration</div>
+<div class="control"><label for="intent">Search intent</label><select id="intent" name="intent"><option value="vector">Vector search fundamentals</option><option value="filter">Metadata filtering</option><option value="agent">AI-agent-ready docs</option><option value="ingest">Ingesting documents</option></select><span class="hint">Choose the vector used to rank example records.</span></div>
+<div class="control"><label for="category">Metadata category</label><select id="category" name="category"><option value="all">All categories</option><option value="python">Python</option><option value="search">Search</option><option value="agents">Agents</option><option value="operations">Operations</option></select><span class="hint">Simulated prefilter applied before ranking.</span></div>
+<div class="control"><label for="count">Maximum results</label><select id="count" name="count"><option value="3">Top 3</option><option value="5">Top 5</option><option value="8">Top 8</option></select></div>
+<div class="control"><label>Quick scenarios</label><div class="pills" aria-label="Example scenarios"><button class="pill" type="button" data-scenario="vector" aria-pressed="true">Semantic search</button><button class="pill" type="button" data-scenario="filter">Filters</button><button class="pill" type="button" data-scenario="agent">Agent instructions</button><button class="pill" type="button" data-scenario="ingest">Ingestion</button></div></div>
+<button class="btn" type="submit" style="width:100%">Run simulation →</button><p class="disclaimer" style="margin:16px 0 0">This browser exercise computes vector similarity in JavaScript against a small, fixed fixture. It does <strong>not</strong> call LanceDB. The real Python implementation is linked below.</p>
+</form>
+<div class="panel" aria-live="polite" aria-atomic="false">
+<div class="resulttop"><div><span class="smalllabel">Result explorer</span><div style="font-size:13px;color:var(--muted);margin-top:8px" id="summary">Ranked results appear here.</div></div><div class="status"><span class="dot"></span><span id="run-status">READY</span></div></div>
+<div class="resultlist" id="results"></div>
+<div class="codewrap"><div class="codehead"><span>Equivalent LanceDB API / Python</span><button class="btn small alt" type="button" id="copy-code">Copy code</button></div><pre><code id="generated-code"># Run a scenario to see Python code.</code></pre></div>
+<p class="disclaimer" style="margin:13px 0 0">Displayed similarity is based on cosine similarity of illustrative 4D vectors, not a real text-embedding model. Code examples query a local LanceDB table.</p>
+</div></div></section>
+<section class="shell section" id="learn">
+<div class="sectionhead"><div><span class="eyebrow">02 / Follow the system</span><h2>From first query to <span class="gradient">validated docs.</span></h2><p class="sectionnote">Each learning path connects an interaction to executable source, expected behavior, and an engineering-quality check.</p></div></div>
+<div class="three-up">
+<article class="card tile"><span class="stepnum">LAB 01 / FOUNDATIONS</span><h3>Local quickstart</h3><p>Connect to LanceDB Embedded, create a table from records, and retrieve nearest neighbors without credentials.</p><a href="./docs/#quickstart">Read the quickstart ↗</a></article>
+<article class="card tile"><span class="stepnum">LAB 02 / RETRIEVAL</span><h3>Vector search + metadata</h3><p>Explore similarity scores, prefiltering, and the difference between demo rankings and SDK results.</p><a href="./docs/#queries">Read search docs ↗</a></article>
+<article class="card tile"><span class="stepnum">LAB 03 / QUALITY</span><h3>Testable documentation</h3><p>Turn developer examples into automated checks that can catch broken APIs and documentation drift.</p><a href="./docs/#validation">See test strategy ↗</a></article>
+</div></section>
+<section class="shell section" id="documentation">
+<div class="sectionhead"><div><span class="eyebrow">03 / Documentation system</span><h2>Documentation with an <span class="gradient">engineering backbone.</span></h2></div></div>
+<div class="two-up">
+<article class="card tile"><span class="stepnum">DEVELOPER DOCS</span><h3>Run, understand, troubleshoot.</h3><p>Step-by-step installation, prerequisites, copyable examples, output expectations, and failure modes.</p><a href="./docs/">Open linked documentation →</a></article>
+<article class="card tile"><span class="stepnum">SYSTEM DESIGN</span><h3>See how it all fits together.</h3><p>Understand the pipeline from fixed example records through a LanceDB table to search, filtering, and tests.</p><a href="./docs/architecture.html">Open architecture guide →</a></article>
+<article class="card tile"><span class="stepnum">AI-AGENT SUPPORT</span><h3>Reduce ambiguous instructions.</h3><p>Give coding assistants exact setup commands, safe assumptions, deterministic tasks, and verification steps.</p><a href="./docs/agent-readiness.html">Open agent playbook →</a></article>
+<article class="card tile"><span class="stepnum">OPEN SOURCE</span><h3>Source, tests, and workflows.</h3><p>Review the Python implementation, automated test suite, and documentation source alongside the live pages.</p><a href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">Explore repository files →</a></article>
+</div></section>
+<section class="shell section"><div class="callout" style="padding:27px 30px"><span class="eyebrow">Author's note</span><h2 style="font-size:26px;margin:9px 0">What this project demonstrates</h2><p style="max-width:800px;color:var(--muted);font-size:14px">I approach documentation as an executable interface to the product: learn the API, build a small reproducible implementation, make assumptions explicit, test examples, and keep the developer and AI-agent paths consistent. This is a portfolio demonstration, not official LanceDB documentation.</p><div class="buttonrow"><a class="btn alt" href="../lancedb-documentation-engineering/">See documentation engineering portfolio ↗</a><a class="btn alt" href="https://docs.lancedb.com/quickstart" target="_blank" rel="noopener noreferrer">Official LanceDB quickstart ↗</a></div></div></section>
+</main>
+<footer class="footer"><div class="shell footer-inner"><span>© 2026 Harold Moses II · Independent documentation engineering lab.</span><span>Not affiliated with or endorsed by LanceDB. Illustrative embeddings, no user data.</span></div></footer>
+<script src="./assets/lab.js" defer></script>
+</body></html>
