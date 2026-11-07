@@ -183,3 +183,15 @@ a,button,select{touch-action:manipulation}
   .resultrow{align-items:start;gap:7px}
   .score{font-size:12px}
 }
+
+/* The ASCII flow remains available on larger screens; phones get a readable
+   vertical representation instead of a sideways-only diagram. */
+.mobile-flow{display:none}
+@media(max-width:700px){
+ .architecture-diagram{display:none}
+ .mobile-flow{display:grid;gap:11px;list-style:none;margin:16px 0 26px;padding:0;counter-reset:mobile-flow}
+ .mobile-flow li{position:relative;margin:0;padding:16px 16px 16px 52px;border:1px solid var(--stroke);border-radius:12px;background:#26202c;counter-increment:mobile-flow}
+ .mobile-flow li:before{content:counter(mobile-flow,decimal-leading-zero);position:absolute;left:14px;top:16px;font:750 11px/1.6 ui-monospace,monospace;color:var(--pink)}
+ .mobile-flow strong{display:block;color:#fff;font-size:14px}
+ .mobile-flow span{display:block;color:var(--muted);font-size:13px;margin-top:5px;line-height:1.6}
+}
