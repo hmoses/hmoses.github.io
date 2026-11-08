@@ -241,11 +241,11 @@
   }
   function render(result,kind){
     response.hidden=false;
-    title.textContent=kind==="ai"?"On-device AI · grounded in lessons":"Verified lesson excerpts";
+    title.textContent=result.kinds?"Verified project pages":kind==="ai"?"On-device AI · lesson context":"Lesson-based explanation";
     answer.textContent=result.text;
     source.textContent=result.sources.length?"Related chapter"+(result.sources.length>1?"s":"")+": "+result.sources.join(" · "):"No reliable passage found in the supplied lessons.";
     renderLinks(result.kinds||["docs"]);
-    appendMessage("bot",result.text,(kind==="ai"?"On-device AI":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
+    appendMessage("bot",result.text,(result.kinds?"Verified project links":kind==="ai"?"On-device AI":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
     repeat.disabled=false;
     speakAnswer();
   }
@@ -274,7 +274,7 @@
       const result=verifiedNavigation||aiAnswer||fallback(clean,matches,relatedChapter);
       dialogue.push({question:clean,answer:result.text,chapter:relatedChapter});if(dialogue.length>10)dialogue.shift();
       render(result,aiAnswer?"ai":"source");
-      if(!aiAnswer)status.textContent=result.grounded?"Reading a grounded lesson excerpt.":"No supported answer found in the lesson.";
+      if(!aiAnswer)status.textContent=result.kinds?"Verified documentation links shown below.":result.grounded?"Reading a grounded lesson excerpt.":"No supported answer found in the lesson.";
     }finally{if(req===requestId)ask.disabled=false;}
   }
   form.addEventListener("submit",e=>{e.preventDefault();askQuestion(question.value)});
