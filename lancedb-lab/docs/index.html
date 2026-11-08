@@ -22,12 +22,12 @@
 <p>From the <code>lancedb-lab</code> folder, create an isolated environment and install dependencies:</p>
 <div class="codewrap"><div class="codehead">Terminal / setup</div><pre><code>python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt</code></pre></div>
+python -m pip install -r requirements.txt</code></pre><details class="code-explainer"><summary>Understand this example: Set up your Python environment</summary><p><code>python3 -m venv .venv</code> creates an isolated Python environment so lab dependencies do not alter system packages. <code>source .venv/bin/activate</code> activates it on macOS/Linux. <code>python -m pip install -r requirements.txt</code> installs the packages listed in the project. On Windows, activate with <code>.venv\Scripts\activate</code>.</p></details></div>
 <p>Windows PowerShell users can replace the activation command with <code>.venv\Scripts\Activate.ps1</code>. If a Python wheel is unavailable for your platform, use a supported CPython version and architecture.</p>
 
 <h2 id="quickstart">2. Quickstart</h2>
 <h3>Run your first query</h3>
-<div class="codewrap"><div class="codehead">Terminal / real LanceDB</div><pre><code>python example.py --intent vector --limit 3</code></pre></div>
+<div class="codewrap"><div class="codehead">Terminal / real LanceDB</div><pre><code>python example.py --intent vector --limit 3</code></pre><details class="code-explainer"><summary>Understand this example: Execute the sample</summary><p><code>python example.py</code> starts the included runnable Python program. <code>--intent vector</code> selects the predefined query embedding for vector search, and <code>--limit 3</code> requests at most three nearest records. The terminal prints IDs, titles, categories, and SDK-computed distances.</p></details></div>
 <p>Expected behavior: the command creates a temporary local database, inserts eight predefined records, runs cosine vector search, prints up to three records ordered by ascending cosine distance, and automatically deletes the temporary directory afterward. The precise distance values are determined by the embedded SDK.</p>
 <h3>Inspect the core pattern</h3>
 <div class="codewrap"><div class="codehead">Python / connect → create → query</div><pre><code>import lancedb
@@ -46,7 +46,7 @@ matches = (
     .to_list()
 )
 for item in matches:
-    print(item["title"], item["_distance"])</code></pre></div>
+    print(item["title"], item["_distance"])</code></pre><details class="code-explainer"><summary>Understand this example: Connect, ingest, and retrieve</summary><p><code>import lancedb</code> imports the SDK. <code>from example import RECORDS</code> loads eight sample dictionaries with four-number vectors. <code>connect</code> creates/opens the local database; <code>create_table</code> writes rows, replacing the prior table because of <code>mode='overwrite'</code>. <code>search</code> starts nearest-neighbor retrieval, <code>distance_type('cosine')</code> selects cosine distance, <code>limit</code> caps matches, and <code>to_list</code> executes and materializes result dictionaries. The loop prints fields from each returned row, including its <code>_distance</code>. Lower cosine distance means a closer match.</p></details></div>
 <p>The <code>RECORDS</code> fixture provides a <code>vector</code> column containing exactly four floating-point values per row. LanceDB can infer that this is the vector column. The <code>_distance</code> value is smaller for closer matches.</p>
 <div class="callout"><strong>Important:</strong> <code>mode="overwrite"</code> replaces a table with the same name. It is appropriate here only because this project uses disposable example data. In a production workflow, use an intentional table-creation or migration strategy.</div>
 
@@ -59,18 +59,18 @@ for item in matches:
     .limit(3)
     .to_list()
 )
-assert all(row["category"] == "search" for row in results)</code></pre></div>
+assert all(row["category"] == "search" for row in results)</code></pre><details class="code-explainer"><summary>Understand this example: Apply a metadata filter</summary><p><code>table.search</code> creates a vector query using a four-number query embedding. <code>.where("category = 'search'")</code> filters candidate rows by metadata, so rows in other categories are excluded. <code>.limit(3)</code> returns at most three results; <code>.to_list()</code> executes the query. <code>assert all(...)</code> is a simple correctness check: it fails if a returned row has another category. This example assumes the <code>table</code> variable from the preceding snippet.</p></details></div>
 <p>The example's <a href="../example.py">search_docs()</a> function validates category names against a fixed allowlist. Do not concatenate arbitrary user input into filter expressions. For real applications, validate user-supplied fields and values and use parameterized predicates where supported by your SDK.</p>
 <p>Try these commands and compare their returned categories:</p>
 <div class="codewrap"><div class="codehead">Terminal / experiments</div><pre><code>python example.py --intent filter --category search
 python example.py --intent agent --category agents
-python example.py --intent ingest --category python --limit 2</code></pre></div>
+python example.py --intent ingest --category python --limit 2</code></pre><details class="code-explainer"><summary>Understand this example: Compare command-line scenarios</summary><p>Each command runs <code>example.py</code> with a different query intent and category filter. <code>--intent</code> chooses a sample embedding, <code>--category</code> restricts results to the specified metadata category, and <code>--limit 2</code> returns up to two rows. These commands are reproducible comparisons, not generated text embeddings.</p></details></div>
 <table><thead><tr><th>Concept</th><th>What this lab demonstrates</th></tr></thead><tbody>
 <tr><td>Embedding</td><td>A fixed 4D numeric vector; not generated from text</td></tr><tr><td>Distance</td><td>Cosine distance; a smaller <code>_distance</code> indicates a closer neighbor</td></tr><tr><td>Filter</td><td>SQL-like <code>where</code> predicate on category metadata</td></tr><tr><td>Index</td><td>No ANN index is needed for this tiny fixture; exhaustive search keeps results easy to inspect</td></tr><tr><td>Production path</td><td>Replace synthetic vectors with a real embedding pipeline; consider index strategy only after measuring workload</td></tr></tbody></table>
 
 <h2 id="validation">4. Automated validation</h2>
 <p>The test suite checks table construction, row count, deterministic search, category filtering, and invalid input. Tests run against a local temporary LanceDB database.</p>
-<div class="codewrap"><div class="codehead">Terminal / pytest</div><pre><code>python -m pytest -q tests</code></pre></div>
+<div class="codewrap"><div class="codehead">Terminal / pytest</div><pre><code>python -m pytest -q tests</code></pre><details class="code-explainer"><summary>Understand this example: Run automated tests</summary><p><code>python -m pytest -q tests</code> invokes pytest with the Python interpreter in your active environment. <code>tests</code> is the directory of automated checks, while <code>-q</code> shows concise test output. A passing run means the currently installed dependencies satisfy the assertions; failures indicate a change to investigate.</p></details></div>
 <p>Review the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/lancedb-lab/tests/test_example.py">test source</a> and the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/.github/workflows/lancedb-lab-ci.yml">GitHub Actions workflow</a>. Workflow results should be checked in the repository's Actions tab; the mere presence of a workflow file does not prove it has passed.</p>
 <h3>Documentation quality contract</h3>
 <ul><li><strong>Runnable:</strong> every code path has an explicitly declared dependency and no hidden API key.</li><li><strong>Repeatable:</strong> sample inputs and expected output properties are stable.</li><li><strong>Clear boundaries:</strong> browser simulation and real LanceDB executions are distinguished.</li><li><strong>Change detection:</strong> tests should fail when an SDK change breaks documented behavior.</li><li><strong>Agent-readable:</strong> prerequisites, commands, inputs, outputs, and verification steps are explicit.</li></ul>
