@@ -10,7 +10,7 @@
   <meta property="og:description" content="Eight conversational voice lessons, interactive practice, and a clear explanation you can use in a technical interview.">
   <link rel="canonical" href="https://hmoses.github.io/lancedb-lab/voice-tour/">
   <link rel="stylesheet" href="../assets/theme.css?v=voice-20261107">
-  <link rel="stylesheet" href="../assets/voice-tour.css?v=qa-20261108">
+  <link rel="stylesheet" href="../assets/voice-tour.css?v=floating-20261108">
   <title>Guided Voice Tutorial | LanceDB Developer Lab</title>
 </head>
 <body>
@@ -93,22 +93,6 @@
             </div>
           </section>
 
-          <section class="qa-panel" aria-labelledby="qa-heading">
-            <div class="qa-heading"><div><span class="eyebrow">Ask while you learn</span><h2 id="qa-heading">Ask the spoken tutor a question</h2></div><span id="qa-mode" class="qa-mode">Checking available answer modes</span></div>
-            <p class="qa-intro">Ask about a concept, a line of Python, or a step in this lesson. Pause the narration automatically, hear the response, then resume when ready.</p>
-            <form id="qa-form" class="qa-form">
-              <label for="qa-question">Your question</label>
-              <div class="qa-input-row"><input id="qa-question" type="text" minlength="3" maxlength="420" required autocomplete="off" placeholder="What does cosine distance mean?" aria-describedby="qa-note"><button type="button" id="qa-mic" class="btn alt">🎙 Ask aloud</button><button type="submit" id="qa-ask" class="btn">Ask</button></div>
-              <p class="qa-note" id="qa-note">Microphone recognition depends on your browser and may use its speech-recognition service. Typing always works. Answers stay grounded in tutorial material, not live LanceDB results.</p>
-            </form>
-            <div id="qa-status" role="status" aria-live="polite" class="qa-status">Ready for your question.</div>
-            <div id="qa-response" class="qa-response" aria-live="polite" aria-atomic="false" hidden>
-              <div class="qa-response-top"><strong id="qa-response-title">Tutor answer</strong><button id="qa-stop" type="button" class="btn small alt">Stop speaking</button></div>
-              <p id="qa-answer"></p><p class="qa-source" id="qa-sources"></p>
-              <div class="qa-actions"><button id="qa-repeat" type="button" class="btn small alt">🔊 Read answer aloud</button><button id="qa-resume" type="button" class="btn small alt">▶ Resume lesson</button></div>
-            </div>
-          </section>
-
           <section class="practice-panel" aria-label="Follow along">
             <div class="practice-intro"><span class="eyebrow">Now, try it yourself</span><h2>Follow along on the real site.</h2><p id="try-hint">Use the live project while you listen.</p>
               <a id="try-link" class="btn" href="../" target="_blank" rel="noopener noreferrer">Open lab ↗</a>
@@ -149,7 +133,27 @@
     <span>© 2026 Harold Moses II · Independent documentation engineering education.</span>
     <span>Narration and replies use device speech synthesis; microphone recognition may use browser speech services. Not affiliated with or endorsed by LanceDB.</span>
   </div></footer>
+  <aside id="qa-floating" class="qa-floating" aria-label="Floating tutor">
+    <button id="qa-launcher" class="qa-launcher" type="button" aria-expanded="false" aria-controls="qa-dialog"><span class="qa-launcher-icon" aria-hidden="true">✦</span><span class="qa-launcher-label">Ask the tutor</span></button>
+    <div id="qa-dialog" class="qa-dialog" hidden>
+<section class="qa-panel" role="dialog" aria-modal="false" aria-label="LanceDB tutor chat" aria-labelledby="qa-heading">
+            <div class="qa-heading"><div><span class="eyebrow">LANCEDB DEVELOPER LAB</span><h2 id="qa-heading">Ask your AI tutor</h2></div><button id="qa-close" class="qa-close" type="button" aria-label="Minimize tutor">×</button></div><div id="qa-mode" class="qa-mode">Checking available answer modes</div>
+            <p class="qa-intro">Ask questions while you scroll and explore. I’ll use the lessons and code examples to help.</p><div id="qa-history" class="qa-history" role="log" aria-live="polite" aria-relevant="additions text"><p class="qa-welcome">Hi! 👋 Ask me what any Python line means, how cosine similarity works, or why the simulation differs from LanceDB.</p></div>
+            <form id="qa-form" class="qa-form">
+              <label for="qa-question" class="sr-only">Type your question</label>
+              <div class="qa-input-row"><input id="qa-question" type="text" minlength="3" maxlength="420" required autocomplete="off" placeholder="Ask a question about this page…" aria-describedby="qa-note"><button type="button" id="qa-mic" class="btn alt" aria-label="Speak your question">🎙</button><button type="submit" id="qa-ask" class="btn">Send</button></div>
+              <p class="qa-note" id="qa-note">Microphone recognition depends on your browser and may use its speech-recognition service. Typing always works. Answers stay grounded in tutorial material, not live LanceDB results.</p>
+            </form>
+            <div id="qa-status" role="status" aria-live="polite" class="qa-status">Ready for your question.</div>
+            <div id="qa-response" class="qa-response" aria-live="polite" aria-atomic="false" hidden>
+              <div class="qa-response-top"><strong id="qa-response-title">Tutor answer</strong><button id="qa-stop" type="button" class="btn small alt">Stop speaking</button></div>
+              <p id="qa-answer"></p><p class="qa-source" id="qa-sources"></p>
+              <div class="qa-actions"><button id="qa-repeat" type="button" class="btn small alt">🔊 Read answer aloud</button><button id="qa-resume" type="button" class="btn small alt">▶ Resume lesson</button></div>
+            </div>
+          </section>
+    </div>
+  </aside>
   <script src="../assets/voice-tour.js?v=voice-20261107" defer></script>
-  <script src="../assets/voice-qa.js?v=qa-20261108" defer></script>
+  <script src="../assets/voice-qa.js?v=floating-20261108" defer></script>
 </body>
 </html>
