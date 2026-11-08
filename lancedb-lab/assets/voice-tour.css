@@ -227,3 +227,45 @@
 .qa-source{color:#b4c9d2;font-size:12px;line-height:1.5}
 .qa-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
 @media(max-width:700px){.qa-panel{padding:18px 16px}.qa-input-row{display:grid;grid-template-columns:1fr 1fr}.qa-input-row input{grid-column:1/-1;width:100%}.qa-input-row .btn{width:100%;font-size:13px}}
+
+/* Floating assistant: remains in view while the tutorial scrolls. */
+.qa-floating{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:1000;pointer-events:none;width:0;height:0}
+.qa-floating button,.qa-floating input{touch-action:manipulation}
+.qa-launcher{pointer-events:auto;position:absolute;right:0;bottom:0;display:flex;align-items:center;gap:11px;min-height:59px;min-width:176px;padding:9px 19px 9px 10px;border:1px solid #d0a7e4;border-radius:99px;color:#201624;background:linear-gradient(115deg,#c8b1ff,#f1b3dc 72%,#f7bea8);box-shadow:0 12px 36px rgba(0,0,0,.4);cursor:pointer;font-size:14px;font-weight:800;white-space:nowrap}
+.qa-launcher:hover,.qa-launcher:focus-visible{filter:brightness(1.09);outline-offset:3px}
+.qa-launcher-icon{width:40px;height:40px;flex:none;display:grid;place-items:center;color:#fae9ff;background:#3a2549;border-radius:50%;font-size:23px}
+.qa-launcher.is-open{display:none}
+.qa-dialog{pointer-events:auto;position:absolute;right:0;bottom:0;width:min(410px,calc(100vw - 32px));height:min(665px,calc(100dvh - 55px));max-height:calc(100dvh - 36px);display:flex;flex-direction:column;border:1px solid #ac87ba;border-radius:19px;background:#1a1521;box-shadow:0 22px 70px rgba(0,0,0,.6);overflow:hidden}
+.qa-dialog[hidden]{display:none}
+.qa-dialog .qa-panel{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:0;border:none;border-radius:0;background:transparent}
+.qa-dialog .qa-heading{display:flex;align-items:center;flex:0 0 auto;gap:10px;padding:15px 17px 9px;background:linear-gradient(135deg,#382344,#232032);border-bottom:1px solid #584765}
+.qa-dialog .qa-heading h2{font-size:19px;margin:3px 0;line-height:1.25}
+.qa-dialog .qa-heading .eyebrow{font-size:9px;letter-spacing:.1em}
+.qa-dialog .qa-close{border:1px solid #826990;border-radius:50%;background:#34253e;color:#fff;width:37px;height:37px;flex:none;cursor:pointer;font-size:25px;line-height:1}
+.qa-dialog .qa-mode{border:none;border-radius:0;padding:6px 17px;background:#241c2b;font-size:10px;line-height:1.5;flex:0 0 auto}
+.qa-dialog .qa-intro{padding:10px 17px 0;font-size:12px;line-height:1.55;margin:0}
+.qa-history{padding:13px 15px;overflow-y:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:80px;display:flex;flex-direction:column;gap:12px;scrollbar-color:#7a5b90 transparent}
+.qa-welcome{margin:0;max-width:91%;padding:12px 13px;border-radius:14px 14px 14px 3px;background:#31263b;border:1px solid #614d70;color:#f3e5f5;font-size:13px;line-height:1.65}
+.qa-message{max-width:91%;padding:10px 13px;border:1px solid #544763;border-radius:14px;background:#2d2635;color:#f6edf7;overflow-wrap:anywhere}
+.qa-message p{margin:0;font-size:13px;line-height:1.68;white-space:pre-wrap}
+.qa-message small{display:block;margin-top:8px;color:#b8ced5;font-size:10px;line-height:1.5}
+.qa-message-user{align-self:flex-end;background:#543d6b;border-color:#9b73b3;border-radius:14px 14px 3px 14px}
+.qa-message-bot{align-self:flex-start;border-radius:14px 14px 14px 3px;background:#21343b;border-color:#547581}
+.qa-dialog .qa-form{flex:0 0 auto;padding:10px 13px 0;border-top:1px solid #52425e;background:#221b2b}
+.qa-dialog .qa-input-row{display:grid;grid-template-columns:minmax(0,1fr) 43px 58px;gap:6px}
+.qa-dialog .qa-input-row input{grid-column:auto;flex:none;min-width:0;width:100%;min-height:44px;font-size:14px;padding:9px 11px}
+.qa-dialog .qa-input-row .btn{width:auto;padding:8px 5px;min-height:44px;font-size:12px}
+.qa-dialog .qa-note{font-size:10px;line-height:1.4;margin:7px 0}
+.qa-dialog .qa-status{min-height:0;padding:0 15px 7px;margin:0;font-size:11px;background:#221b2b}
+.qa-dialog .qa-response{flex:0 0 auto;max-height:155px;overflow-y:auto;margin:0;padding:8px 13px;border-radius:0;border:0;border-top:1px solid #564460;background:#1d2a32}
+.qa-dialog .qa-response-top{font-size:11px}
+.qa-dialog #qa-answer,.qa-dialog #qa-sources{display:none}
+.qa-dialog .qa-response .btn{font-size:11px;min-height:36px}
+.qa-dialog .qa-actions{margin-top:6px;gap:7px}
+@media(max-width:700px){
+.qa-floating{bottom:max(13px,env(safe-area-inset-bottom));right:max(12px,env(safe-area-inset-right))}
+.qa-launcher{min-height:54px;min-width:162px}
+.qa-dialog{width:calc(100vw - 24px);height:min(670px,calc(100dvh - 28px));max-height:calc(100dvh - 24px)}
+.qa-dialog .qa-input-row{grid-template-columns:minmax(0,1fr) 43px 55px}
+}
+@media(max-height:600px){.qa-dialog{height:calc(100dvh - 22px)}.qa-dialog .qa-intro{display:none}.qa-dialog .qa-note{display:none}}
