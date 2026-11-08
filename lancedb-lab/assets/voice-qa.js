@@ -24,6 +24,25 @@
       sentences.forEach((sentence)=>{const text=sentence.trim();if(text.length>28)candidates.push({text,chapterIndex,chapter:chapter.title,source:pidx===chapter.paragraphs.length+1?"checkpoint":"lesson",terms:tokens(text)});});
     });
   });
+  let docsLoaded=null;
+  function loadDocumentation(){
+    if(docsLoaded)return docsLoaded;
+    docsLoaded=(async()=>{
+      try{
+        const response=await fetch("../docs/",{credentials:"same-origin"});
+        if(!response.ok)return;
+        const html=new DOMParser().parseFromString(await response.text(),"text/html");
+        html.querySelectorAll(".line-walkthrough li").forEach(li=>{
+          const code=li.querySelector(".line-code")?.textContent?.trim();
+          const meaning=li.querySelector(".line-meaning")?.textContent?.trim();
+          if(!code||!meaning||code==="(blank line)")return;
+          const text=code+" — "+meaning;
+          candidates.push({text,chapterIndex:4,chapter:"Python developer documentation",source:"line-by-line code walkthrough",terms:tokens(text)});
+        });
+      }catch(e){console.info("Additional documentation unavailable; lesson answers still work.");}
+    })();
+    return docsLoaded;
+  }
   function search(questionText){
     const q=tokens(questionText);
     if(!q.length)return [];
@@ -120,6 +139,8 @@
     status.textContent="Searching the lessons for a supported answer…";
     response.hidden=true;
     try{
+      await loadDocumentation();
+      if(req!==requestId)return;
       const matches=search(clean);
       const aiAnswer=await answerWithModel(clean,matches);
       if(req!==requestId)return;
@@ -147,7 +168,7 @@
       status.textContent="Listening for your question…";
       recognition.onresult=e=>{
         const text=e.results?.[0]?.[0]?.transcript?.trim();
-        if(text){question.value=text;askQuestion(text);}
+        if(text){question.value=text;recognition.stop();askQuestion(text);}
       };
       recognition.onerror=e=>{status.textContent="Microphone error: "+(e.error||"unknown")+". You can type instead.";};
       recognition.onend=()=>{recognition=null;mic.textContent="🎙 Ask aloud";};
