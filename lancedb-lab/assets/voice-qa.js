@@ -11,6 +11,29 @@
   const source=el("qa-sources"), mode=el("qa-mode"), title=el("qa-response-title");
   const ask=el("qa-ask"), repeat=el("qa-repeat"), stop=el("qa-stop"), resume=el("qa-resume");
   if(!form || typeof chapters==="undefined")return;
+  const launcher=el("qa-launcher"), dialog=el("qa-dialog"), close=el("qa-close"), history=el("qa-history");
+  let isOpen=false;
+  function setOpen(open,focus=true){
+    isOpen=Boolean(open);
+    dialog.hidden=!isOpen;
+    launcher.setAttribute("aria-expanded",String(isOpen));
+    launcher.classList.toggle("is-open",isOpen);
+    if(isOpen&&focus)question.focus({preventScroll:true});
+    else if(!isOpen&&focus)launcher.focus({preventScroll:true});
+  }
+  launcher.addEventListener("click",()=>setOpen(!isOpen));
+  close.addEventListener("click",()=>setOpen(false));
+  document.addEventListener("keydown",event=>{if(event.key==="Escape"&&isOpen&&document.activeElement?.closest("#qa-floating"))setOpen(false);});
+  function appendMessage(kind,text,meta=""){
+    const article=document.createElement("div");
+    article.className="qa-message qa-message-"+kind;
+    const p=document.createElement("p");p.textContent=text;article.append(p);
+    if(meta){const small=document.createElement("small");small.textContent=meta;article.append(small);}
+    history.append(article);
+    history.scrollTop=history.scrollHeight;
+    return article;
+  }
+
   const SR=window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition=null, requestId=0, wasPlaying=false, replyUtterance=null, localModel=null;
   const stopwords=new Set("a an and are as at be but by can could did do does for from had has have how i in into is it its me my of on or our should so than that the their them there these this those to was we what when where which who why will with would you your tell explain please about does mean means difference between code line example here again".split(" "));
@@ -125,12 +148,16 @@
     title.textContent=kind==="ai"?"On-device AI · grounded in lessons":"Verified lesson excerpts";
     answer.textContent=result.text;
     source.textContent=result.sources.length?"Related chapter"+(result.sources.length>1?"s":"")+": "+result.sources.join(" · "):"No reliable passage found in the supplied lessons.";
+    appendMessage("bot",result.text,(kind==="ai"?"On-device AI":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
     repeat.disabled=false;
     speakAnswer();
   }
   async function askQuestion(q){
     const clean=q.trim();if(clean.length<3)return;
     requestId++;const req=requestId;
+    setOpen(true,false);
+    appendMessage("user",clean);
+    question.value="";
     // Stop narration without losing position: Play resumes from this paragraph.
     wasPlaying=speaking||wasPlaying;
     if(speaking)pause();
@@ -175,5 +202,7 @@
       try{recognition.start();}catch{recognition=null;mic.textContent="🎙 Ask aloud";status.textContent="Couldn't start microphone. Type a question instead.";}
     });
   }
+  // The drawer is initially minimized; typing and questions do not change page scroll position.
+  setOpen(false,false);
   window.addEventListener("pagehide",()=>{requestId++;if(recognition)recognition.abort();speechStop();if(localModel?.destroy)localModel.destroy();});
 })();
