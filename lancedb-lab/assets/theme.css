@@ -195,3 +195,16 @@ a,button,select{touch-action:manipulation}
  .mobile-flow strong{display:block;color:#fff;font-size:14px}
  .mobile-flow span{display:block;color:var(--muted);font-size:13px;margin-top:5px;line-height:1.6}
 }
+
+/* Interactive retrieval inputs and accessible walkthroughs */
+.code-explainer{margin:16px 0 20px;border:1px solid var(--stroke);border-radius:12px;background:rgba(255,255,255,.035);padding:15px 18px;color:var(--muted)}
+.code-explainer summary{cursor:pointer;color:#fff;font-size:14px;font-weight:750;line-height:1.5}
+.code-explainer[open] summary{margin-bottom:12px}
+.code-explainer p,.code-explainer li{font-size:14px;line-height:1.8}
+.code-explainer ol{padding-left:22px;margin:0}
+.code-explainer code{overflow-wrap:anywhere;color:#ffd7f0}
+.control input{display:block;width:100%;max-width:100%;box-sizing:border-box;border:1px solid var(--stroke);border-radius:10px;padding:12px 13px;background:#1c1925;color:#fff;font:inherit;margin:8px 0}
+.control input:focus{outline:2px solid var(--pink);outline-offset:2px}
+#vector-error:not(:empty){display:block;color:#ffb2b2;margin-top:6px}
+#dataset-status{display:block;margin-top:10px}
+#add-document,#reset-documents{margin:5px 8px 4px 0}
