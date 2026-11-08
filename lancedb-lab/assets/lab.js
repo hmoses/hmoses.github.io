@@ -11,30 +11,89 @@ const records = [
 {id:"doc-07",title:"Document common query failures",category:"operations",summary:"Explain vector dimensions, filter predicates, and local data-path errors.",vector:[0.41,0.79,0.58,0.12]},
 {id:"doc-08",title:"Version documentation against APIs",category:"agents",summary:"Make API assumptions explicit and link to authoritative reference pages.",vector:[0.11,0.37,0.94,0.47]}
 ];
-const vectors={vector:[0.10,0.99,0.11,0.15],filter:[0.16,0.90,0.19,0.55],agent:[0.18,0.30,0.95,0.20],ingest:[0.89,0.18,0.15,0.72]};
-const form=document.getElementById("lab-form"),intent=document.getElementById("intent"),category=document.getElementById("category"),count=document.getElementById("count"),results=document.getElementById("results"),summary=document.getElementById("summary"),status=document.getElementById("run-status"),code=document.getElementById("generated-code");
-const cosine=(a,b)=>{const dot=a.reduce((s,x,i)=>s+x*b[i],0);const na=Math.hypot(...a),nb=Math.hypot(...b);return dot/(na*nb)};
-function createResult(record,score,rank){const article=document.createElement("article");article.className="result";const header=document.createElement("div");header.className="resultrow";const info=document.createElement("div");const tag=document.createElement("span");tag.className="tag";tag.textContent=record.category.toUpperCase();const title=document.createElement("h3");title.textContent=rank+". "+record.title;info.append(tag,title);const number=document.createElement("span");number.className="score";number.textContent=(score*100).toFixed(1)+"%";number.setAttribute("aria-label","Cosine similarity "+(score*100).toFixed(1)+" percent");header.append(info,number);const p=document.createElement("p");p.textContent=record.summary;const bar=document.createElement("div");bar.className="bar";bar.setAttribute("aria-hidden","true");const fill=document.createElement("span");fill.style.width=(Math.max(0,score)*100).toFixed(2)+"%";bar.append(fill);article.append(header,p,bar);return article}
-function pythonCode(key,selected,limit){const v=vectors[key].map(x=>x.toFixed(2)).join(", ");const filter=selected==="all"?"":".where(\"category = '"+selected+"'\")";return [
-"import lancedb",
-"from example import RECORDS",
-"",
-'db = lancedb.connect("./sample.lance")',
-'table = db.create_table("doc_chunks", data=RECORDS, mode="overwrite")',
-"query_vector = ["+v+"]",
-"results = (",
-"    table.search(query_vector)",
-'    .distance_type("cosine")',
-...(filter?[ "    "+filter]:[]),
-"    .limit("+limit+")",
-"    .to_list()",
-")",
-"for item in results:",
-'    print(item["id"], item["title"], item["_distance"])'
-].join("\n")}
-function run(){const key=intent.value,cat=category.value,lim=Number(count.value),vector=vectors[key];const ranked=records.filter(r=>cat==="all"||r.category===cat).map(r=>({...r,score:cosine(vector,r.vector)})).sort((a,b)=>b.score-a.score).slice(0,lim);results.replaceChildren(...ranked.map((r,i)=>createResult(r,r.score,i+1)));summary.textContent=ranked.length+" ranked records · "+(cat==="all"?"all categories":cat+" only")+" · cosine distance";status.textContent="COMPLETE";code.textContent=pythonCode(key,cat,lim);document.querySelectorAll("[data-scenario]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.scenario===key)))}
+const defaults={vector:[0.10,0.99,0.11,0.15],filter:[0.16,0.90,0.19,0.55],agent:[0.18,0.30,0.95,0.20],ingest:[0.89,0.18,0.15,0.72]};
+
+const form=document.getElementById("lab-form"), intent=document.getElementById("intent"),category=document.getElementById("category"),count=document.getElementById("count"),results=document.getElementById("results"),summary=document.getElementById("summary"),status=document.getElementById("run-status"),code=document.getElementById("generated-code"),queryInput=document.getElementById("query-vector"),customTitle=document.getElementById("custom-title"),customVector=document.getElementById("custom-vector"),datasetStatus=document.getElementById("dataset-status"),error=document.getElementById("vector-error");
+let custom=[];
+function parseVector(input){
+ const parts=input.split(",").map(x=>x.trim());
+ if(parts.length!==4 || parts.some(x=>x===""||!Number.isFinite(Number(x))))throw new Error("Enter exactly four finite numbers separated by commas.");
+ const v=parts.map(Number);
+ if(Math.hypot(...v)===0)throw new Error("The vector cannot be all zeros.");
+ return v;
+}
+function cosine(a,b){const dot=a.reduce((sum,x,i)=>sum+x*b[i],0);return dot/(Math.hypot(...a)*Math.hypot(...b))}
+function createResult(record,score,rank){
+ const article=document.createElement("article");article.className="result";
+ const header=document.createElement("div");header.className="resultrow";
+ const info=document.createElement("div"),tag=document.createElement("span");tag.className="tag";tag.textContent=record.category.toUpperCase();
+ const title=document.createElement("h3");title.textContent=rank+". "+record.title;info.append(tag,title);
+ const number=document.createElement("span");number.className="score";number.textContent=(score*100).toFixed(1)+"%";
+ number.setAttribute("aria-label","Cosine similarity "+(score*100).toFixed(1)+" percent");
+ header.append(info,number);const p=document.createElement("p");p.textContent=record.summary;
+ const bar=document.createElement("div");bar.className="bar";bar.setAttribute("aria-hidden","true");
+ const fill=document.createElement("span");fill.style.width=(Math.max(0,score)*100).toFixed(2)+"%";bar.append(fill);
+ article.append(header,p,bar);return article;
+}
+function pythonCode(vector,selected,limit){
+ const extra=custom.length?custom.map(r=>({id:r.id,title:r.title,category:r.category,text:r.summary,vector:r.vector})):[];
+ const rows=JSON.stringify(extra,null,2).replace(/\bnull\b/g,"None");
+ const filter=selected==="all"?"":'    .where("category = \\''+selected+'\\'")';
+ return [
+ "import lancedb",
+ "from example import RECORDS",
+ "",
+ '# Open a local embedded database (no API key needed).',
+ 'db = lancedb.connect("./sample.lance")',
+ '# Copy fixture rows; append any documents you added in the explorer.',
+ 'data = RECORDS + '+(extra.length?rows:"[]"),
+ '# Overwrite the table for repeatable learning; do not use overwrite on production data.',
+ 'table = db.create_table("doc_chunks", data=data, mode="overwrite")',
+ '# Four numeric coordinates, matching each stored vector length.',
+ 'query_vector = '+JSON.stringify(vector),
+ '# Cosine distance is 1 - cosine similarity; smaller means closer.',
+ 'results = (',
+ '    table.search(query_vector)',
+ '    .distance_type("cosine")',
+ ...(filter?[filter]:[]),
+ '    .limit('+limit+')',
+ '    .to_list()',
+ ')',
+ '# Each result is a dictionary; _distance is the computed cosine distance.',
+ 'for item in results:',
+ '    print(item["id"], item["title"], item["_distance"])'
+ ].join("\n");
+}
+function run(){
+ try{
+  const vector=parseVector(queryInput.value),cat=category.value,lim=Number(count.value);
+  const dataset=records.concat(custom);
+  const ranked=dataset.filter(r=>cat==="all"||r.category===cat)
+   .map(r=>({record:r,score:cosine(vector,r.vector)}))
+   .sort((a,b)=>b.score-a.score||a.record.id.localeCompare(b.record.id)).slice(0,lim);
+  results.replaceChildren(...ranked.map((r,i)=>createResult(r.record,r.score,i+1)));
+  if(!ranked.length){const p=document.createElement("p");p.textContent="No records match this category. Try All categories or add a document.";results.append(p)}
+  summary.textContent=ranked.length+" ranked of "+dataset.length+" records · "+(cat==="all"?"all categories":cat+" only")+" · calculated cosine similarity";
+  status.textContent="COMPLETE";error.textContent="";code.textContent=pythonCode(vector,cat,lim);
+  document.querySelectorAll("[data-scenario]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.scenario===intent.value && queryInput.value===defaults[intent.value].join(", "))));
+ }catch(e){status.textContent="INVALID INPUT";error.textContent=e.message;results.replaceChildren();summary.textContent="Fix the query embedding to calculate results."}
+}
 form.addEventListener("submit",event=>{event.preventDefault();run()});
-document.querySelectorAll("[data-scenario]").forEach(btn=>btn.addEventListener("click",()=>{intent.value=btn.dataset.scenario;run()}));
-intent.addEventListener("change",run);category.addEventListener("change",run);count.addEventListener("change",run);
-document.getElementById("copy-code").addEventListener("click",async()=>{const btn=document.getElementById("copy-code");try{await navigator.clipboard.writeText(code.textContent);btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy code",1600)}catch{btn.textContent="Select and copy the code";setTimeout(()=>btn.textContent="Copy code",2200)}});
+document.querySelectorAll("[data-scenario]").forEach(btn=>btn.addEventListener("click",()=>{intent.value=btn.dataset.scenario;queryInput.value=defaults[intent.value].map(x=>x.toFixed(2)).join(", ");run()}));
+intent.addEventListener("change",()=>{queryInput.value=defaults[intent.value].map(x=>x.toFixed(2)).join(", ");run()});
+category.addEventListener("change",run);count.addEventListener("change",run);
+queryInput.addEventListener("input",()=>{status.textContent="EDITED — RUN TO UPDATE";error.textContent=""});
+document.getElementById("add-document").addEventListener("click",()=>{
+ try{
+  const title=customTitle.value.trim(),vector=parseVector(customVector.value);
+  if(!title)throw new Error("Enter a document title before adding a document.");
+  const id="custom-"+String(custom.length+1).padStart(2,"0");
+  const cat=category.value==="all"?"python":category.value;
+  custom.push({id,title,vector,category:cat,summary:"User-added record with a four-dimensional embedding."});
+  datasetStatus.textContent=custom.length+" custom document(s) added; "+(records.length+custom.length)+" total.";
+  customTitle.value="";customVector.value="";run();
+ }catch(e){datasetStatus.textContent=e.message}
+});
+document.getElementById("reset-documents").addEventListener("click",()=>{custom=[];datasetStatus.textContent="8 sample records loaded.";run()});
+document.getElementById("copy-code").addEventListener("click",async()=>{const btn=document.getElementById("copy-code");try{await navigator.clipboard.writeText(code.textContent);btn.textContent="Copied ✓"}catch{btn.textContent="Select and copy code"}setTimeout(()=>btn.textContent="Copy code",1700)});
 run();
