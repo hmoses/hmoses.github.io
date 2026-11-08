@@ -57,21 +57,21 @@
   }
   function documentIntent(raw){
     const q=String(raw||"").toLowerCase();
-    const navigation=/\\b(where|find|view|show|open|access|link|url|website|page|read|see|navigate|404|broken|correct|documentation|docs|wiki|github)\\b/.test(q);
-    const docs=/\\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404)\\b/.test(q);
-    const location=/\\b(where|find|view|show|open|access|link|url|page|read|see|navigate|404|broken|correct)\\b/.test(q);
+    const navigation=/\b(where|find|view|show|open|access|link|url|website|page|read|see|navigate|404|broken|correct|documentation|docs|wiki|github)\b/.test(q);
+    const docs=/\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404)\b/.test(q);
+    const location=/\b(where|find|view|show|open|access|link|url|page|read|see|navigate|404|broken|correct)\b/.test(q);
     if(!navigation || !(docs||location))return null;
-    const selected=/\\b(architect|system design|diagram)\\b/.test(q)?"architecture":
-      /\\b(agent|mcp|coding assistant)\\b/.test(q)?"agents":
-      /\\b(source|repository|github|file|code on github)\\b/.test(q) && !docs?"source":
-      /\\b(simulat|interactive|sandbox|explorer)\\b/.test(q) && !docs?"lab":"docs";
+    const selected=/\b(architect|system design|diagram)\b/.test(q)?"architecture":
+      /\b(agent|mcp|coding assistant)\b/.test(q)?"agents":
+      /\b(source|repository|github|file|code on github)\b/.test(q) && !docs?"source":
+      /\b(simulat|interactive|sandbox|explorer)\b/.test(q) && !docs?"lab":"docs";
     const item=PROJECT_LINKS.find(x=>x.kind===selected);
     return {text:"The "+item.label.toLowerCase()+" for this project is here: "+item.url+" . This is the real LanceDB Developer Lab under hmoses/hmoses.github.io, not a jupyterlab-samples repository or GitHub wiki.",sources:["Verified project navigation"],grounded:true,kinds:selected==="docs"?["docs","architecture","agents","source"]:[selected,"docs"]};
   }
   function rejectInventedLinks(text){
-    const urls=String(text||"").match(/https?:\\/\\/[^\\s)\\]<>]+/gi)||[];
+    const urls=String(text||"").match(/https?:\/\/[^\s)\]<>]+/gi)||[];
     if(urls.some(url=>!safeURL(url.replace(/[.,;]+$/,""))))return true;
-    return /jupyterlab-samples|lancedb-lab\\/wiki|github\\.com\\/[^\\s]+\\/wiki/i.test(text);
+    return /jupyterlab-samples|lancedb-lab\/wiki|github\.com\/[^\s]+\/wiki/i.test(text);
   }
   const SR=window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition=null, requestId=0, wasPlaying=false, replyUtterance=null, localModel=null;
