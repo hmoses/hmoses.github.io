@@ -208,3 +208,12 @@ a,button,select{touch-action:manipulation}
 #vector-error:not(:empty){display:block;color:#ffb2b2;margin-top:6px}
 #dataset-status{display:block;margin-top:10px}
 #add-document,#reset-documents{margin:5px 8px 4px 0}
+
+/* Accessible dark-theme syntax colors for executable code examples.
+   Python comments receive distinct green/teal highlighting. */
+pre code.syntax-highlighted .syn-comment{color:#87d7aa;font-style:italic}
+pre code.syntax-highlighted .syn-keyword{color:#d9a8ff;font-weight:650}
+pre code.syntax-highlighted .syn-builtin{color:#82ceff}
+pre code.syntax-highlighted .syn-string{color:#ffc98a}
+pre code.syntax-highlighted .syn-number{color:#a9e4f1}
+pre code.syntax-highlighted{white-space:pre}
