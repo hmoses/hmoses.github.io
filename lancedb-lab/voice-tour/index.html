@@ -138,10 +138,10 @@
     <div id="qa-dialog" class="qa-dialog" hidden>
 <section class="qa-panel" role="dialog" aria-modal="false" aria-label="LanceDB tutor chat" aria-labelledby="qa-heading">
             <div class="qa-heading"><div><span class="eyebrow">LANCEDB DEVELOPER LAB</span><h2 id="qa-heading">Ask your AI tutor</h2></div><button id="qa-close" class="qa-close" type="button" aria-label="Minimize tutor">×</button></div><div id="qa-mode" class="qa-mode">Checking available answer modes</div>
-            <p class="qa-intro">Ask questions while you scroll and explore. I’ll use the lessons and code examples to help.</p><div id="qa-history" class="qa-history" role="log" aria-live="polite" aria-relevant="additions text"><p class="qa-welcome">Hi! 👋 Ask me what any Python line means, how cosine similarity works, or why the simulation differs from LanceDB.</p></div>
+            <p class="qa-intro">Ask what, where, why, how, when, or what if. I’ll use the current chapter, all eight lessons, and linked code guides.</p><div id="qa-history" class="qa-history" role="log" aria-live="polite" aria-relevant="additions text"><p class="qa-welcome">Hi! 👋 I know the eight chapters, code walkthroughs, architecture, and AI-agent guide. Ask “How does this work?”, “Where is that code?”, or “What if it fails?” You can ask follow-ups too.</p></div>
             <form id="qa-form" class="qa-form">
               <label for="qa-question" class="sr-only">Type your question</label>
-              <div class="qa-input-row"><input id="qa-question" type="text" minlength="3" maxlength="420" required autocomplete="off" placeholder="Ask a question about this page…" aria-describedby="qa-note"><button type="button" id="qa-mic" class="btn alt" aria-label="Speak your question">🎙</button><button type="submit" id="qa-ask" class="btn">Send</button></div>
+              <div class="qa-input-row"><input id="qa-question" type="text" minlength="3" maxlength="420" required autocomplete="off" placeholder="What, why, how, where, when, what if…" aria-describedby="qa-note"><button type="button" id="qa-mic" class="btn alt" aria-label="Speak your question">🎙</button><button type="submit" id="qa-ask" class="btn">Send</button></div>
               <p class="qa-note" id="qa-note">Microphone recognition depends on your browser and may use its speech-recognition service. Typing always works. Answers stay grounded in tutorial material, not live LanceDB results.</p>
             </form>
             <div id="qa-status" role="status" aria-live="polite" class="qa-status">Ready for your question.</div>
@@ -154,6 +154,6 @@
     </div>
   </aside>
   <script src="../assets/voice-tour.js?v=voice-20261107" defer></script>
-  <script src="../assets/voice-qa.js?v=floating-20261108" defer></script>
+  <script src="../assets/voice-qa.js?v=chapter-context-20261108" defer></script>
 </body>
 </html>
