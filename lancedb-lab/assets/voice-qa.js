@@ -61,7 +61,7 @@
     const docs=/\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404)\b/.test(q);
     const location=/\b(where|find|view|show|open|access|link|url|page|read|see|navigate|404|broken|correct)\b/.test(q);
     if(!navigation || !(docs||location))return null;
-    const selected=/\b(architect|system design|diagram)\b/.test(q)?"architecture":
+    const selected=/\b(architecture|architectural|architect|system design|diagram)\b/.test(q)?"architecture":
       /\b(agent|mcp|coding assistant)\b/.test(q)?"agents":
       /\b(source|repository|github|file|code on github)\b/.test(q) && !docs?"source":
       /\b(simulat|interactive|sandbox|explorer)\b/.test(q) && !docs?"lab":"docs";
