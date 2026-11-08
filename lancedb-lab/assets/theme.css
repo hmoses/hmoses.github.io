@@ -217,3 +217,15 @@ pre code.syntax-highlighted .syn-builtin{color:#82ceff}
 pre code.syntax-highlighted .syn-string{color:#ffc98a}
 pre code.syntax-highlighted .syn-number{color:#a9e4f1}
 pre code.syntax-highlighted{white-space:pre}
+
+/* Progressive source walkthroughs accompany each executable example. */
+.line-walkthrough{margin:16px 0 28px;padding:18px;border:1px solid var(--stroke);border-radius:14px;background:rgba(255,255,255,.028)}
+.line-walkthrough h4{font-size:17px;line-height:1.4;margin:0 0 8px;color:#fff}
+.line-walkthrough .walkthrough-intro{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 14px}
+.line-walkthrough ol{list-style:none;counter-reset:lab-lines;margin:0;padding:0;display:grid;gap:0}
+.line-walkthrough li{counter-increment:lab-lines;display:grid;grid-template-columns:minmax(0,44%) minmax(0,1fr);gap:14px;padding:12px 0 12px 37px;position:relative;border-top:1px solid var(--stroke);font-size:13px;line-height:1.55}
+.line-walkthrough li::before{content:counter(lab-lines,decimal-leading-zero);position:absolute;left:0;top:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;color:#9db2cc}
+.line-walkthrough .line-code{min-width:0;overflow-wrap:anywhere;color:#d6b9ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.line-walkthrough .line-code code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+.line-walkthrough .line-meaning{min-width:0;color:#e2dce8}
+@media(max-width:700px){.line-walkthrough{padding:14px}.line-walkthrough li{grid-template-columns:minmax(0,1fr);gap:6px;padding-left:30px}}
