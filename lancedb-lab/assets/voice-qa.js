@@ -101,11 +101,13 @@
   const resolveQuestion=(q)=>{
     const clean=q.trim(), norm=normalize(clean);
     const short=tokens(clean).length<=3;
+    const general=/^(what (is|does|about) (this|it|that)|how (does|do) (this|it|that) work|why (is|does) (this|it|that)|explain (this|it|that)|where (is|do) (this|it|that)|what if (it|this|that))/i.test(clean);
     const reference=/^(and |but |so |then |what about |why |how |when |where |what if |if |can it |does it |what does that |explain that |tell me more)/i.test(clean);
     const prev=dialogue[dialogue.length-1];
     if(prev && (reference||short && /\b(it|that|this|those|they|the same|again)\b/i.test(clean))){
       return {query:prev.question+" "+clean,chapter:prev.chapter,followup:true};
     }
+    if(general)return {query:chapters[index].title+" "+clean,chapter:index,followup:false};
     return {query:clean,chapter:index,followup:false};
   };
   function chooseChapter(q,matches,fallbackChapter){
@@ -225,7 +227,7 @@
       await loadDocumentation();
       if(req!==requestId)return;
       const matches=search(resolved.query);
-      const relatedChapter=chooseChapter(resolved.query,matches,resolved.chapter);
+      const relatedChapter=resolved.followup?resolved.chapter:chooseChapter(resolved.query,matches,resolved.chapter);
       const aiAnswer=await answerWithModel(resolved.query,matches);
       if(req!==requestId)return;
       const result=aiAnswer||fallback(clean,matches,relatedChapter);
