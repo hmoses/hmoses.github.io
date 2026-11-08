@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#100f16">
 <meta name="description" content="Developer documentation for an independent LanceDB Embedded lab: install, ingest, vector query, metadata filter, test and troubleshoot.">
 <link rel="canonical" href="https://hmoses.github.io/lancedb-lab/docs/">
-<link rel="stylesheet" href="../assets/theme.css?v=interactive-20261108">
+<link rel="stylesheet" href="../assets/theme.css?v=syntax-20261108">
 <title>Developer documentation | LanceDB Lab</title></head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="sitehead"><div class="shell nav"><a class="brand" href="../"><span class="symbol" aria-hidden="true">✦</span><span>LanceDB <span style="color:var(--pink)">/ Developer Lab</span></span></a><nav class="navlinks" aria-label="Primary"><a href="../">Interactive lab</a><a aria-current="page" href="./">Docs</a><a href="architecture.html">Architecture</a><a href="agent-readiness.html">AI agents</a><a class="nav-cta" href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">Source ↗</a></nav><details class="mobile-nav"><summary>Menu <span aria-hidden="true">☰</span></summary><nav class="mobile-menu" aria-label="Mobile navigation"><a href="../">Interactive lab</a><a aria-current="page" href="./">Developer documentation</a><a href="architecture.html">Architecture</a><a href="agent-readiness.html">AI-agent guide</a><a href="../../lancedb-documentation-engineering/">LanceDB portfolio</a></nav></details></div></header>
@@ -20,17 +20,17 @@
 <h2 id="requirements">1. Requirements</h2>
 <ul><li>Python 3.11 or newer and pip.</li><li>A local working directory with the <a href="https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab">lab source files</a>.</li><li>Network access for initial Python package installation; subsequent local queries need no external service.</li></ul>
 <p>From the <code>lancedb-lab</code> folder, create an isolated environment and install dependencies:</p>
-<div class="codewrap"><div class="codehead">Terminal / setup</div><pre><code>python3 -m venv .venv
+<div class="codewrap"><div class="codehead">Terminal / setup</div><pre><code data-language="shell">python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt</code></pre><details class="code-explainer"><summary>Understand this example: Set up your Python environment</summary><p><code>python3 -m venv .venv</code> creates an isolated Python environment so lab dependencies do not alter system packages. <code>source .venv/bin/activate</code> activates it on macOS/Linux. <code>python -m pip install -r requirements.txt</code> installs the packages listed in the project. On Windows, activate with <code>.venv\Scripts\activate</code>.</p></details></div>
 <p>Windows PowerShell users can replace the activation command with <code>.venv\Scripts\Activate.ps1</code>. If a Python wheel is unavailable for your platform, use a supported CPython version and architecture.</p>
 
 <h2 id="quickstart">2. Quickstart</h2>
 <h3>Run your first query</h3>
-<div class="codewrap"><div class="codehead">Terminal / real LanceDB</div><pre><code>python example.py --intent vector --limit 3</code></pre><details class="code-explainer"><summary>Understand this example: Execute the sample</summary><p><code>python example.py</code> starts the included runnable Python program. <code>--intent vector</code> selects the predefined query embedding for vector search, and <code>--limit 3</code> requests at most three nearest records. The terminal prints IDs, titles, categories, and SDK-computed distances.</p></details></div>
+<div class="codewrap"><div class="codehead">Terminal / real LanceDB</div><pre><code data-language="shell">python example.py --intent vector --limit 3</code></pre><details class="code-explainer"><summary>Understand this example: Execute the sample</summary><p><code>python example.py</code> starts the included runnable Python program. <code>--intent vector</code> selects the predefined query embedding for vector search, and <code>--limit 3</code> requests at most three nearest records. The terminal prints IDs, titles, categories, and SDK-computed distances.</p></details></div>
 <p>Expected behavior: the command creates a temporary local database, inserts eight predefined records, runs cosine vector search, prints up to three records ordered by ascending cosine distance, and automatically deletes the temporary directory afterward. The precise distance values are determined by the embedded SDK.</p>
 <h3>Inspect the core pattern</h3>
-<div class="codewrap"><div class="codehead">Python / connect → create → query</div><pre><code>import lancedb
+<div class="codewrap"><div class="codehead">Python / connect → create → query</div><pre><code data-language="python">import lancedb
 from example import RECORDS
 
 db = lancedb.connect("./sample.lance")
@@ -52,7 +52,7 @@ for item in matches:
 
 <h2 id="queries">3. Query with filters</h2>
 <p>Metadata filters restrict which rows are eligible before the similarity search. You can experiment with the same behavior in the <a href="../#explorer">interactive result explorer</a>.</p>
-<div class="codewrap"><div class="codehead">Python / vector + metadata predicate</div><pre><code>results = (
+<div class="codewrap"><div class="codehead">Python / vector + metadata predicate</div><pre><code data-language="python">results = (
     table.search([0.16, 0.90, 0.19, 0.55])
     .distance_type("cosine")
     .where("category = 'search'")
@@ -62,7 +62,7 @@ for item in matches:
 assert all(row["category"] == "search" for row in results)</code></pre><details class="code-explainer"><summary>Understand this example: Apply a metadata filter</summary><p><code>table.search</code> creates a vector query using a four-number query embedding. <code>.where("category = 'search'")</code> filters candidate rows by metadata, so rows in other categories are excluded. <code>.limit(3)</code> returns at most three results; <code>.to_list()</code> executes the query. <code>assert all(...)</code> is a simple correctness check: it fails if a returned row has another category. This example assumes the <code>table</code> variable from the preceding snippet.</p></details></div>
 <p>The example's <a href="../example.py">search_docs()</a> function validates category names against a fixed allowlist. Do not concatenate arbitrary user input into filter expressions. For real applications, validate user-supplied fields and values and use parameterized predicates where supported by your SDK.</p>
 <p>Try these commands and compare their returned categories:</p>
-<div class="codewrap"><div class="codehead">Terminal / experiments</div><pre><code>python example.py --intent filter --category search
+<div class="codewrap"><div class="codehead">Terminal / experiments</div><pre><code data-language="shell">python example.py --intent filter --category search
 python example.py --intent agent --category agents
 python example.py --intent ingest --category python --limit 2</code></pre><details class="code-explainer"><summary>Understand this example: Compare command-line scenarios</summary><p>Each command runs <code>example.py</code> with a different query intent and category filter. <code>--intent</code> chooses a sample embedding, <code>--category</code> restricts results to the specified metadata category, and <code>--limit 2</code> returns up to two rows. These commands are reproducible comparisons, not generated text embeddings.</p></details></div>
 <table><thead><tr><th>Concept</th><th>What this lab demonstrates</th></tr></thead><tbody>
@@ -70,7 +70,7 @@ python example.py --intent ingest --category python --limit 2</code></pre><detai
 
 <h2 id="validation">4. Automated validation</h2>
 <p>The test suite checks table construction, row count, deterministic search, category filtering, and invalid input. Tests run against a local temporary LanceDB database.</p>
-<div class="codewrap"><div class="codehead">Terminal / pytest</div><pre><code>python -m pytest -q tests</code></pre><details class="code-explainer"><summary>Understand this example: Run automated tests</summary><p><code>python -m pytest -q tests</code> invokes pytest with the Python interpreter in your active environment. <code>tests</code> is the directory of automated checks, while <code>-q</code> shows concise test output. A passing run means the currently installed dependencies satisfy the assertions; failures indicate a change to investigate.</p></details></div>
+<div class="codewrap"><div class="codehead">Terminal / pytest</div><pre><code data-language="shell">python -m pytest -q tests</code></pre><details class="code-explainer"><summary>Understand this example: Run automated tests</summary><p><code>python -m pytest -q tests</code> invokes pytest with the Python interpreter in your active environment. <code>tests</code> is the directory of automated checks, while <code>-q</code> shows concise test output. A passing run means the currently installed dependencies satisfy the assertions; failures indicate a change to investigate.</p></details></div>
 <p>Review the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/lancedb-lab/tests/test_example.py">test source</a> and the <a href="https://github.com/hmoses/hmoses.github.io/blob/main/.github/workflows/lancedb-lab-ci.yml">GitHub Actions workflow</a>. Workflow results should be checked in the repository's Actions tab; the mere presence of a workflow file does not prove it has passed.</p>
 <h3>Documentation quality contract</h3>
 <ul><li><strong>Runnable:</strong> every code path has an explicitly declared dependency and no hidden API key.</li><li><strong>Repeatable:</strong> sample inputs and expected output properties are stable.</li><li><strong>Clear boundaries:</strong> browser simulation and real LanceDB executions are distinguished.</li><li><strong>Change detection:</strong> tests should fail when an SDK change breaks documented behavior.</li><li><strong>Agent-readable:</strong> prerequisites, commands, inputs, outputs, and verification steps are explicit.</li></ul>
@@ -89,4 +89,4 @@ python example.py --intent ingest --category python --limit 2</code></pre><detai
 <div class="buttonrow"><a class="btn" href="architecture.html">Architecture guide →</a><a class="btn alt" href="agent-readiness.html">Agent-ready instructions →</a></div>
 <p class="disclaimer" style="margin-top:37px">Prepared by Harold Moses II as an independent candidate portfolio. Not official LanceDB documentation or a company-endorsed project. API behavior should be rechecked against the installed SDK version.</p>
 </article></main>
-<footer class="footer"><div class="shell footer-inner"><span>© 2026 Harold Moses II · Independent documentation lab.</span><span><a href="../">Lab</a> · <a href="architecture.html">Architecture</a> · <a href="agent-readiness.html">AI agents</a></span></div></footer></body></html>
+<footer class="footer"><div class="shell footer-inner"><span>© 2026 Harold Moses II · Independent documentation lab.</span><span><a href="../">Lab</a> · <a href="architecture.html">Architecture</a> · <a href="agent-readiness.html">AI agents</a></span></div></footer><script src="../assets/syntax.js?v=syntax-20261108" defer></script></body></html>
