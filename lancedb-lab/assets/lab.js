@@ -74,7 +74,7 @@ function run(){
   results.replaceChildren(...ranked.map((r,i)=>createResult(r.record,r.score,i+1)));
   if(!ranked.length){const p=document.createElement("p");p.textContent="No records match this category. Try All categories or add a document.";results.append(p)}
   summary.textContent=ranked.length+" ranked of "+dataset.length+" records · "+(cat==="all"?"all categories":cat+" only")+" · calculated cosine similarity";
-  status.textContent="COMPLETE";error.textContent="";code.textContent=pythonCode(vector,cat,lim);
+  status.textContent="COMPLETE";error.textContent="";code.textContent=pythonCode(vector,cat,lim);if(window.highlightLabCode)window.highlightLabCode(code,"python");
   document.querySelectorAll("[data-scenario]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.scenario===intent.value && queryInput.value===defaults[intent.value].join(", "))));
  }catch(e){status.textContent="INVALID INPUT";error.textContent=e.message;results.replaceChildren();summary.textContent="Fix the query embedding to calculate results."}
 }
