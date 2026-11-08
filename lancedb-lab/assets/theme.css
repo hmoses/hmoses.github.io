@@ -229,3 +229,11 @@ pre code.syntax-highlighted{white-space:pre}
 .line-walkthrough .line-code code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
 .line-walkthrough .line-meaning{min-width:0;color:#e2dce8}
 @media(max-width:700px){.line-walkthrough{padding:14px}.line-walkthrough li{grid-template-columns:minmax(0,1fr);gap:6px;padding-left:30px}}
+
+/* Verified docs links: visible without using the AI tutor. */
+.lab-doc-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:18px 20px;margin:0 0 28px;border:1px solid var(--stroke);border-radius:14px;background:#241d2b}
+.lab-doc-bar strong{display:block;color:#fff;font-size:16px}
+.lab-doc-bar p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+.lab-doc-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lab-doc-actions .btn{min-height:44px;white-space:normal;text-align:center}
+@media(max-width:700px){.lab-doc-bar{padding:16px}.lab-doc-actions{width:100%;display:grid;grid-template-columns:1fr}.lab-doc-actions .btn{width:100%}}
