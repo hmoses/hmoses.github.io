@@ -269,3 +269,11 @@
 .qa-dialog .qa-input-row{grid-template-columns:minmax(0,1fr) 43px 55px}
 }
 @media(max-height:600px){.qa-dialog{height:calc(100dvh - 22px)}.qa-dialog .qa-intro{display:none}.qa-dialog .qa-note{display:none}}
+
+/* Verified, actionable navigation stays accessible while chatting. */
+.qa-dialog .qa-quicklinks{display:flex;gap:7px;flex-wrap:wrap;padding:9px 13px;border-bottom:1px solid #52405f;background:#221a2c}
+.qa-dialog .qa-quicklinks a{font-size:11px;line-height:1.35;color:#ffdcf4;text-decoration:none;border:1px solid #8e719a;border-radius:9px;padding:7px 9px;background:#35243f}
+.qa-dialog .qa-quicklinks a:hover,.qa-dialog .qa-quicklinks a:focus-visible{background:#51365b;color:#fff;text-decoration:underline}
+.qa-dialog .qa-answer-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.qa-dialog .qa-doc-link{font-size:11px;line-height:1.4;color:#ceebff;padding:6px 9px;border:1px solid #688c9f;background:#243f49;border-radius:8px;text-decoration:none}
+.qa-dialog .qa-doc-link:hover,.qa-dialog .qa-doc-link:focus-visible{text-decoration:underline}
