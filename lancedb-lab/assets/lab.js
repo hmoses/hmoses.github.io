@@ -38,7 +38,7 @@ function createResult(record,score,rank){
 function pythonCode(vector,selected,limit){
  const extra=custom.length?custom.map(r=>({id:r.id,title:r.title,category:r.category,text:r.summary,vector:r.vector})):[];
  const rows=JSON.stringify(extra,null,2).replace(/\bnull\b/g,"None");
- const filter=selected==="all"?"":'    .where("category = \\''+selected+'\\'")';
+ const filter=selected==="all"?"":`    .where("category = '${selected}'")`;
  return [
  "import lancedb",
  "from example import RECORDS",
