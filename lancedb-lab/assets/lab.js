@@ -64,6 +64,54 @@ function pythonCode(vector,selected,limit){
  '    print(item["id"], item["title"], item["_distance"])'
  ].join("\n");
 }
+function describePythonLine(line){
+ const trimmed=line.trim();
+ if(!trimmed)return "Visual separator between stages of the Python program.";
+ if(trimmed.startsWith("#"))return "Comment: "+trimmed.slice(1).trim()+" This annotation explains the following operation; Python does not execute it.";
+ if(trimmed==="import lancedb")return "Loads the LanceDB Python SDK so the program can create and query a local database.";
+ if(trimmed==="from example import RECORDS")return "Imports the demonstration records from example.py; every record includes a vector and metadata.";
+ if(trimmed.startsWith('db = lancedb.connect('))return "Opens or creates an embedded local LanceDB database at the supplied folder path.";
+ if(trimmed==="data = RECORDS + []")return "Copies the built-in sample records without adding any user-defined documents.";
+ if(trimmed.startsWith("data = RECORDS +"))return "Starts a combined dataset containing the built-in rows plus the documents you added in the browser.";
+ if(trimmed.startsWith("table = db.create_table("))return "Creates the doc_chunks table from the combined dataset; overwrite replaces its previous contents.";
+ if(trimmed.startsWith("query_vector ="))return "Stores the exact four numeric coordinates you entered. Query and document embeddings must have matching dimensions.";
+ if(trimmed==="results = (")return "Begins a multi-line query expression. Its eventual list of matching rows is assigned to results.";
+ if(trimmed==="table.search(query_vector)")return "Builds a nearest-neighbor search against the table using your query vector.";
+ if(trimmed==='.distance_type("cosine")')return "Uses cosine distance to rank records. Lower _distance indicates a closer match; similarity is one minus distance.";
+ if(trimmed.startsWith(".where("))return "Applies the selected metadata category as a filter, excluding other categories from the returned matches.";
+ if(trimmed.startsWith(".limit("))return "Limits how many of the nearest matches can be returned.";
+ if(trimmed===".to_list()")return "Executes the query and converts the retrieved rows into a Python list of dictionaries.";
+ if(trimmed===")")return "Closes the multi-line query expression.";
+ if(trimmed==="for item in results:")return "Starts a loop, processing each returned match once.";
+ if(trimmed.startsWith("print("))return "Prints each matching record's ID, title, and computed cosine distance.";
+ if(trimmed==="[")return "Opens the list of extra user-created records to add to the fixture.";
+ if(trimmed==="]")return "Closes the list of extra records.";
+ if(trimmed==="{")return "Begins a dictionary describing a custom record.";
+ if(trimmed==="},"||trimmed==="}")return "Ends this custom record dictionary.";
+ if(/^"(id|title|category|text|vector)"\s*:/.test(trimmed))return "Specifies a field in a custom record; its ID, title, category, text, and 4D vector are stored in LanceDB.";
+ if(/^[-\d.,\s\[\]]+$/.test(trimmed))return "Contains numeric embedding coordinates for a custom record.";
+ return "Part of the additional custom-record data generated from the documents you entered in the simulator.";
+}
+function renderLineWalkthrough(source){
+ const target=document.getElementById("generated-line-notes");
+ if(!target)return;
+ const lines=source.split("\\n");
+ const fragment=document.createDocumentFragment();
+ for(let i=0;i<lines.length;i++){
+  const li=document.createElement("li");
+  const snippet=document.createElement("span");
+  snippet.className="line-code";
+  const lineCode=document.createElement("code");
+  lineCode.textContent=lines[i].trim()||"(blank line)";
+  snippet.append(lineCode);
+  const explanation=document.createElement("span");
+  explanation.className="line-meaning";
+  explanation.textContent=describePythonLine(lines[i]);
+  li.append(snippet,explanation);
+  fragment.append(li);
+ }
+ target.replaceChildren(fragment);
+}
 function run(){
  try{
   const vector=parseVector(queryInput.value),cat=category.value,lim=Number(count.value);
@@ -74,7 +122,7 @@ function run(){
   results.replaceChildren(...ranked.map((r,i)=>createResult(r.record,r.score,i+1)));
   if(!ranked.length){const p=document.createElement("p");p.textContent="No records match this category. Try All categories or add a document.";results.append(p)}
   summary.textContent=ranked.length+" ranked of "+dataset.length+" records · "+(cat==="all"?"all categories":cat+" only")+" · calculated cosine similarity";
-  status.textContent="COMPLETE";error.textContent="";code.textContent=pythonCode(vector,cat,lim);if(window.highlightLabCode)window.highlightLabCode(code,"python");
+  status.textContent="COMPLETE";error.textContent="";const generated=pythonCode(vector,cat,lim);code.textContent=generated;if(window.highlightLabCode)window.highlightLabCode(code,"python");renderLineWalkthrough(generated);
   document.querySelectorAll("[data-scenario]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.scenario===intent.value && queryInput.value===defaults[intent.value].join(", "))));
  }catch(e){status.textContent="INVALID INPUT";error.textContent=e.message;results.replaceChildren();summary.textContent="Fix the query embedding to calculate results."}
 }
