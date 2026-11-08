@@ -14,7 +14,7 @@ const chapters = [
     paragraphs:[
       "Okay, here’s the big picture. Imagine you have hundreds of help articles, code examples, and troubleshooting guides. A developer asks a question, but they don't know the exact words used in your documentation. Ordinary keyword search might miss the answer.",
       "Vector search is one way to bridge that gap. It represents information as lists of numbers, called vectors. In a real application, an embedding model turns text or images into those vectors. LanceDB stores and searches the vectors alongside useful fields, like the document title or category.",
-      "Your project has two parts. The website is an interactive teaching tool that simulates vector similarity. Separately, the Python file uses the actual LanceDB library to create a local database and run queries. That distinction matters, and it's a strength to explain it clearly.",
+      "Your project has two parts. The website is an interactive teaching tool that computes cosine similarity over editable numeric vectors and a small local dataset. Separately, the Python file uses the actual LanceDB library to create a local database and run queries. That distinction matters, and it's a strength to explain it clearly.",
       "The point of the project isn't that you invented vector search. It's that you made a technical workflow understandable, reproducible, and connected to documentation."
     ],
     action:{url:"../",label:"Open the interactive lab",hint:"Look at the heading, then the example Python terminal panel. Don't worry about the syntax yet."},
@@ -29,13 +29,13 @@ const chapters = [
       "Open the lab's Result Explorer. Leave Search intent on Vector search fundamentals, Metadata category on All categories, and Maximum results on Top 3. Press Run simulation.",
       "You should see three ranked sample documents. The first is usually Run a nearest-neighbor query. Why? Because its four-number vector points in a similar direction to the four-number query vector.",
       "Here's an important distinction. The percentages in the browser are cosine similarity scores multiplied by one hundred. They are not confidence levels, accuracy percentages, or a guarantee that the answer is correct.",
-      "In this teaching example, there are eight records and the vectors are hand-written. They weren't produced by an embedding model. For a production system, you would normally create embeddings from real content, store the relevant metadata, and evaluate how well the retrieved results answer actual questions.",
+      "In this teaching example, the initial eight records use hand-written vectors, and you can add more records or edit the query vector. Those numeric embeddings are illustrative; they weren't produced by an embedding model. For a production system, you would normally create embeddings from real content, store the relevant metadata, and evaluate how well the retrieved results answer actual questions.",
       "So when you explain this step, say: I built a small, deterministic example so developers can see why one result appears above another."
     ],
     action:{url:"../#explorer",label:"Run the example",hint:"Select Vector search fundamentals, All categories, Top 3. Compare the result titles and scores."},
     takeaway:"Vector similarity ranks records; a high similarity number isn't proof of a correct answer.",
     question:"Are those browser similarity percentages an AI model's confidence?",
-    answer:"No. They are cosine similarity calculations on fixed sample vectors, displayed as percentages for readability."
+    answer:"No. They are cosine similarity calculations on illustrative sample vectors, displayed as percentages for readability. You can modify the query and add new records."
   },
   {
     id:"filters", title:"Add metadata filtering", time:"1–2 min",
@@ -56,10 +56,10 @@ const chapters = [
     id:"real-vs-simulated", title:"What is actually running?", time:"1 min",
     subtitle:"Be precise about the web demo versus the database.",
     paragraphs:[
-      "Here's a detail that will make you sound credible in a technical interview. The live GitHub Pages website does not run the LanceDB engine. It runs JavaScript in the browser and demonstrates the ranking math using a tiny fixed dataset.",
+      "Here's a detail that will make you sound credible in a technical interview. The live GitHub Pages website does not run the LanceDB engine. It runs JavaScript in the browser and demonstrates the ranking math using eight starting records plus any custom records you add.",
       "The real database-backed workflow is in example dot py, in your GitHub source. That Python example connects to LanceDB Embedded, creates a local table, inserts eight sample records, runs cosine vector search, and optionally filters by category.",
       "GitHub Pages can host the interactive interface and documentation because they're static files. But it isn't executing Python on a server. To run the actual Python example, a developer clones or downloads the project, installs the requirements, and runs the command locally.",
-      "This separation is deliberate: the browser makes the concept easy to explore, while the Python code shows the real API calls. You're demonstrating both learning design and technical implementation."
+      "This separation is deliberate: the browser makes the numeric vector calculations easy to explore, while the Python code shows the real API calls. You're demonstrating both learning design and technical implementation."
     ],
     action:{url:"https://github.com/hmoses/hmoses.github.io/blob/main/lancedb-lab/example.py",label:"Inspect the real Python file",hint:"Find create_table and search_docs. Those functions are the database-backed implementation."},
     takeaway:"Browser: simulation. Python: actual LanceDB Embedded. GitHub Pages hosts the interface, not a Python backend.",
