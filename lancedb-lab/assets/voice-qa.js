@@ -37,7 +37,7 @@
   const SR=window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition=null, requestId=0, wasPlaying=false, replyUtterance=null, localModel=null;
   const stopwords=new Set("a an and are as at be but by can could did do does for from had has have how i in into is it its me my of on or our should so than that the their them there these this those to was we what when where which who why will with would you your tell explain please about does mean means difference between code line example here again".split(" "));
-  const normalize=x=>String(x||"").toLowerCase().replace(/\bcosine\b/g,"cosine").replace(/[^a-z0-9_]+/g," ").trim();
+  const normalize=x=>String(x||"").toLowerCase().replace(/\bdims?\b/g,"dimensions").replace(/\bembeddings?\b/g,"embedding").replace(/\bfilters?\b/g,"filter").replace(/\bvectors?\b/g,"vector").replace(/\bdb\b/g,"database").replace(/\bpy\b/g,"python").replace(/[^a-z0-9_]+/g," ").trim();
   const tokens=x=>normalize(x).split(/\s+/).filter(x=>x.length>2&&!stopwords.has(x));
   const candidates=[];
   chapters.forEach((chapter,chapterIndex)=>{
