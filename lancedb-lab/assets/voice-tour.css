@@ -204,3 +204,26 @@
 .interview-fast blockquote{font-size:15px;padding-left:14px}
 }
 @media(prefers-reduced-motion:reduce){.tour-progress-fill{transition:none}}
+
+/* Interactive lesson-grounded spoken Q&A */
+.qa-panel{padding:24px 26px;background:linear-gradient(145deg,#261d2d,#191d28);border:1px solid #77618b;border-radius:15px;min-width:0}
+.qa-heading{display:flex;justify-content:space-between;gap:14px;align-items:start;flex-wrap:wrap}
+.qa-heading h2{font-size:clamp(22px,2.7vw,28px);line-height:1.25;letter-spacing:-.035em;margin:8px 0}
+.qa-mode{font-size:11px;font-weight:700;border:1px solid #705b80;border-radius:99px;padding:8px 11px;color:#e2cce8;line-height:1.4}
+.qa-intro,.qa-note{font-size:13px;line-height:1.7;color:var(--muted)}
+.qa-form label{display:block;font-size:12px;color:#efe4f3;font-weight:700;margin:14px 0 7px}
+.qa-input-row{display:flex;flex-wrap:wrap;gap:9px}
+.qa-input-row input{flex:1 1 270px;min-width:0;min-height:47px;border:1px solid #77638a;background:#16131f;color:#fff;border-radius:10px;padding:11px 13px;font-size:15px}
+.qa-input-row input:focus-visible{outline:2px solid #d6b0fc;outline-offset:2px}
+.qa-input-row .btn{min-height:47px;white-space:nowrap}
+.qa-input-row .btn:disabled{opacity:.5;cursor:not-allowed}
+.qa-note{font-size:11px;margin:9px 0}
+.qa-status{font-size:12px;color:#bee4dd;margin-top:13px;min-height:20px}
+.qa-response{margin-top:15px;padding:17px 18px;border:1px solid #59717a;border-radius:12px;background:#19272e}
+.qa-response[hidden]{display:none}
+.qa-response-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.qa-response-top strong{color:#f4fafb;font-size:14px}
+.qa-response #qa-answer{font-size:15px;line-height:1.75;color:#eef9fa;margin:14px 0}
+.qa-source{color:#b4c9d2;font-size:12px;line-height:1.5}
+.qa-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+@media(max-width:700px){.qa-panel{padding:18px 16px}.qa-input-row{display:grid;grid-template-columns:1fr 1fr}.qa-input-row input{grid-column:1/-1;width:100%}.qa-input-row .btn{width:100%;font-size:13px}}
