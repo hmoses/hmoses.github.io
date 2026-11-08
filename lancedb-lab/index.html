@@ -8,7 +8,7 @@
 <meta property="og:description" content="Interactive retrieval explorer plus executable, testable Python documentation examples.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://hmoses.github.io/lancedb-lab/">
-<link rel="stylesheet" href="./assets/theme.css?v=interactive-20261108">
+<link rel="stylesheet" href="./assets/theme.css?v=syntax-20261108">
 <title>LanceDB Developer Lab | Documentation Engineering</title>
 </head>
 <body>
@@ -61,7 +61,7 @@ results = (
 <div class="panel" aria-live="polite" aria-atomic="false">
 <div class="resulttop"><div><span class="smalllabel">Result explorer</span><div style="font-size:13px;color:var(--muted);margin-top:8px" id="summary">Ranked results appear here.</div></div><div class="status"><span class="dot"></span><span id="run-status">READY</span></div></div>
 <div class="resultlist" id="results"></div>
-<div class="codewrap"><div class="codehead"><span>Equivalent LanceDB API / Python</span><button class="btn small alt" type="button" id="copy-code">Copy code</button></div><pre><code id="generated-code"># Run a scenario to see Python code.</code></pre></div>
+<div class="codewrap"><div class="codehead"><span>Equivalent LanceDB API / Python</span><button class="btn small alt" type="button" id="copy-code">Copy code</button></div><pre><code id="generated-code" data-language="python"># Run a scenario to see Python code.</code></pre></div>
 <details class="code-explainer"><summary>Explain this generated Python code, step by step</summary><ol><li><strong>import lancedb</strong> loads the LanceDB Python SDK.</li><li><strong>RECORDS</strong> supplies example rows containing IDs, titles, categories and four-dimensional vectors.</li><li><strong>connect</strong> opens or creates a local database at the given folder path.</li><li><strong>create_table</strong> inserts the dataset; <code>mode="overwrite"</code> replaces any earlier table of that name.</li><li><strong>query_vector</strong> holds your four numeric embedding coordinates. It must match the dimensions of the stored vectors.</li><li><strong>table.search</strong> finds nearest neighbors; <strong>distance_type("cosine")</strong> chooses cosine distance. Smaller <code>_distance</code> means closer.</li><li><strong>where</strong> optionally restricts candidates by category before ranking.</li><li><strong>limit</strong> caps returned rows; <strong>to_list</strong> runs the query and returns Python dictionaries.</li><li><strong>for item in results</strong> prints each matching record and its distance. The browser displays cosine similarity instead (higher is better).</li></ol><p>To run this Python, install requirements and save <code>example.py</code> in the same directory. The generated example rebuilds a local table whenever executed.</p></details><p class="disclaimer" style="margin:13px 0 0">Displayed similarity is based on cosine similarity of illustrative 4D vectors, not a real text-embedding model. Code examples query a local LanceDB table.</p>
 </div></div></section>
 <section class="shell section" id="learn">
@@ -82,5 +82,6 @@ results = (
 <section class="shell section"><div class="callout" style="padding:27px 30px"><span class="eyebrow">Author's note</span><h2 style="font-size:26px;margin:9px 0">What this project demonstrates</h2><p style="max-width:800px;color:var(--muted);font-size:14px">I approach documentation as an executable interface to the product: learn the API, build a small reproducible implementation, make assumptions explicit, test examples, and keep the developer and AI-agent paths consistent. This is a portfolio demonstration, not official LanceDB documentation.</p><div class="buttonrow"><a class="btn alt" href="../lancedb-documentation-engineering/">See documentation engineering portfolio ↗</a><a class="btn alt" href="https://docs.lancedb.com/quickstart" target="_blank" rel="noopener noreferrer">Official LanceDB quickstart ↗</a></div></div></section>
 </main>
 <footer class="footer"><div class="shell footer-inner"><span>© 2026 Harold Moses II · Independent documentation engineering lab.</span><span>Not affiliated with or endorsed by LanceDB. Illustrative embeddings, no user data.</span></div></footer>
-<script src="./assets/lab.js?v=interactive-20261108" defer></script>
+<script src="./assets/syntax.js?v=syntax-20261108" defer></script>
+<script src="./assets/lab.js?v=syntax-20261108" defer></script>
 </body></html>
