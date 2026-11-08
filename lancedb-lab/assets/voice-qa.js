@@ -34,6 +34,45 @@
     return article;
   }
 
+  const PROJECT_LINKS=Object.freeze([
+    {label:"Developer documentation",url:"https://hmoses.github.io/lancedb-lab/docs/",kind:"docs"},
+    {label:"Architecture guide",url:"https://hmoses.github.io/lancedb-lab/docs/architecture.html",kind:"architecture"},
+    {label:"AI-agent guide",url:"https://hmoses.github.io/lancedb-lab/docs/agent-readiness.html",kind:"agents"},
+    {label:"Interactive lab",url:"https://hmoses.github.io/lancedb-lab/",kind:"lab"},
+    {label:"Actual project source",url:"https://github.com/hmoses/hmoses.github.io/tree/main/lancedb-lab",kind:"source"}
+  ]);
+  const safeURL=url=>PROJECT_LINKS.find(link=>link.url===url)||null;
+  const linksHost=el("qa-links");
+  function renderLinks(kinds){
+    if(!linksHost)return;
+    linksHost.replaceChildren();
+    kinds.forEach(kind=>{
+      const item=PROJECT_LINKS.find(link=>link.kind===kind);
+      if(!item)return;
+      const a=document.createElement("a");
+      a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+      a.textContent=item.label+" ↗";a.className="qa-doc-link";
+      linksHost.append(a);
+    });
+  }
+  function documentIntent(raw){
+    const q=String(raw||"").toLowerCase();
+    const navigation=/\\b(where|find|view|show|open|access|link|url|website|page|read|see|navigate|404|broken|correct|documentation|docs|wiki|github)\\b/.test(q);
+    const docs=/\\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404)\\b/.test(q);
+    const location=/\\b(where|find|view|show|open|access|link|url|page|read|see|navigate|404|broken|correct)\\b/.test(q);
+    if(!navigation || !(docs||location))return null;
+    const selected=/\\b(architect|system design|diagram)\\b/.test(q)?"architecture":
+      /\\b(agent|mcp|coding assistant)\\b/.test(q)?"agents":
+      /\\b(source|repository|github|file|code on github)\\b/.test(q) && !docs?"source":
+      /\\b(simulat|interactive|sandbox|explorer)\\b/.test(q) && !docs?"lab":"docs";
+    const item=PROJECT_LINKS.find(x=>x.kind===selected);
+    return {text:"The "+item.label.toLowerCase()+" for this project is here: "+item.url+" . This is the real LanceDB Developer Lab under hmoses/hmoses.github.io, not a jupyterlab-samples repository or GitHub wiki.",sources:["Verified project navigation"],grounded:true,kinds:selected==="docs"?["docs","architecture","agents","source"]:[selected,"docs"]};
+  }
+  function rejectInventedLinks(text){
+    const urls=String(text||"").match(/https?:\\/\\/[^\\s)\\]<>]+/gi)||[];
+    if(urls.some(url=>!safeURL(url.replace(/[.,;]+$/,""))))return true;
+    return /jupyterlab-samples|lancedb-lab\\/wiki|github\\.com\\/[^\\s]+\\/wiki/i.test(text);
+  }
   const SR=window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition=null, requestId=0, wasPlaying=false, replyUtterance=null, localModel=null;
   const stopwords=new Set("a an and are as at be but by can could did do does for from had has have how i in into is it its me my of on or our should so than that the their them there these this those to was we what when where which who why will with would you your tell explain please about does mean means difference between code line example here again".split(" "));
@@ -174,7 +213,7 @@
         "ANSWER:"
       ].join("\n\n");
       const out=String(await localModel.prompt(prompt)).trim().slice(0,2000);
-      if(!out || out.length<10)return null;
+      if(!out || out.length<10 || rejectInventedLinks(out))return null;
       return {text:out,sources:[...new Set(matches.slice(0,3).map(x=>x.chapter))],grounded:!out.includes("can't verify")};
     }catch(e){console.warn("On-device AI unavailable:",e?.message||e);return null;}
   }
@@ -205,6 +244,7 @@
     title.textContent=kind==="ai"?"On-device AI · grounded in lessons":"Verified lesson excerpts";
     answer.textContent=result.text;
     source.textContent=result.sources.length?"Related chapter"+(result.sources.length>1?"s":"")+": "+result.sources.join(" · "):"No reliable passage found in the supplied lessons.";
+    renderLinks(result.kinds||["docs"]);
     appendMessage("bot",result.text,(kind==="ai"?"On-device AI":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
     repeat.disabled=false;
     speakAnswer();
@@ -228,9 +268,10 @@
       if(req!==requestId)return;
       const matches=search(resolved.query);
       const relatedChapter=resolved.followup?resolved.chapter:chooseChapter(resolved.query,matches,resolved.chapter);
-      const aiAnswer=await answerWithModel(resolved.query,matches);
+      const verifiedNavigation=documentIntent(clean)||documentIntent(resolved.query);
+      const aiAnswer=verifiedNavigation?null:await answerWithModel(resolved.query,matches);
       if(req!==requestId)return;
-      const result=aiAnswer||fallback(clean,matches,relatedChapter);
+      const result=verifiedNavigation||aiAnswer||fallback(clean,matches,relatedChapter);
       dialogue.push({question:clean,answer:result.text,chapter:relatedChapter});if(dialogue.length>10)dialogue.shift();
       render(result,aiAnswer?"ai":"source");
       if(!aiAnswer)status.textContent=result.grounded?"Reading a grounded lesson excerpt.":"No supported answer found in the lesson.";
