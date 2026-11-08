@@ -95,7 +95,7 @@ function describePythonLine(line){
 function renderLineWalkthrough(source){
  const target=document.getElementById("generated-line-notes");
  if(!target)return;
- const lines=source.split("\\n");
+ const lines=source.split("\n");
  const fragment=document.createDocumentFragment();
  for(let i=0;i<lines.length;i++){
   const li=document.createElement("li");
