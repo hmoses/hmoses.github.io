@@ -57,18 +57,30 @@
   function loadDocumentation(){
     if(docsLoaded)return docsLoaded;
     docsLoaded=(async()=>{
-      try{
-        const response=await fetch("../docs/",{credentials:"same-origin"});
-        if(!response.ok)return;
-        const html=new DOMParser().parseFromString(await response.text(),"text/html");
-        html.querySelectorAll(".line-walkthrough li").forEach(li=>{
-          const code=li.querySelector(".line-code")?.textContent?.trim();
-          const meaning=li.querySelector(".line-meaning")?.textContent?.trim();
-          if(!code||!meaning||code==="(blank line)")return;
-          const text=code+" — "+meaning;
-          candidates.push({text,chapterIndex:4,chapter:"Python developer documentation",source:"line-by-line code walkthrough",terms:tokens(text)});
-        });
-      }catch(e){console.info("Additional documentation unavailable; lesson answers still work.");}
+      const docs=[
+        {url:"../docs/",chapter:4,label:"Developer documentation"},
+        {url:"../docs/architecture.html",chapter:3,label:"Architecture guide"},
+        {url:"../docs/agent-readiness.html",chapter:6,label:"AI-agent guide"}
+      ];
+      await Promise.all(docs.map(async doc=>{
+        try{
+          const response=await fetch(doc.url,{credentials:"same-origin"});
+          if(!response.ok)return;
+          const html=new DOMParser().parseFromString(await response.text(),"text/html");
+          html.querySelectorAll(".line-walkthrough li").forEach(li=>{
+            const code=li.querySelector(".line-code")?.textContent?.trim();
+            const meaning=li.querySelector(".line-meaning")?.textContent?.trim();
+            if(!code||!meaning||code==="(blank line)")return;
+            const text=code+" — "+meaning;
+            candidates.push({text,chapterIndex:doc.chapter,chapter:doc.label,source:"line-by-line code walkthrough",terms:tokens(text)});
+          });
+          html.querySelectorAll("main h2,main h3,main article p,main .doc p").forEach(element=>{
+            const text=(element.textContent||"").replace(/\s+/g," ").trim().slice(0,950);
+            if(text.length<50)return;
+            candidates.push({text,chapterIndex:doc.chapter,chapter:doc.label,source:"documentation",terms:tokens(text)});
+          });
+        }catch(e){console.info("Documentation not available; built-in chapter references remain usable.");}
+      }));
     })();
     return docsLoaded;
   }
