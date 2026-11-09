@@ -114,64 +114,6 @@ function renderLineWalkthrough(source){
  }
  target.replaceChildren(fragment);
 }
-function renderInterviewWalkthrough(vector,categorySelected,limit,source){
- const stageRoot=document.getElementById("interview-stages");
- if(!stageRoot)return;
- const extras=custom.length;
- const total=records.length+extras;
- const filtered=categorySelected==="all"?total:records.filter(r=>r.category===categorySelected).length+custom.filter(r=>r.category===categorySelected).length;
- const categoryText=categorySelected==="all"?"all categories":'the "'+categorySelected+'" category';
- const pythonLines=source.split("\n").filter(line=>line.trim()&&!line.trim().startsWith("#"));
- const pythonBlock=(start,end)=>{
-   const startIndex=pythonLines.findIndex(line=>line.trim().startsWith(start));
-   if(startIndex<0)return "";
-   const endIndex=end?pythonLines.findIndex((line,i)=>i>startIndex&&line.trim().startsWith(end)):pythonLines.length;
-   return pythonLines.slice(startIndex,endIndex<0?pythonLines.length:endIndex).join("\n");
- };
- const stages=[
-  {name:"1. Identify the dependencies and inputs",code:"import lancedb\nfrom example import RECORDS",purpose:"The program imports the installed LanceDB library and the predefined sample records from the local example module. At this point, no database operation has happened.",why:"An import tells you the name being loaded, not everything inside it. To verify RECORDS, open example.py; to understand lancedb.connect, consult the package API.",question:"What do you inspect if you have never seen RECORDS before?",answer:"Open example.py and examine the value assigned to RECORDS. In this lab it is a list of eight record dictionaries, each including a 4D vector."},
-  {name:"2. Connect and prepare the table",code:pythonBlock("db = lancedb.connect(","query_vector ="),purpose:"Connect to local embedded storage, combine the eight fixture records"+(extras?" with "+extras+" additional explorer record(s)":" with no additional records")+", then create and populate a table named doc_chunks.",why:"connect identifies where data lives; create_table inserts it. The overwrite option deliberately resets the table so the example is reproducible—but would be dangerous on production data.",question:"What would happen if you ran the program twice?",answer:"The table is recreated from the same supplied rows because mode=overwrite replaces an existing doc_chunks table. It does not append indefinitely."},
-  {name:"3. Define the question as a vector",code:"query_vector = ["+vector.join(", ")+"]",purpose:"The search input is a four-number vector. It represents the point that the example will compare against each stored document vector.",why:"The query vector and stored vectors must have the same number of dimensions. These example vectors are manually chosen numbers, not embeddings produced from natural-language text.",question:"What happens if the query has only three coordinates?",answer:"It would not match the four-coordinate stored vectors. A proper vector query requires compatible dimensions."},
-  {name:"4. Construct and execute the search",code:'results = (\n  table.search(query_vector)\n  .distance_type("cosine")'+(categorySelected==="all"?"":"\n  .where(\"category = '" + categorySelected + "'\")")+'\n  .limit('+limit+')\n  .to_list()\n)',purpose:"Build a nearest-neighbor query, rank by cosine distance, "+(categorySelected==="all"?"consider all categories":"restrict to "+categoryText)+", request at most "+limit+" match(es), and materialize results as a Python list.",why:"Search, distance, optional metadata predicate and limit are combined into one query. Smaller cosine distance indicates greater directional similarity; this is not a confidence probability.",question:"What changes when you add a category filter?",answer:"Only records meeting the metadata predicate are eligible. A filter can reduce the returned number of matches below the requested limit."},
-  {name:"5. Inspect the output",code:'for item in results:\n  print(item["id"], item["title"], item["_distance"])',purpose:"For each returned record, print an identifier, a readable title and its numeric cosine distance.",why:"These values let you inspect what was retrieved and how it was ranked. The webpage itself displays an independently calculated JavaScript similarity score, not the output of this Python run.",question:"Does this program prove the returned results are semantically correct?",answer:"No. It ranks provided four-dimensional vectors. Semantic relevance would require meaningful embeddings and evaluation with representative queries."}
- ];
- stageRoot.replaceChildren();
- const fragment=document.createDocumentFragment();
- for(const stage of stages){
-   const article=document.createElement("article");article.className="interview-stage";
-   const heading=document.createElement("h6");heading.textContent=stage.name;
-   const codeBox=document.createElement("pre");codeBox.className="interview-stage-code";
-   const codeEl=document.createElement("code");codeEl.textContent=stage.code;codeBox.append(codeEl);
-   const purpose=document.createElement("p");purpose.textContent=stage.purpose;
-   const detail=document.createElement("details");detail.className="interview-deep-dive";
-   const summary=document.createElement("summary");summary.textContent="Why this matters + likely interview question";
-   const why=document.createElement("p");why.textContent=stage.why;
-   const quiz=document.createElement("p");const strong=document.createElement("strong");strong.textContent=stage.question;
-   const answer=document.createElement("p");answer.textContent=stage.answer;
-   quiz.append(strong);detail.append(summary,why,quiz,answer);
-   article.append(heading,codeBox,purpose,detail);fragment.append(article);
- }
- stageRoot.append(fragment);
- const script="This example starts with "+total+" illustrative document record(s), including "+extras+" custom record(s). It connects to a local LanceDB database, creates a table from those records, and defines a four-dimensional query vector. It runs a nearest-neighbor search using cosine distance"+(categorySelected==="all"?"":", filters candidates to "+categoryText)+", and returns up to "+limit+" matching record(s). Finally it prints each result's ID, title and distance. The browser explorer separately simulates ranking in JavaScript, while this generated Python demonstrates how the LanceDB SDK would perform the workflow in a local environment.";
- document.getElementById("interview-script").textContent=script;
- document.getElementById("interview-purpose").textContent="Start with "+total+" sample record(s), connect to local LanceDB, create a table, query with four coordinates, "+(categorySelected==="all"?"search across all categories":"filter to "+categoryText)+", and print up to "+limit+" matching record(s).";
- const checks=document.getElementById("interview-checks");
- checks.replaceChildren();
- const prompts=[
-  ["Where did the starting data come from?","The RECORDS list in example.py, plus any custom records entered in the browser."],
-  ["When is the database actually created or changed?","lancedb.connect opens local storage, and create_table writes the rows. Overwrite resets the table."],
-  ["What controls the returned ranking?","The query vector, cosine distance, optional category filter and limit."],
-  ["What have you verified versus only demonstrated?","The browser uses a JavaScript similarity simulation. The Python example is generated, but the browser does not execute it."]
- ];
- prompts.forEach(([question,answer])=>{const details=document.createElement("details");const summary=document.createElement("summary");summary.textContent=question;const p=document.createElement("p");p.textContent=answer;details.append(summary,p);checks.append(details)});
-}
-const copyInterview=document.getElementById("copy-interview-script");
-if(copyInterview)copyInterview.addEventListener("click",async()=>{
- const text=document.getElementById("interview-script")?.textContent||"";
- try{await navigator.clipboard.writeText(text);copyInterview.textContent="Copied ✓";}
- catch(e){copyInterview.textContent="Select the explanation to copy";}
- setTimeout(()=>copyInterview.textContent="Copy my explanation",1800);
-});
 function run(){
  try{
   const vector=parseVector(queryInput.value),cat=category.value,lim=Number(count.value);
@@ -182,7 +124,7 @@ function run(){
   results.replaceChildren(...ranked.map((r,i)=>createResult(r.record,r.score,i+1)));
   if(!ranked.length){const p=document.createElement("p");p.textContent="No records match this category. Try All categories or add a document.";results.append(p)}
   summary.textContent=ranked.length+" ranked of "+dataset.length+" records · "+(cat==="all"?"all categories":cat+" only")+" · calculated cosine similarity";
-  status.textContent="COMPLETE";error.textContent="";const generated=pythonCode(vector,cat,lim);code.textContent=generated;if(window.highlightLabCode)window.highlightLabCode(code,"python");renderLineWalkthrough(generated);renderInterviewWalkthrough(vector,cat,lim,generated);
+  status.textContent="COMPLETE";error.textContent="";const generated=pythonCode(vector,cat,lim);code.textContent=generated;if(window.highlightLabCode)window.highlightLabCode(code,"python");renderLineWalkthrough(generated);
   document.querySelectorAll("[data-scenario]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.scenario===intent.value && queryInput.value===defaults[intent.value].join(", "))));
  }catch(e){status.textContent="INVALID INPUT";error.textContent=e.message;results.replaceChildren();summary.textContent="Fix the query embedding to calculate results."}
 }
