@@ -138,6 +138,37 @@
     ["agent ready","Agent-ready documentation provides explicit steps, source files, constraints, and verification commands for coding assistants."],
     ["overwrite","mode='overwrite' replaces an existing table of the same name. It helps reset sample data but can destroy production data."]
   ];
+  // Explain the actual generated Python steps, not a nearby dictionary definition.
+  // Supports multiline pastes, single-line pasted code, and questions about a selection.
+  const pythonSteps=[
+    {re:/\bimport\s+lancedb\b/i,code:"import lancedb",meaning:"Imports the LanceDB Python SDK. It makes the lancedb.connect function available."},
+    {re:/\bfrom\s+example\s+import\s+RECORDS\b/i,code:"from example import RECORDS",meaning:"Loads the eight sample record dictionaries defined in example.py."},
+    {re:/\bdb\s*=\s*lancedb\.connect\s*\(/i,code:'db = lancedb.connect("./sample.lance")',meaning:"Opens or creates a local embedded database at ./sample.lance and saves the connection in db. No remote service or API key is required."},
+    {re:/\bdata\s*=\s*RECORDS\s*\+\s*\[\s*\]/i,code:"data = RECORDS + []",meaning:"Creates a new list with the original eight records. The empty list adds zero custom documents. If you add documents in the explorer, the generated code will include their rows instead."},
+    {re:/\bdata\s*=\s*RECORDS\s*\+/i,code:"data = RECORDS + [custom records]",meaning:"Combines the original sample records with custom records entered in the browser explorer."},
+    {re:/\btable\s*=\s*db\.create_table\s*\(/i,code:'table = db.create_table("doc_chunks", data=data, mode="overwrite")',meaning:"Creates and populates the doc_chunks table from data. Overwrite resets an existing table of that name; do not use it casually with production data."},
+    {re:/\bquery_vector\s*=/i,code:"query_vector = [four numbers]",meaning:"Defines the four-coordinate query vector, which must match the stored vectors' dimensionality."},
+    {re:/\bresults\s*=\s*\(/i,code:"results = (",meaning:"Starts a multiline query expression whose output is assigned to results."},
+    {re:/\btable\.search\s*\(/i,code:"table.search(query_vector)",meaning:"Begins a nearest-neighbor search using the query vector."},
+    {re:/\.distance_type\s*\(/i,code:'.distance_type("cosine")',meaning:"Selects cosine distance for vector ranking. Smaller distance indicates closer direction."},
+    {re:/\.where\s*\(/i,code:'.where("category = ...")',meaning:"Adds a metadata predicate to restrict which rows can qualify."},
+    {re:/\.limit\s*\(/i,code:".limit(3)",meaning:"Caps the number of matching results returned."},
+    {re:/\.to_list\s*\(/i,code:".to_list()",meaning:"Executes the query and returns Python dictionaries in a list."},
+    {re:/\bfor\s+item\s+in\s+results\s*:/i,code:"for item in results:",meaning:"Loops over each returned record."},
+    {re:/\bprint\s*\(/i,code:'print(item["id"], item["title"], item["_distance"])',meaning:"Prints identifying information and the numeric distance for each result."}
+  ];
+  function codeQuestion(raw){
+    const q=String(raw||"");
+    const explain=/\b(explain|line by line|each line|walk through|what (?:is|does|are)|how (?:does|do)|code|snippet|break down|mean)\b/i.test(q);
+    const found=pythonSteps.filter(step=>step.re.test(q));
+    const selectedCode=selectedContext && /\b(import|from|db\s*=|data\s*=|table\s*=|query_vector|\.search|\.where|\.limit|\.to_list)\b/i.test(selectedContext.text);
+    if(!explain&&!selectedCode)return null;
+    if(found.length<2 && !selectedCode && !(found.length===1&&/\b(?:line|code|statement|snippet|function)\b/i.test(q)))return null;
+    const relevant=found.length?found:pythonSteps.filter(step=>step.re.test(selectedContext?.text||""));
+    if(!relevant.length)return null;
+    const parts=relevant.map((step,i)=>(i+1)+". "+step.code+" — "+step.meaning);
+    return {text:"Here is what the Python code does, line by line:\n"+parts.join("\n")+"\n\nLines beginning with # are comments for people reading the code; Python does not execute them. Importing, connecting and creating the table prepare the data; searching requires the later table.search call.",sources:["Generated Python example in interactive lab"],grounded:true};
+  }
   function answerGlossary(q){
     const text=normalizeFact(q);
     const definitionRequest=/\b(what|define|meaning|means|explain|tell me about|stand for|stands for)\b/i.test(q);
@@ -460,7 +491,7 @@
       if(req!==requestId)return;
       const matches=search(resolved.query);
       const relatedChapter=resolved.followup?resolved.chapter:chooseChapter(resolved.query,matches,resolved.chapter);
-      const exact=answerProjectTerminology(clean)||answerRecords(clean)||answerGlossary(clean)||answerExactText(clean);
+      const exact=codeQuestion(clean)||answerProjectTerminology(clean)||answerRecords(clean)||answerGlossary(clean)||answerExactText(clean);
       const verifiedNavigation=exact?null:documentIntent(clean)||documentIntent(resolved.query);
       const corpusMatches=exact?[]:findInCorpus(resolved.query);
       const hasEvidence=corpusMatches.length&&corpusMatches[0].coverage>=0.40;
