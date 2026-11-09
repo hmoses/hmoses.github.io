@@ -438,7 +438,31 @@
     // Chrome's on-device Prompt API; not supported in every browser/device.
     return typeof window.LanguageModel!=="undefined" && typeof window.LanguageModel.create==="function";
   }
-  mode.textContent=localAI()?"On-device AI when available · lesson-sourced fallback":"Lesson-sourced answers · on-device AI unavailable";
+  const enableAI=el("qa-enable-ai");
+  mode.textContent=localAI()?"On-device AI when available · grounded in lab sources":"Lesson-based answers · no general-purpose AI model";
+  if(enableAI&&localAI()){
+    (async()=>{
+      try{
+        const availability=typeof window.LanguageModel.availability==="function"?await window.LanguageModel.availability():"available";
+        enableAI.hidden=availability!=="downloadable";
+        if(availability==="available")mode.textContent="Conversational on-device AI · grounded in project sources";
+      }catch(e){enableAI.hidden=true;}
+    })();
+    enableAI.addEventListener("click",async()=>{
+      enableAI.disabled=true;
+      enableAI.textContent="Preparing on-device AI…";
+      try{
+        // Explicit user action is required before downloading an optional local model.
+        localModel=await window.LanguageModel.create();
+        mode.textContent="Conversational on-device AI · grounded in project sources";
+        enableAI.hidden=true;
+      }catch(e){
+        mode.textContent="On-device model unavailable; using lesson-based answers";
+        enableAI.textContent="Try enabling on-device AI";
+        enableAI.disabled=false;
+      }
+    });
+  }
   async function answerWithModel(q,matches,corpusMatches=[]){
     if(!localAI())return null;
     const prior=dialogue.slice(-3).map(d=>"QUESTION: "+d.question+"\nTOPIC: "+(d.topic||"unknown")).join("\n");
