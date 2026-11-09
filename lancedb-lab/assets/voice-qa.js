@@ -136,13 +136,13 @@
   }
   function answerExactText(q){
     if(!selectedContext)return null;
-    const topical=/\b(this|that|selected|selection|highlight|line|word|phrase|meaning|explain)\b/i.test(q);
+    const topical=/\b(this|that|selected|selection|highlight|highlighted)\b/i.test(q)||q.toLowerCase().includes(selectedContext.text.toLowerCase());
     if(!topical)return null;
     const snippets=findInCorpus(selectedContext.text);
     const best=snippets.find(x=>x.text.includes(selectedContext.text)||x.text.toLowerCase().includes(selectedContext.text.toLowerCase()));
     const context=best?.text || selectedContext.nearby || selectedContext.text;
     const selected=selectedContext.text;
-    if(!best && !/\bwhat (is|does)|meaning|define\b/i.test(q))return null;
+    if(!best && !selectedContext.nearby)return null;
     return {text:"Selected text: “"+selected+"”\n\nContext from "+(best?.source||selectedContext.source)+": "+context.slice(0,850)+"\n\nAsk a more specific follow-up if you want the reasoning or consequences.",sources:[best?.source||selectedContext.source],grounded:Boolean(best)};
   }
   async function buildFullCorpus(){
@@ -317,6 +317,7 @@
         "Conversation so far (for follow-up referents):\n"+prior,
         "Additional chapter concept, where/how/when/if reference:\n"+detailed.slice(0,17000),
         "Relevant code explanations:\n"+matches.slice(0,5).map(x=>x.text).join("\n").slice(0,4000),
+        "Highlighted text and surrounding context:\n"+(selectedContext?selectedContext.text+"\n"+selectedContext.nearby:"No selected text"),
         "Relevant exact excerpts from lab pages:\n"+corpusMatches.slice(0,6).map(x=>"SOURCE "+x.source+": "+x.text).join("\n").slice(0,7500),
         "LESSON SOURCE:\n"+context,
         "LEARNER QUESTION: "+q,
@@ -418,7 +419,22 @@
       try{recognition.start();}catch{recognition=null;mic.textContent="🎙 Ask aloud";status.textContent="Couldn't start microphone. Type a question instead.";}
     });
   }
+  // Same-origin embedded chat receives selections from lab and documentation pages.
+  window.addEventListener("message",event=>{
+    if(event.origin!==location.origin||event.data?.type!=="lab-selection")return;
+    updateSelection(event.data.text,event.data.source,event.data.nearby);
+    if(event.data.open){
+      setOpen(true,false);
+      question.value="Explain this selection: "+String(event.data.text||"").slice(0,340);
+      question.focus({preventScroll:true});
+    }
+  });
+  const standaloneChat=new URLSearchParams(location.search).get("chat")==="1";
+  if(standaloneChat){
+    document.documentElement.classList.add("embedded-chat-mode");
+    setOpen(true,false);
+  }
   // The drawer is initially minimized; typing and questions do not change page scroll position.
-  setOpen(false,false);
+  if(!standaloneChat)setOpen(false,false);
   window.addEventListener("pagehide",()=>{requestId++;if(recognition)recognition.abort();speechStop();if(localModel?.destroy)localModel.destroy();});
 })();
