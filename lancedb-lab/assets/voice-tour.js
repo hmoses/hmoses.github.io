@@ -306,7 +306,10 @@ voiceSelect.addEventListener("change",()=>{
   try{localStorage.setItem("pg:sharedEnglishVoiceURI",voiceSelect.value);}catch(e){}
   if(speaking){pause();play();}
 });
-speedSelect.addEventListener("change",()=>{if(speaking){pause();play();}});
+speedSelect.addEventListener("change",()=>{
+  try{localStorage.setItem("pg:sharedEnglishRate",speedSelect.value);}catch(e){}
+  if(speaking){pause();play();}
+});
 fullTour.addEventListener("click",()=>{autoNext.checked=true;drawChapter(0,true)});
 $("copy-script").addEventListener("click",async()=>{
   const text=chapters.map((c,i)=>"CHAPTER "+(i+1)+": "+c.title+"\n\n"+c.paragraphs.join("\n\n")+"\n\nTRY IT: "+c.action.label+"\n"+c.action.url+"\n\nKEY IDEA: "+c.takeaway).join("\n\n-----------------------------\n\n");
@@ -316,6 +319,14 @@ $("copy-script").addEventListener("click",async()=>{
   setTimeout(()=>b.textContent=orig,2300);
 });
 if(canSpeak){
+  // Match the voice and speaking pace across LanceDB's embedded assistant
+  // and Poly-Glot's chat on the same hmoses.github.io origin.
+  try{
+    const savedRate=localStorage.getItem("pg:sharedEnglishRate");
+    if(savedRate && [...speedSelect.options].some(o=>o.value===savedRate))
+      speedSelect.value=savedRate;
+    localStorage.setItem("pg:sharedEnglishRate",speedSelect.value);
+  }catch(e){}
   populateVoices();
   if("onvoiceschanged" in synth)synth.addEventListener("voiceschanged",populateVoices);
   supportNote.textContent="Audio uses your device's installed voices. Choose a voice you like; quality and availability depend on your browser and device. No recording or voice data is sent to this site.";
