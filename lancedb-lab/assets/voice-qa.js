@@ -104,7 +104,17 @@
     ["../docs/agent-readiness.html","AI-agent guide",6]
   ];
   const normalizeFact=x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
-  const recordQuestion=q=>/\b(eight|8|starting|original|sample|fixture|records?|doc-0[1-8]|dataset|list all)\b/i.test(q);
+  // A mention of "sample", "4D" or "record" is NOT a request to list the fixture.
+  // Only explicit inventory requests or a specific record ID trigger dataset lookup.
+  const recordQuestion=q=>{
+    const normalized=String(q||"").toLowerCase().trim();
+    if(/\\bdoc[ -]?0?[1-8]\\b/.test(normalized))return true;
+    const inventory=/\\b(?:what|which|list|show|name|enumerate|give|tell)\\b[\\s\\S]{0,100}\\b(?:records|rows|entries|documents|dataset|fixture)\\b/.test(normalized)
+      ||/\\b(?:eight|8)\\s+(?:starting|original|sample)?\\s*(?:records|rows|documents|entries)\\b/.test(normalized)
+      ||/\\b(?:list|show|name)\\s+(?:all|the)\\s+(?:records|documents|rows|entries)\\b/.test(normalized);
+    const definition=/\\b(?:what (?:does|is)|meaning|define|explain|why|how)\\b[\\s\\S]{0,90}\\b(?:4d|four.dimensional|dimensions?|vectors?|embeddings?|record(?:s)?|sample)\\b/.test(normalized);
+    return inventory&&!definition;
+  };
   const glossary=[
     ["record","A record is one row of stored data. In this lab each record has an ID, title, category, text, and a four-number vector."],
     ["fixture","A fixture is a small known dataset used to make examples and tests repeatable. The lab fixture contains eight records."],
