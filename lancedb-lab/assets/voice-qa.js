@@ -356,18 +356,53 @@
     return result.sort((a,b)=>b.score-a.score).slice(0,8);
   }
   const dialogue=[];
-  const resolveQuestion=(q)=>{
-    const clean=q.trim(), norm=normalize(clean);
-    const short=tokens(clean).length<=3;
-    const general=/^(what (is|does|about) (this|it|that)|how (does|do) (this|it|that) work|why (is|does) (this|it|that)|explain (this|it|that)|where (is|do) (this|it|that)|what if (it|this|that))/i.test(clean);
-    const reference=/^(and |but |so |then |what about |why |how |when |where |what if |if |can it |does it |what does that |explain that |tell me more)/i.test(clean);
-    const prev=dialogue[dialogue.length-1];
-    if(prev && (reference||short && /\b(it|that|this|those|they|the same|again)\b/i.test(clean))){
-      return {query:prev.question+" "+clean,chapter:prev.chapter,followup:true};
+  // Only resolve pronouns against the last subject. Starting a new question must not
+  // drag the previous answer (or eight-record inventory) into the new topic.
+  const resolveQuestion=q=>{
+    const clean=String(q||"").trim();
+    const previous=dialogue[dialogue.length-1];
+    const explicitFollowup=/^(and |but |so |then |what about (it|that|this)|tell me more|can you elaborate|why (is|does|would) (it|that|this)|how (does|would) (it|that|this)|what if (it|that|this))/i.test(clean);
+    const pronounOnly=/^(?:what|why|how|when|where)\s+(?:(?:is|are|does|do|would|could)\s+)?(?:it|that|this|they|those)\b/i.test(clean);
+    const topic=previous?.topic||"";
+    if(previous && topic && (explicitFollowup||pronounOnly)){
+      return {query:clean+" (about "+topic+")",chapter:previous.chapter,topic,followup:true};
     }
-    if(general)return {query:chapters[index].title+" "+clean,chapter:index,followup:false};
-    return {query:clean,chapter:index,followup:false};
+    return {query:clean,chapter:index,topic:"",followup:false};
   };
+  function questionIntent(q){
+    const value=String(q||"").trim().toLowerCase();
+    if(/\b(?:list|show|name|enumerate|which are|what are the eight|what are the 8)\b/.test(value) && /\b(?:records|rows|documents|entries)\b/.test(value))return "list";
+    if(/\b(?:where|locate|find|which file|which page|path to)\b/.test(value))return "location";
+    if(/\b(?:how|steps|walk through|line by line)\b/.test(value))return "how";
+    if(/\b(?:why|reason|purpose|benefit)\b/.test(value))return "why";
+    if(/\b(?:when|use case|should i use)\b/.test(value))return "when";
+    if(/\b(?:what if|happens if|if i|if the|error|fail|invalid|wrong|missing)\b/.test(value))return "if";
+    return "what";
+  }
+  function questionTopic(q){
+    const str=normalizeFact(q);
+    const matches=glossary.filter(([term])=>(" "+str+" ").includes(" "+term+" ")).sort((a,b)=>b[0].length-a[0].length);
+    if(matches.length)return matches[0][0];
+    if(/\b(?:4d|four dimensional|4 dimensions)\b/.test(str))return "four-dimensional vector";
+    if(/\bdoc 0?[1-8]\b/.test(str))return str.match(/\bdoc 0?[1-8]\b/)[0];
+    const known=["fixture row","cosine similarity","cosine distance","metadata filtering","vector search","create table","embedded database","python code","agent ready"];
+    return known.find(x=>str.includes(x))||"";
+  }
+  function contextualFallback(q,matches){
+    const ranked=findInCorpus(q);
+    const strong=ranked.filter(x=>x.coverage>=0.35 && x.text.length>=24);
+    if(!strong.length)return null;
+    const intent=questionIntent(q);
+    const preferred=strong.filter(x=>intent==="location"?/docs|chapter|file|source|\bwhere\b/i.test(x.text+" "+x.source):true);
+    const chosen=(preferred.length?preferred:strong).slice(0,2);
+    const seen=new Set(),parts=[];
+    for(const item of chosen){
+      const clean=item.text.replace(/\s+/g," ").trim();
+      if(!seen.has(clean)){parts.push(clean);seen.add(clean)}
+    }
+    if(!parts.length)return null;
+    return {text:parts.join("\n\n")+"\n\nSource: "+[...new Set(chosen.map(x=>x.source))].join("; "),sources:[...new Set(chosen.map(x=>x.source))],grounded:true};
+  }
   function chooseChapter(q,matches,fallbackChapter){
     if(!matches.length)return fallbackChapter;
     const highest=matches[0];
