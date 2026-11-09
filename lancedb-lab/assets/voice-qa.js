@@ -160,14 +160,14 @@
   function codeQuestion(raw){
     const q=String(raw||"");
     const explain=/\b(explain|line by line|each line|walk through|what (?:is|does|are)|how (?:does|do)|code|snippet|break down|mean)\b/i.test(q);
-    const found=pythonSteps.filter(step=>step.re.test(q));
+    const found=pythonSteps.filter(step=>step.re.test(q) && !(step.code==="data = RECORDS + [custom records]" && /\bdata\s*=\s*RECORDS\s*\+\s*\[\s*\]/i.test(q)));
     const selectedCode=selectedContext && /\b(import|from|db\s*=|data\s*=|table\s*=|query_vector|\.search|\.where|\.limit|\.to_list)\b/i.test(selectedContext.text);
     if(!explain&&!selectedCode)return null;
     if(found.length<2 && !selectedCode && !(found.length===1&&/\b(?:line|code|statement|snippet|function)\b/i.test(q)))return null;
     const relevant=found.length?found:pythonSteps.filter(step=>step.re.test(selectedContext?.text||""));
     if(!relevant.length)return null;
     const parts=relevant.map((step,i)=>(i+1)+". "+step.code+" — "+step.meaning);
-    return {text:"Here is what the Python code does, line by line:\n"+parts.join("\n")+"\n\nLines beginning with # are comments for people reading the code; Python does not execute them. Importing, connecting and creating the table prepare the data; searching requires the later table.search call.",sources:["Generated Python example in interactive lab"],grounded:true};
+    return {text:"Here is what the Python code does, line by line:\n"+parts.join("\n")+"\n\nLines beginning with # are comments for people reading the code; Python does not execute them. These statements prepare a local database and table; a vector search runs only if the code later calls table.search(...).",sources:["Generated Python example in interactive lab"],grounded:true};
   }
   function answerGlossary(q){
     const text=normalizeFact(q);
