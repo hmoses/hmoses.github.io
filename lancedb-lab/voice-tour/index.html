@@ -7,7 +7,7 @@
   <meta name="description" content="Listen to a friendly, step-by-step voice tutorial explaining LanceDB vector search, metadata filtering, real Python examples, developer docs, and AI-agent-ready documentation. Includes interview practice.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="LanceDB Developer Lab — Guided Voice Tutorial">
-  <meta property="og:description" content="Eight conversational voice lessons, interactive practice, and a clear explanation you can use in a technical interview.">
+  <meta property="og:description" content="Nine conversational voice lessons, interactive practice, and a clear explanation you can use in a technical interview.">
   <link rel="canonical" href="https://hmoses.github.io/lancedb-lab/voice-tour/">
   <link rel="stylesheet" href="../assets/theme.css?v=voice-20261107">
   <link rel="stylesheet" href="../assets/voice-tour.css?v=visual-answers-20261108e">
@@ -19,14 +19,14 @@
     <div class="shell nav">
       <a class="brand" href="../"><span class="symbol" aria-hidden="true">✦</span><span>LanceDB <span style="color:var(--pink)">/ Developer Lab</span></span></a>
       <nav class="navlinks" aria-label="Primary navigation">
-        <a href="../">Interactive lab</a><a href="../docs/">Documentation</a>
+        <a href="../">Interactive lab</a><a href="../docs/">Documentation</a><a href="../docs/jev-reranking.html">Jev reranking</a>
         <a aria-current="page" href="./">Voice tutorial</a><a href="../../lancedb-documentation-engineering/">Portfolio</a>
       </nav>
       <details class="mobile-nav"><summary>Menu <span aria-hidden="true">☰</span></summary>
         <nav class="mobile-menu" aria-label="Mobile navigation">
           <a href="../">Interactive lab</a><a href="../docs/">Developer documentation</a>
           <a aria-current="page" href="./">Voice tutorial</a><a href="../docs/architecture.html">Architecture</a>
-          <a href="../docs/agent-readiness.html">AI-agent guide</a><a href="../../lancedb-documentation-engineering/">Portfolio</a>
+          <a href="../docs/agent-readiness.html">AI-agent guide</a><a href="../docs/jev-reranking.html">Jev reranking</a><a href="../../lancedb-documentation-engineering/">Portfolio</a>
         </nav>
       </details>
     </div>
@@ -41,19 +41,19 @@
           <button id="full-tour" class="btn" type="button">▶ Listen to the full walkthrough</button>
           <a class="btn alt" href="../" target="_blank" rel="noopener noreferrer">Open the live lab ↗</a>
         </div>
-        <p class="disclaimer" style="margin:14px 0 0">About 12–16 minutes at a conversational pace. Uses your device's voice synthesizer—no account, API key, paid service, recording, or download required. Voice quality depends on the device and installed voices. Questions can be typed; microphone recognition may be processed by your browser's speech provider.</p>
+        <p class="disclaimer" style="margin:14px 0 0">About 14–18 minutes at a conversational pace. Uses your device's voice synthesizer—no account, API key, paid service, recording, or download required. Voice quality depends on the device and installed voices. Questions can be typed; microphone recognition may be processed by your browser's speech provider.</p>
       </div>
       <div class="tour-hero-art" aria-hidden="true">
         <div class="orb">
           <div class="orb-inner"><span class="orb-icon">♫</span><span>PLAY • LEARN • EXPLAIN</span></div>
         </div>
-        <div class="hero-pills"><span>08 chapters</span><span>Interactive practice</span><span>Interview-ready</span></div>
+        <div class="hero-pills"><span>09 chapters</span><span>Interactive practice</span><span>Interview-ready</span></div>
       </div>
     </section>
 
     <section class="shell" id="tutorial">
       <div class="tour-progress-panel">
-        <div class="progress-top"><span class="smalllabel">Your learning progress</span><span id="progress-label">0 of 8 chapters completed</span></div>
+        <div class="progress-top"><span class="smalllabel">Your learning progress</span><span id="progress-label">0 of 9 chapters completed</span></div>
         <div class="tour-progress-track" aria-hidden="true"><div id="progress-bar" class="tour-progress-fill" style="width:0%"></div></div>
       </div>
 
@@ -67,7 +67,7 @@
         <div class="tour-main">
           <section class="player card" aria-labelledby="chapter-title">
             <div class="player-top">
-              <div><span id="chapter-number" class="eyebrow">CHAPTER 01 / 8</span><h2 id="chapter-title">What did I build?</h2><p id="chapter-subtitle" class="player-subtitle">Start with the why, not the code.</p></div>
+              <div><span id="chapter-number" class="eyebrow">CHAPTER 01 / 9</span><h2 id="chapter-title">What did I build?</h2><p id="chapter-subtitle" class="player-subtitle">Start with the why, not the code.</p></div>
               <span class="status-pill"><span class="pulse-dot" aria-hidden="true"></span><span id="playback-status" role="status" aria-live="polite">Ready to listen</span></span>
             </div>
 
@@ -138,7 +138,7 @@
     <div id="qa-dialog" class="qa-dialog" hidden>
 <section class="qa-panel" role="dialog" aria-modal="false" aria-label="LanceDB tutor chat" aria-labelledby="qa-heading">
             <div class="qa-heading"><div><span class="eyebrow">LANCEDB DEVELOPER LAB</span><h2 id="qa-heading">Ask your AI tutor</h2></div><button id="qa-close" class="qa-close" type="button" aria-label="Minimize tutor">×</button></div><div id="qa-mode" class="qa-mode">Checking available answer modes</div><button id="qa-enable-ai" class="qa-enable-ai" type="button" hidden>Enable on-device AI</button>
-            <p class="qa-intro">Ask what, where, why, how, when, or what if. I’ll use the current chapter, all eight lessons, and linked code guides.</p><button id="qa-selection" class="qa-selection" type="button" hidden>Ask about selected text</button><nav class="qa-quicklinks" aria-label="Verified project pages"><a href="https://hmoses.github.io/lancedb-lab/docs/" target="_blank" rel="noopener noreferrer">📖 View documentation ↗</a><a href="https://hmoses.github.io/lancedb-lab/docs/architecture.html" target="_blank" rel="noopener noreferrer">Architecture ↗</a><a href="https://hmoses.github.io/lancedb-lab/docs/agent-readiness.html" target="_blank" rel="noopener noreferrer">AI-agent guide ↗</a></nav><div class="qa-visual-shortcuts" role="group" aria-label="Visual answers"><button type="button" data-qa-visual="Show me the table schema">Table schema</button><button type="button" data-qa-visual="Show me the sample records table">Sample records</button><button type="button" data-qa-visual="Visualize the 4D vector">4D vector</button><button type="button" data-qa-visual="Show the workflow diagram">Data flow</button></div><div id="qa-history" class="qa-history" role="log" aria-live="polite" aria-relevant="additions text"><p class="qa-welcome">Hi! 👋 I know the eight chapters, code walkthroughs, architecture, and AI-agent guide. Ask “How does this work?”, “Where is that code?”, or “What if it fails?” You can ask follow-ups too.</p></div>
+            <p class="qa-intro">Ask what, where, why, how, when, or what if. I’ll use the current chapter, all nine lessons, and linked code guides.</p><button id="qa-selection" class="qa-selection" type="button" hidden>Ask about selected text</button><nav class="qa-quicklinks" aria-label="Verified project pages"><a href="https://hmoses.github.io/lancedb-lab/docs/" target="_blank" rel="noopener noreferrer">📖 View documentation ↗</a><a href="https://hmoses.github.io/lancedb-lab/docs/architecture.html" target="_blank" rel="noopener noreferrer">Architecture ↗</a><a href="https://hmoses.github.io/lancedb-lab/docs/agent-readiness.html" target="_blank" rel="noopener noreferrer">AI-agent guide ↗</a></nav><div class="qa-visual-shortcuts" role="group" aria-label="Visual answers"><button type="button" data-qa-visual="Show me the table schema">Table schema</button><button type="button" data-qa-visual="Show me the sample records table">Sample records</button><button type="button" data-qa-visual="Visualize the 4D vector">4D vector</button><button type="button" data-qa-visual="Show the workflow diagram">Data flow</button></div><div id="qa-history" class="qa-history" role="log" aria-live="polite" aria-relevant="additions text"><p class="qa-welcome">Hi! 👋 I know the nine chapters, code walkthroughs, architecture, and AI-agent guide. Ask “How does this work?”, “Where is that code?”, or “What if it fails?” You can ask follow-ups too.</p></div>
             <form id="qa-form" class="qa-form">
               <label for="qa-question" class="sr-only">Type your question</label>
               <div class="qa-input-row"><input id="qa-question" type="text" minlength="3" maxlength="420" required autocomplete="off" placeholder="What, why, how, where, when, what if…" aria-describedby="qa-note"><button type="button" id="qa-mic" class="btn alt" aria-label="Speak your question">🎙</button><button type="submit" id="qa-ask" class="btn">Send</button></div>
