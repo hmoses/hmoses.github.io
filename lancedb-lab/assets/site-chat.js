@@ -25,18 +25,18 @@
     ".lab-site-assistant-panel iframe{width:100%;min-height:0;flex:1;border:0;background:#18121f}"
   ].join("\n");
   document.head.append(css);document.body.append(root);
-  let selected=null,loaded=false;
+  let selected=null,loaded=false,pendingOpen=false;
   const sendContext=open=>{
     if(!loaded||!selected)return;
     try{frame.contentWindow.postMessage({type:"lab-selection",text:selected.text,nearby:selected.nearby,source:document.title||"LanceDB lab",open},location.origin);}catch(e){}
   };
   const openPanel=open=>{
     panel.hidden=!open;launch.hidden=open;launch.setAttribute("aria-expanded",String(open));
-    if(open)sendContext(false);
+    if(open&&loaded)sendContext(false);
   };
-  launch.addEventListener("click",()=>{openPanel(true);if(selected)sendContext(true)});
+  launch.addEventListener("click",()=>{pendingOpen=Boolean(selected);openPanel(true);if(loaded&&selected){sendContext(true);pendingOpen=false;}});
   minimize.addEventListener("click",()=>openPanel(false));
-  frame.addEventListener("load",()=>{loaded=true;sendContext(false)});
+  frame.addEventListener("load",()=>{loaded=true;sendContext(pendingOpen);pendingOpen=false;});
   document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!panel.hidden&&document.activeElement!==frame)openPanel(false)});
   const captureSelection=()=>{
     const sel=window.getSelection();const text=sel?.toString().trim();
