@@ -185,11 +185,11 @@
     const lower=String(q||"").toLowerCase();
     const wants4D=/\b(?:4\s*[- ]?d|four[ -]dimensional|four[ -]dimensions|4[ -]dimensions|4d)\b/i.test(lower);
     if(wants4D){
-      return {
-        text:"4D means four-dimensional: each sample vector contains exactly four numbers. For example, [0.85, 0.12, 0.14, 0.18] has four coordinates, so it is a 4D vector. Each coordinate represents one dimension in this demonstration; the numbers were chosen manually, not learned from text. The query vector must also have four numbers so the lab can compare matching positions using cosine similarity. It does NOT mean four physical or spatial dimensions, and the individual coordinates do not have meaningful topic names in this example.",
-        sources:["Actual example.py fixture","Chapter 2: Try your first vector search"],
-        grounded:true
-      };
+      const intent=questionIntent(q);
+      const explanation=intent==="why"?"The tutorial uses four-dimensional vectors to keep the math small enough to inspect. Four dimensions are a teaching choice, not a requirement imposed by LanceDB. Actual embedding models commonly produce many more dimensions. What matters here is that every stored vector and the query vector have the same number of coordinates.":
+        intent==="how"?"Each 4D vector has four numeric components, such as [0.85, 0.12, 0.14, 0.18]. The lab compares each stored vector with a four-number query using cosine similarity, then orders the records by similarity. You can change the values in the explorer to see how rankings change.":
+        "4D means four-dimensional: each sample vector contains exactly four numbers, such as [0.85, 0.12, 0.14, 0.18]. Those coordinates were chosen manually for a small, transparent demonstration. They are not four physical dimensions, and they do not carry individual topic labels. The query vector must also have four numbers.";
+      return {text:explanation,sources:["Actual example.py fixture","Chapter 2: Try your first vector search"],grounded:true};
     }
     if(/\btransparent\s+(?:sample\s+)?embeddings?\b/i.test(lower)||/\b(?:sample|illustrative|synthetic)\s+embeddings?\b/i.test(lower) && /\b(?:what|explain|mean|why|how|transparent)\b/i.test(lower)){
       return {
@@ -361,7 +361,7 @@
   const resolveQuestion=q=>{
     const clean=String(q||"").trim();
     const previous=dialogue[dialogue.length-1];
-    const explicitFollowup=/^(and |but |so |then |what about (it|that|this)|tell me more|can you elaborate|why (is|does|would) (it|that|this)|how (does|would) (it|that|this)|what if (it|that|this))/i.test(clean);
+    const explicitFollowup=/^(and |but |so |then |what about (it|that|this)|tell me more|can you elaborate|why(?:\?| is it| does it| would it)|how(?:\?| so| does it| would it)|what if (it|that|this))/i.test(clean);
     const pronounOnly=/^(?:what|why|how|when|where)\s+(?:(?:is|are|does|do|would|could)\s+)?(?:it|that|this|they|those)\b/i.test(clean);
     const topic=previous?.topic||"";
     if(previous && topic && (explicitFollowup||pronounOnly)){
