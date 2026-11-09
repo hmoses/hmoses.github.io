@@ -185,6 +185,20 @@
     const builtIn=chapters.flatMap((c,i)=>c.paragraphs.map((p,j)=>({text:p,source:"Chapter "+(i+1)+": "+c.title,chapterIndex:i})));
     fullCorpus.push(...builtIn);
     if(labRecords.length)fullCorpus.push(...labRecords.map(r=>({text:r.id+" "+r.title+" ("+r.category+"): "+r.text+" vector ["+r.vector.join(", ")+"]",source:"example.py RECORDS",chapterIndex:1})));
+    await Promise.all([
+      ["../example.py","Python LanceDB source",4],
+      ["../assets/lab.js","Browser simulation JavaScript source",1]
+    ].map(async ([url,label,chapterIndex])=>{
+      try{
+        const response=await fetch(url,{credentials:"same-origin"});if(!response.ok)return;
+        const lines=(await response.text()).split("\n");
+        lines.forEach((line,i)=>{
+          const text=line.trim();
+          if(text.length>5&&text.length<900)
+            fullCorpus.push({text:"Line "+(i+1)+": "+text,source:label,chapterIndex});
+        });
+      }catch(e){console.info("Original code source not available for question retrieval:",url);}
+    }));
     await Promise.all(corpusPages.map(async ([url,label,chapterIndex])=>{
       try{
         const response=await fetch(url,{credentials:"same-origin"});if(!response.ok)return;
