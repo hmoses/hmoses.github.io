@@ -98,6 +98,8 @@ function renderLineWalkthrough(source){
  const lines=source.split("\n");
  const fragment=document.createDocumentFragment();
  for(let i=0;i<lines.length;i++){
+  // Walkthrough covers executable Python only; comments stay in the generated source.
+  if(!lines[i].trim() || lines[i].trim().startsWith("#"))continue;
   const li=document.createElement("li");
   const snippet=document.createElement("span");
   snippet.className="line-code";
