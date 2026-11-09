@@ -112,6 +112,24 @@ const chapters = [
     answer:"No. You have to run an evaluation, collect the output, check tests, and report what actually succeeded."
   },
   {
+    id:"jev", title:"Add Jev reranking after vector search", time:"2–3 min",
+    subtitle:"Retrieval finds candidates. Reranking asks which ones actually help.",
+    paragraphs:[
+      "Now let's make the retrieval pipeline smarter. First, LanceDB searches the vector index to find candidate passages. Imagine asking: how do I fix a vector dimension mismatch? Vector search might rank a general article about embeddings above a specific troubleshooting article because their numeric vectors are similar.",
+      "This is where a reranker such as Jev comes in. LanceDB retrieves a shortlist, say eight documents in our lab. Jev evaluates the original natural-language question together with the text of each document. It estimates which candidates meet your relevance criteria, and the results can be reordered.",
+      "The important distinction is that Jev does not replace the vector search stage. Reranking every document in a large database would be expensive, so you use efficient retrieval first. Jev also cannot recover a passage that LanceDB never retrieved.",
+      "Open the Jev lesson in the developer documentation. You'll see a browser-based comparison. Choose the direct-answer criterion, then try the broader supporting-evidence criterion and adjust the score threshold. Those scores are made up for teaching; they are not live results from Jev.",
+      "Below the interactive demo you'll find a real Python integration using LanceDB's TypeSafeReranker. The code starts with an embedded LanceDB table, retrieves eight candidates, uses dot rerank with a question, and takes three results only after reranking.",
+      "Unlike the earlier LanceDB example, the Jev integration needs a supported LanceDB version, a private TypeSafe API key, network access, and possibly paid usage. Never put that API key in the browser or a public repository. We haven't claimed a successful hosted run in this portfolio.",
+      "Does reranking always improve accuracy? No. The relevance instructions, candidate selection, cost, and latency all matter. You should compare against the original vector ranking using labeled questions and measures such as Hit at one, normalized discounted cumulative gain, and end-to-end latency.",
+      "In an interview, a clear explanation is: I use LanceDB to find likely passages quickly, then Jev to judge whether those passages actually satisfy the user's question. I verify that the second step improves results on representative queries rather than assuming it does."
+    ],
+    action:{url:"../docs/jev-reranking.html",label:"Open the interactive Jev lesson",hint:"Change the relevance criterion and threshold, then follow the Python integration line by line."},
+    takeaway:"Jev is a question-aware reranking stage, not a substitute for fast vector retrieval. It must be evaluated against a baseline.",
+    question:"Why should you retrieve eight candidates and select three only AFTER reranking?",
+    answer:"Because a useful answer might be ranked fourth or eighth by vector similarity. Jev can promote it into the final top three, but only if it is in the candidate pool."
+  },
+  {
     id:"interview", title:"Tell the story in the interview", time:"1–2 min",
     subtitle:"Practice a short, grounded explanation.",
     paragraphs:[
