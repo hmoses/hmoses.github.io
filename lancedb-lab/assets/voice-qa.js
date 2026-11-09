@@ -112,7 +112,7 @@
     if(/\bdoc[ -]?0?[1-8]\b/.test(text))return true;
     if(/\b(?:what is|what does|explain|define|meaning of|how does|why is|what are)\s+(?:a |an |the )?(?:fixture|sample|record|row|dataset)\s*(?:row|record|mean|means|work|used for)?\s*\??$/.test(text))return false;
     return /\b(?:list|show|name|enumerate|display|give me)\b[\s\S]{0,55}\b(?:all|eight|8|starting|original|sample|fixture|records|rows|entries|documents)\b[\s\S]{0,35}\b(?:records|rows|entries|documents)\b/.test(text)
-      || /\b(?:what|which)\s+(?:are|were)\s+(?:the |all )?(?:eight|8|starting|original)\s+(?:sample |fixture )?(?:records|rows|entries|documents)\b/.test(text)
+      || /\b(?:what|which)\s+(?:are|were)\s+(?:the |all )?(?:eight|8|starting|original)\s+(?:(?:starting|original|sample|fixture)\s+)?(?:records|rows|entries|documents)\b/.test(text)
       || /\b(?:list|show|name)\s+(?:all|the)\s+(?:records|rows|entries|documents)\b/.test(text);
   };
   const glossary=[
@@ -171,9 +171,10 @@
     const parts=relevant.map((step,i)=>(i+1)+". "+step.code+" — "+step.meaning);
     return {text:"Here is what the Python code does, line by line:\n"+parts.join("\n")+"\n\nLines beginning with # are comments for people reading the code; Python does not execute them. These statements prepare a local database and table; a vector search runs only if the code later calls table.search(...).",sources:["Generated Python example in interactive lab"],grounded:true};
   }
+  function isDefinitionQuestion(q){return /\b(what\s+(?:is|are|does)|define|definition|meaning|means|explain|tell me about|stand for|stands for)\b/i.test(q);}
   function answerGlossary(q){
     const text=normalizeFact(q);
-    const definitionRequest=/\b(what|define|meaning|means|explain|tell me about|stand for|stands for)\b/i.test(q);
+    const definitionRequest=isDefinitionQuestion(q);
     if(!definitionRequest)return null;
     const found=glossary.filter(([term])=>(" "+text+" ").includes(" "+term+" ")).sort((a,b)=>b[0].length-a[0].length)[0];
     if(!found)return null;
