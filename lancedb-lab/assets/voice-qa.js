@@ -60,7 +60,8 @@
     const navigation=/\b(where|find|view|show|open|access|link|url|website|page|read|see|navigate|404|broken|correct|documentation|docs|wiki|github)\b/.test(q);
     const docs=/\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404)\b/.test(q);
     const location=/\b(where|find|view|show|open|access|link|url|page|read|see|navigate|404|broken|correct)\b/.test(q);
-    if(!navigation || !(docs||location))return null;
+    const namedDestination=/\b(doc(?:s|umentation)?|guide|wiki|article|manual|quickstart|tutorial|404|website|site|repo|repository|github|source code|lab page|interactive lab|portfolio)\b/.test(q);
+    if(!navigation || !namedDestination)return null;
     const selected=/\b(architecture|architectural|architect|system design|diagram)\b/.test(q)?"architecture":
       /\b(agent|mcp|coding assistant)\b/.test(q)?"agents":
       /\b(source|repository|github|file|code on github)\b/.test(q) && !docs?"source":
@@ -309,6 +310,8 @@
       const prompt=[
         "You are an accurate, patient instructor for an eight-chapter LanceDB learning lab.",
         "Answer the learner's exact question in 2-5 clear sentences using ONLY the lesson material below.",
+        "Start by answering exactly what was asked. For list/which/how many questions, enumerate the concrete items from source; do not replace the answer with a broad description.",
+        "For names, IDs, paths, embedding numbers or technical claims, copy the factual details from the source excerpts. Do not guess.",
         "Distinguish browser JavaScript similarity simulation from the separate real Python LanceDB SDK.",
         "Do not claim tests ran, code executed, or live database queries occurred.",
         "If the source does not substantiate an answer, respond exactly: I can't verify that from this tutorial.",
