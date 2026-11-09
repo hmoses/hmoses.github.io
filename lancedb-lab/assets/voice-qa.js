@@ -666,6 +666,7 @@
     }finally{if(req===requestId)ask.disabled=false;}
   }
   form.addEventListener("submit",e=>{e.preventDefault();askQuestion(question.value)});
+  document.querySelectorAll("[data-qa-visual]").forEach(button=>button.addEventListener("click",()=>askQuestion(button.dataset.qaVisual)));
   repeat.addEventListener("click",speakAnswer);
   stop.addEventListener("click",()=>{speechStop();status.textContent="Answer playback stopped."});
   resume.addEventListener("click",()=>{
