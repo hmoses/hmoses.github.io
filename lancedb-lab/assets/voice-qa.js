@@ -524,13 +524,109 @@
     replyUtterance=u;
     try{window.speechSynthesis.speak(u);}catch{status.textContent="Unable to play this answer.";}
   }
+
+  // Visual answers use actual fixture records and safe DOM nodes, not AI-generated HTML.
+  function graphicIntent(q){
+    const text=String(q||"").trim().toLowerCase();
+    const visual=/\b(show|display|visuali[sz]e|draw|diagram|graphic|graph|chart|table|schema|columns|structure|picture)\b/.test(text);
+    if(!visual)return null;
+    if(/\b(schema|columns|column types|table structure|fields)\b/.test(text))return "schema";
+    if(/\b(vector|embedding|4d|four.dimensional|dimensions)\b/.test(text))return "vector";
+    if(/\b(flow|pipeline|workflow|architecture|how data moves)\b/.test(text))return "flow";
+    if(/\b(records?|rows?|dataset|fixtures?|data table|doc_chunks)\b/.test(text))return "records";
+    return null;
+  }
+  function graphicAnswer(q){
+    const visual=graphicIntent(q);
+    if(!visual)return null;
+    const descriptions={
+      schema:"Here's the doc_chunks schema. The columns come from the sample records in example.py; the exact LanceDB/Arrow field types should be inspected from a created table.",
+      records:"Here are the eight sample records from example.py, including the category and four-number vector for each record.",
+      vector:"Here's one actual four-dimensional sample vector. Each numeric value is one coordinate, so four numbers means four dimensions. These coordinates are illustrative, not model-generated text embeddings.",
+      flow:"The program imports sample data, opens an embedded LanceDB database, creates a table, executes a vector search, and displays matching records. The browser's interactive similarity display is a separate JavaScript simulation."
+    };
+    return {text:descriptions[visual],sources:["Actual example.py fixture","Interactive lab"],grounded:true,graphic:visual};
+  }
+  function addGraphicHeading(parent,value){
+    const heading=document.createElement("strong");heading.className="qa-graphic-title";heading.textContent=value;parent.append(heading);
+  }
+  function addGraphicTable(parent,headings,values){
+    const scrolling=document.createElement("div");scrolling.className="qa-graphic-scroll";
+    const table=document.createElement("table");table.className="qa-graphic-table";
+    const head=document.createElement("thead"),headRow=document.createElement("tr");
+    headings.forEach(h=>{const th=document.createElement("th");th.scope="col";th.textContent=h;headRow.append(th);});
+    head.append(headRow);table.append(head);
+    const body=document.createElement("tbody");
+    values.forEach(valuesRow=>{
+      const tr=document.createElement("tr");
+      valuesRow.forEach(value=>{const td=document.createElement("td");td.textContent=String(value);tr.append(td);});
+      body.append(tr);
+    });
+    table.append(body);scrolling.append(table);parent.append(scrolling);
+  }
+  function addGraphicCaption(parent,value){
+    const caption=document.createElement("p");caption.className="qa-graphic-caption";caption.textContent=value;parent.append(caption);
+  }
+  function drawGraphic(host,kind){
+    if(!host||!kind)return;
+    const panel=document.createElement("section");
+    panel.className="qa-graphic";panel.setAttribute("aria-label",kind+" visualization");
+    if(kind==="schema"){
+      addGraphicHeading(panel,"doc_chunks · table schema");
+      addGraphicTable(panel,["Column","Conceptual type","Purpose"],[
+        ["id","string","Record identifier"],
+        ["title","string","Document title"],
+        ["category","string","Filterable metadata"],
+        ["text","string","Document content"],
+        ["vector","4 numbers","Vector-search coordinates"]
+      ]);
+      addGraphicCaption(panel,"Conceptual types inferred from example.py. To confirm exact Arrow field types in Python, inspect table.schema. No database was queried to create this graphic.");
+    }else if(kind==="records"){
+      addGraphicHeading(panel,"doc_chunks · sample fixture");
+      if(!labRecords.length){addGraphicCaption(panel,"Sample fixture could not be loaded; no records are being fabricated.");}
+      else{
+        addGraphicTable(panel,["ID","Title","Category","Vector"],labRecords.map(r=>[r.id,r.title,r.category,"["+r.vector.join(", ")+"]"]));
+        addGraphicCaption(panel,labRecords.length+" actual sample rows · example.py · not live query results");
+      }
+    }else if(kind==="vector"){
+      addGraphicHeading(panel,"One vector · four dimensions");
+      const chosen=labRecords.find(r=>r.id==="doc-01");
+      if(!chosen){addGraphicCaption(panel,"Sample vectors unavailable.");}
+      else{
+        const list=document.createElement("div");list.className="qa-vector-chart";
+        chosen.vector.forEach((v,i)=>{
+          const entry=document.createElement("div");entry.className="qa-vector-entry";
+          const label=document.createElement("span");label.textContent="D"+(i+1);
+          const track=document.createElement("div");track.className="qa-vector-track";
+          const fill=document.createElement("span");fill.className="qa-vector-fill";
+          fill.style.width=Math.max(0,Math.min(100,v*100))+"%";
+          const value=document.createElement("code");value.textContent=Number(v).toFixed(2);
+          track.append(fill);entry.append(label,track,value);list.append(entry);
+        });
+        panel.append(list);
+        addGraphicCaption(panel,chosen.id+" · ["+chosen.vector.join(", ")+"] · Four individual numeric values. The bars are scaled from 0 to 1 for this illustrative vector.");
+      }
+    }else if(kind==="flow"){
+      addGraphicHeading(panel,"LanceDB Python example · data flow");
+      const stages=["RECORDS in example.py","lancedb.connect(…)","create_table(…)","table.search(…)","Results printed"];
+      const flow=document.createElement("div");flow.className="qa-graphic-flow";
+      stages.forEach((step,i)=>{
+        const node=document.createElement("div");node.className="qa-graphic-node";node.textContent=step;flow.append(node);
+        if(i!==stages.length-1){const arrow=document.createElement("span");arrow.className="qa-graphic-arrow";arrow.textContent="↓";arrow.setAttribute("aria-hidden","true");flow.append(arrow);}
+      });
+      panel.append(flow);
+      addGraphicCaption(panel,"Workflow illustration of the generated local Python example, not an executed database trace.");
+    }
+    host.append(panel);
+  }
   function render(result,kind){
     response.hidden=false;
     title.textContent=result.kinds?"Verified project pages":kind==="ai"?"On-device AI · lesson context":"Lesson-based explanation";
     answer.textContent=result.text;
     source.textContent=result.sources.length?"Related chapter"+(result.sources.length>1?"s":"")+": "+result.sources.join(" · "):"No reliable passage found in the supplied lessons.";
     renderLinks(result.kinds||["docs"]);
-    appendMessage("bot",result.text,(result.kinds?"Verified project links":kind==="ai"?"On-device AI":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
+    const bubble=appendMessage("bot",result.text,(result.kinds?"Verified project links":kind==="ai"?"On-device AI":result.graphic?"Fixture visualization":"Lesson excerpt")+(result.sources.length?" · "+result.sources.join(", "):" · limited source coverage"));
+    if(result.graphic)drawGraphic(bubble,result.graphic);
     repeat.disabled=false;
     speakAnswer();
   }
@@ -553,7 +649,7 @@
       if(req!==requestId)return;
       const matches=search(resolved.query);
       const relatedChapter=resolved.followup?resolved.chapter:chooseChapter(resolved.query,matches,resolved.chapter);
-      const exact=codeQuestion(clean)||answerProjectTerminology(clean)||answerGlossary(clean)||answerRecords(clean)||answerExactText(clean);
+      const exact=graphicAnswer(clean)||codeQuestion(clean)||answerProjectTerminology(clean)||answerGlossary(clean)||answerRecords(clean)||answerExactText(clean);
       const verifiedNavigation=exact?null:documentIntent(clean)||documentIntent(resolved.query);
       const corpusMatches=exact?[]:findInCorpus(resolved.query);
       const hasEvidence=corpusMatches.length&&corpusMatches[0].coverage>=0.40;
