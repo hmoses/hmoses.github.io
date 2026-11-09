@@ -269,7 +269,13 @@ function populateVoices(){
   }
   const prefer=voiceItems.find(v=>/(samantha|natural|premium|enhanced|ava|aria|jenny|google us english|allison)/i.test(v.name))||
     voiceItems.find(v=>/en[-_]US/i.test(v.lang))||voiceItems[0];
-  voiceSelect.value=voiceItems.some(v=>v.voiceURI===old)?old:prefer.voiceURI;
+  // Shared across the LanceDB and Poly-Glot paths on hmoses.github.io.
+  // Preserve a deliberate voice choice instead of silently switching voices.
+  let remembered="";
+  try{remembered=localStorage.getItem("pg:sharedEnglishVoiceURI")||"";}catch(e){}
+  voiceSelect.value=voiceItems.some(v=>v.voiceURI===old)?old:
+    voiceItems.some(v=>v.voiceURI===remembered)?remembered:prefer.voiceURI;
+  try{localStorage.setItem("pg:sharedEnglishVoiceURI",voiceSelect.value);}catch(e){}
 }
 function populateChapters(){
   chapterList.replaceChildren();
@@ -296,7 +302,10 @@ revealButton.addEventListener("click",()=>{
   revealButton.setAttribute("aria-expanded",String(shouldShow));
   revealButton.textContent=shouldShow?"Hide sample answer":"Show a sample answer";
 });
-voiceSelect.addEventListener("change",()=>{if(speaking){pause();play();}});
+voiceSelect.addEventListener("change",()=>{
+  try{localStorage.setItem("pg:sharedEnglishVoiceURI",voiceSelect.value);}catch(e){}
+  if(speaking){pause();play();}
+});
 speedSelect.addEventListener("change",()=>{if(speaking){pause();play();}});
 fullTour.addEventListener("click",()=>{autoNext.checked=true;drawChapter(0,true)});
 $("copy-script").addEventListener("click",async()=>{
