@@ -132,7 +132,7 @@
     const text=normalizeFact(q);
     const definitionRequest=/\b(what|define|meaning|means|explain|tell me about|stand for|stands for)\b/i.test(q);
     if(!definitionRequest)return null;
-    const found=glossary.filter(([term])=>new RegExp("\\b"+term.replace(/[.*+?^$()|[\]{}]/g,"\\  function answerRecords(q){").replace(/ /g,"\\s+")+"\\b","i").test(text)).sort((a,b)=>b[0].length-a[0].length)[0];
+    const found=glossary.filter(([term])=>(" "+text+" ").includes(" "+term+" ")).sort((a,b)=>b[0].length-a[0].length)[0];
     if(!found)return null;
     return {text:found[0]+": "+found[1],sources:["Lab terminology reference"],grounded:true};
   }
