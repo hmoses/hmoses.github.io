@@ -372,7 +372,7 @@
   mode.textContent=localAI()?"On-device AI when available · lesson-sourced fallback":"Lesson-sourced answers · on-device AI unavailable";
   async function answerWithModel(q,matches,corpusMatches=[]){
     if(!localAI())return null;
-    const prior=dialogue.slice(-3).map(d=>"LEARNER: "+d.question+"\nTUTOR SUMMARY: "+(d.answer.match(/doc-0[1-8]/g)||[]).length>=3?"The learner asked about sample records.":d.answer.slice(0,350)).join("\n\n");
+    const prior=dialogue.slice(-3).map(d=>{const summary=(d.answer.match(/doc-0[1-8]/g)||[]).length>=3?"The learner asked about sample records.":d.answer.slice(0,350);return "LEARNER: "+d.question+"\nTUTOR SUMMARY: "+summary;}).join("\n\n");
     const detailed=knowledgeNotes.map(n=>"CHAPTER "+(n.chapter+1)+" REFERENCE: "+n.text).join("\n");
     const context=chapters.map((c,i)=>"CHAPTER "+(i+1)+": "+c.title+"\n"+c.paragraphs.join("\n")+"\nKEY IDEA: "+c.takeaway+"\nCHECKPOINT: "+c.question+" "+c.answer).join("\n\n").slice(0,15500);
     try{
