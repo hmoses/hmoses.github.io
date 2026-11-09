@@ -105,6 +105,37 @@
   ];
   const normalizeFact=x=>String(x||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
   const recordQuestion=q=>/\b(eight|8|starting|original|sample|fixture|records?|doc-0[1-8]|dataset|list all)\b/i.test(q);
+  const glossary=[
+    ["record","A record is one row of stored data. In this lab each record has an ID, title, category, text, and a four-number vector."],
+    ["fixture","A fixture is a small known dataset used to make examples and tests repeatable. The lab fixture contains eight records."],
+    ["embedding","An embedding is a numerical representation generated from data by an embedding model. This lab uses hand-written sample vectors rather than model-generated embeddings."],
+    ["vector","A vector is an ordered list of numbers. The examples use four coordinates per vector, so each query must also have four coordinates."],
+    ["cosine similarity","Cosine similarity compares vector directions using their normalized dot product. Higher similarity indicates more similar directions, not a probability of correctness."],
+    ["cosine distance","Cosine distance equals one minus cosine similarity. In LanceDB search results, smaller cosine distance means a closer vector."],
+    ["dot product","A dot product multiplies corresponding vector coordinates and adds the products. It is part of calculating cosine similarity."],
+    ["nearest neighbor","Nearest-neighbor search returns stored vectors closest to a query vector under a chosen distance metric."],
+    ["metadata","Metadata is structured information attached to a record, such as category or product version. It can be used for filtering."],
+    ["prefilter","A prefilter restricts eligible records using a metadata condition before the nearest results are returned."],
+    ["predicate","A predicate is a condition that evaluates true or false, such as category = 'search'."],
+    ["sdk","An SDK is a software development kit: a library and related tools developers use to call software APIs. Python lancedb is the actual SDK in this project."],
+    ["api","An API is an application programming interface: documented functions or endpoints that software uses to interact with another component."],
+    ["embedded database","An embedded database runs as part of your program and works with local storage rather than requiring a separate managed service."],
+    ["ingestion","Ingestion means adding data into a system. Here the Python example inserts RECORDS into the doc_chunks table."],
+    ["table","A table organizes stored records into columns and rows. The example calls its table doc_chunks."],
+    ["query","A query requests information from stored data. The lab uses query vectors to rank matching records."],
+    ["pytest","pytest is a Python test runner used to execute assertions and detect behavior changes."],
+    ["ci","CI means continuous integration: automated jobs that may run tests and checks after code changes. A configured workflow does not prove that a run passed."],
+    ["agent ready","Agent-ready documentation provides explicit steps, source files, constraints, and verification commands for coding assistants."],
+    ["overwrite","mode='overwrite' replaces an existing table of the same name. It helps reset sample data but can destroy production data."]
+  ];
+  function answerGlossary(q){
+    const text=normalizeFact(q);
+    const definitionRequest=/\b(what|define|meaning|means|explain|tell me about|stand for|stands for)\b/i.test(q);
+    if(!definitionRequest)return null;
+    const found=glossary.filter(([term])=>new RegExp("\\b"+term.replace(/[.*+?^$()|[\]{}]/g,"\\  function answerRecords(q){").replace(/ /g,"\\s+")+"\\b","i").test(text)).sort((a,b)=>b[0].length-a[0].length)[0];
+    if(!found)return null;
+    return {text:found[0]+": "+found[1],sources:["Lab terminology reference"],grounded:true};
+  }
   function answerRecords(q){
     if(!labRecords.length || !recordQuestion(q))return null;
     const lower=q.toLowerCase();
@@ -382,7 +413,7 @@
       if(req!==requestId)return;
       const matches=search(resolved.query);
       const relatedChapter=resolved.followup?resolved.chapter:chooseChapter(resolved.query,matches,resolved.chapter);
-      const exact=answerRecords(clean)||answerExactText(clean);
+      const exact=answerRecords(clean)||answerExactText(clean)||answerGlossary(clean);
       const verifiedNavigation=exact?null:documentIntent(clean)||documentIntent(resolved.query);
       const corpusMatches=exact?[]:findInCorpus(resolved.query);
       const hasEvidence=corpusMatches.length&&corpusMatches[0].coverage>=0.40;
