@@ -533,7 +533,7 @@
     if(/\b(schema|columns|column types|table structure|fields)\b/.test(text))return "schema";
     if(/\b(vector|embedding|4d|four.dimensional|dimensions)\b/.test(text))return "vector";
     if(/\b(flow|pipeline|workflow|architecture|how data moves)\b/.test(text))return "flow";
-    if(/\b(records?|rows?|dataset|fixtures?|data table|doc_chunks)\b/.test(text))return "records";
+    if(/\b(records?|rows?|dataset|fixtures?|data table|doc_chunks|table)\b/.test(text))return "records";
     return null;
   }
   function graphicAnswer(q){
