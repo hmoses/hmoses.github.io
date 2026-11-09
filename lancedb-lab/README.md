@@ -4,6 +4,8 @@ An interactive GitHub Pages lab with linked developer documentation, real LanceD
 
 **Live lab:** https://hmoses.github.io/lancedb-lab/  
 **Developer docs:** https://hmoses.github.io/lancedb-lab/docs/  
+**Jev reranking:** https://hmoses.github.io/lancedb-lab/docs/jev-reranking.html  
+**Guided voice tutorial:** https://hmoses.github.io/lancedb-lab/voice-tour/  
 **Architecture:** https://hmoses.github.io/lancedb-lab/docs/architecture.html  
 **Agent-ready docs:** https://hmoses.github.io/lancedb-lab/docs/agent-readiness.html  
 **Portfolio:** https://hmoses.github.io/lancedb-documentation-engineering/
@@ -26,6 +28,7 @@ Python 3.11+ recommended. Windows PowerShell activation: `.venv\Scripts\Activate
 
 - **Real:** `example.py` uses LanceDB Embedded to create a local database, insert fixed 4D numeric vectors, search with cosine distance, filter by metadata, and return results. No API key.
 - **Simulated:** `assets/lab.js` demonstrates cosine ranking and metadata filtering against the same fixtures in the browser. It does not run the LanceDB SDK or an embedding model.
+- **Optional hosted Jev:** `jev_example.py` retrieves the same eight local candidates then calls TypeSafe via LanceDB’s native `TypeSafeReranker`. Requires a compatible SDK revision and a private `TYPESAFE_API_KEY`. Unlike the browser illustration, this path calls an external API; no successful hosted execution is claimed. See [Lab 04](docs/jev-reranking.html).
 - **Automated:** `tests/test_example.py` checks ingestion, row count, result ranking, category filtering, and validation. `.github/workflows/lancedb-lab-ci.yml` attempts the same checks on qualifying pushes and PRs. Confirm execution in the Actions tab.
 
 The example vectors are deliberately hand-authored. They are *not* text embeddings or a benchmark of retrieval quality. Production indexing, performance, and LanceDB Enterprise are outside the scope of this small educational sample.
@@ -40,11 +43,14 @@ lancedb-lab/
 │   └── lab.js                  # Browser-only deterministic simulation
 ├── docs/
 │   ├── index.html              # Installation, querying, tests, troubleshooting
+│   ├── jev-reranking.html      # Interactive reranking explanation + optional API guide
 │   ├── architecture.html       # Data/flow/quality contract
 │   └── agent-readiness.html    # Reproducible AI-agent evaluation task
 ├── example.py                  # Real LanceDB Embedded example
+├── jev_example.py              # Optional hosted TypeSafe Jev example
 ├── tests/
-│   └── test_example.py
+│   ├── test_example.py
+│   └── test_jev_example.py      # Offline rank-comparison tests
 ├── requirements.txt
 └── README.md
 ```
