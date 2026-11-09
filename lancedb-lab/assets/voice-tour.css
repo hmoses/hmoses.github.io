@@ -291,3 +291,27 @@ html.embedded-chat-mode,html.embedded-chat-mode body{width:100%;height:100%;marg
 .qa-enable-ai{align-self:flex-start;margin:7px 13px 9px;border:1px solid #a991c4;border-radius:9px;background:#3a2a49;color:#f9eafa;min-height:38px;padding:8px 12px;font:700 12px system-ui,sans-serif;cursor:pointer}
 .qa-enable-ai[hidden]{display:none}
 .qa-enable-ai:disabled{opacity:.62;cursor:progress}
+
+/* Data-aware visual answers in the floating chat. */
+.qa-visual-shortcuts{display:flex;gap:6px;flex-wrap:wrap;padding:8px 13px 10px;border-top:1px solid #4d405a}
+.qa-visual-shortcuts button{border:1px solid #847095;border-radius:20px;background:#30243d;color:#f0d9fd;font:600 11px system-ui,sans-serif;padding:7px 10px;cursor:pointer;min-height:34px}
+.qa-visual-shortcuts button:hover,.qa-visual-shortcuts button:focus-visible{background:#513763;border-color:#c7a4de}
+.qa-message-bot:has(.qa-graphic){width:100%;max-width:100%}
+.qa-graphic{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding:12px;border:1px solid #647889;border-radius:11px;background:#16252c;min-width:0}
+.qa-graphic-title{color:#f4e0ff;font-size:13px}
+.qa-graphic-scroll{overflow-x:auto;max-width:100%;border:1px solid #49606c;border-radius:8px}
+.qa-graphic-table{width:100%;border-collapse:collapse;text-align:left;font:11px/1.5 system-ui,sans-serif;min-width:340px}
+.qa-graphic-table th{position:sticky;top:0;background:#29424d;color:#f4eef6;font-weight:700}
+.qa-graphic-table th,.qa-graphic-table td{padding:7px 9px;vertical-align:top;border-bottom:1px solid #405460;overflow-wrap:anywhere}
+.qa-graphic-table tr:last-child td{border-bottom:0}
+.qa-graphic-table tbody tr:nth-child(even){background:#1b3039}
+.qa-graphic-caption{font-size:11px!important;line-height:1.6!important;color:#c5d5dc!important}
+.qa-vector-chart{display:grid;gap:8px}
+.qa-vector-entry{display:grid;grid-template-columns:25px minmax(0,1fr) 48px;align-items:center;gap:8px;font:12px system-ui,sans-serif}
+.qa-vector-entry code{text-align:right;color:#e7d8f7}
+.qa-vector-track{height:15px;background:#35444f;border-radius:8px;overflow:hidden}
+.qa-vector-fill{display:block;height:100%;background:linear-gradient(90deg,#9771ba,#d9b8ee);border-radius:8px}
+.qa-graphic-flow{display:flex;flex-direction:column;align-items:center;gap:5px}
+.qa-graphic-node{width:100%;padding:9px;border:1px solid #745d85;border-radius:8px;background:#342943;color:#f9eafb;font:12px/1.4 ui-monospace,SFMono-Regular,monospace;text-align:center}
+.qa-graphic-arrow{color:#d6bbe8;font-size:17px}
+@media(max-width:450px){.qa-graphic{padding:8px}.qa-graphic-table{min-width:310px}.qa-visual-shortcuts{gap:5px}.qa-visual-shortcuts button{font-size:10px;padding:6px 8px}}
